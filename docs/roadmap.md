@@ -12,9 +12,10 @@
 | Pembacaan aturan lengkap dan data agronomi | Belum selesai | Belum boleh mengklaim kandidat terverifikasi |
 | Inventaris sumber agronomi/jalan dan uji akses | Selesai terbatas; analisis cakupan penuh belum | [Matriks sumber](discovery/data-sources.md); sampel/akses parsial bukan kesesuaian bidang |
 | Rubrik dan kontrak keluaran | Draf tersedia, belum disepakati | [Rubrik usulan](design/scoring-rubric.md); format SHP ZIP + KML sudah dipilih, skema/ambang/toleransi masih terbuka |
-| Mockup | Dibuat dan diuji; review pengguna belum | [Alur dan uji](design/mockup.md); tanpa kandidat nyata atau ekspor GIS |
+| Prototipe eksplorasi | Dibuat dan diuji; review pengguna belum | [Alur dan uji](design/mockup.md); hanya KBLI/wilayah, tanpa kandidat atau ekspor GIS |
+| Sorotan geometri pilot | Terintegrasi dan teruji pada satu RDTR Tirawuta | [20 polygon sumber dan 18 pemeriksaan browser](design/zone-overlay.md); relevan untuk ditelaah, bukan izin/exact-KBLI terverifikasi |
 | Desain teknis/backlog/estimasi | Belum difinalisasi | Stack di PRD masih usulan |
-| Development/integrasi OSS | Belum dimulai | Memerlukan persetujuan terpisah |
+| Mesin produksi/integrasi OSS | Belum dimulai | Prototipe eksplorasi bukan persetujuan seluruh cakupan atau tindakan OSS |
 
 ## Tahap A — Audit data inti pilot
 
@@ -50,11 +51,15 @@ Draf rubrik dan skenario penerimaan sudah tersedia pada [rancangan rubrik](desig
 
 ## Tahap C — Mockup dan validasi alur
 
-Layar yang direncanakan: peta/filter → kriteria → perbandingan kandidat → detail bukti/unknown → pilihan kandidat → ekspor rencana.
+Alur produk yang dituju tetap peta/filter → kriteria → perbandingan kandidat → detail bukti/unknown → pilihan kandidat → ekspor rencana. Implementasi tahap ini hanya **eksplorasi KBLI/wilayah dan detail zona**; luas/jalan/kandidat berada pada modul lain.
 
 - [x] Buat mockup interaktif berlabel perencanaan tanpa kandidat/polygon rekaan.
 - [x] Tampilkan batas cakupan, bukti turunan dan unknown; tidak menggambar zona sesuai tanpa evaluasi.
 - [x] Pisahkan konfigurasi/rencana dari kesiapan pengajuan resmi; ekspor GIS nonaktif.
+- [x] Hubungkan API terbatas Tirawuta ke sorotan biru, legenda dan detail polygon sumber; 20 fitur nyata teruji.
+- [x] Uji perubahan filter, respons rusak/terlambat, cache, keyboard/seluler dan unduhan JSON; 18 pemeriksaan browser lulus.
+- [ ] Review relasi exact-KBLI serta ketentuan Tirawuta sebelum menerbitkan status kesesuaian terverifikasi.
+- [ ] Perluas cakupan geometri bertahap dengan validasi/batas bukti yang sama; tujuh rencana belum diaktifkan.
 - [ ] Tinjau alur bersama pemilik kebutuhan.
 
 **Gerbang:** alur disetujui tanpa menyamakan mockup dengan bukti kelayakan lokasi.
@@ -65,7 +70,7 @@ Layar yang direncanakan: peta/filter → kriteria → perbandingan kandidat → 
 - [ ] Tetapkan peran/akses, kebijakan data/AI/cloud, persetujuan dan pemulihan kegagalan.
 - [ ] Susun desain teknis, backlog, dependensi dan matriks uji.
 - [ ] Estimasikan durasi/biaya berdasarkan scope serta risiko yang sudah diperiksa.
-- [ ] Peroleh persetujuan development eksplisit.
+- [ ] Finalisasi persetujuan cakupan pembangunan mesin produksi; kelanjutan prototipe eksplorasi sudah diminta pengguna, bukan izin pengajuan OSS.
 
 **Gerbang:** Definition of Ready pada [PRD](PRD.md) terpenuhi. Persetujuan commit dokumentasi tidak dihitung sebagai persetujuan tahap ini.
 

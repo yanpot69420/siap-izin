@@ -44,9 +44,16 @@ Pada formulir terakhir, pengguna melewati konfirmasi ruang lingkup budidaya, usu
 
 ## Bahan review yang sudah tersedia
 
+### Pilihan pelaksanaan teknis — bukan keputusan parameter pengguna
+
+Permintaan pengguna untuk melanjutkan tahap berikutnya dikerjakan sebagai pembuktian sorotan **satu RDTR Tirawuta** terlebih dahulu. Ini tidak menghapus empat kabupaten pilot, mengonfirmasi asumsi budidaya atau menetapkan stack produksi. Leaflet dipertahankan; backend lokal membatasi sumber/query, memvalidasi geometri dan menyimpan cache privat. Perluasan rencana dilakukan setelah bukti integrasi ini, bukan memakai polygon contoh.
+
+Pada 25 Oktober 2026, 20 polygon sumber tampil dan 18 pemeriksaan browser lulus. Semuanya biru putus-putus, `unreviewed_mapping`/`unknown`; relasi exact-KBLI belum direview. [Kontrak dan hasil](design/zone-overlay.md). Keberhasilan rendering tidak dianggap persetujuan kegiatan, agronomi, bidang hak atau penerimaan OSS.
+
 - [Audit geometri dan sampel ITBX](discovery/rdtr-geometry-audit.md): audit sumber, bukan persetujuan kegiatan/lokasi.
 - [Matriks sumber data](discovery/data-sources.md): akses, resolusi, lisensi dan celah; analisis penuh belum dilakukan.
 - [Rubrik usulan](design/scoring-rubric.md): pemisahan zona/agronomi/jalan; ambang nonaktif sampai direview.
 - [Mockup interaktif](design/mockup.md): alur dapat diuji tanpa kandidat palsu; belum disetujui pengguna.
+- [API lokal](design/zone-api.md) dan [rekaman sorotan nyata](design/zone-overlay-verification.json): pembuktian teknis satu rencana, bukan penerimaan seluruh produk.
 
 Register lengkap dan stable ID kebutuhan tersedia di [PRD](PRD.md), bagian 3 dan 16. Jawaban baru memperbarui register, persyaratan, alur dan uji yang terdampak; jangan hanya ditambahkan pada catatan akhir.

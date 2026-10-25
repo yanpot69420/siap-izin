@@ -1,0 +1,2 @@
+# Geometry validation only; HTTP, JSON, server and cache use Python stdlib.
+Shapely==2.2.0

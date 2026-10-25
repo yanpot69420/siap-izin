@@ -1,8 +1,8 @@
 # Siap Izin
 
-Aplikasi Induk Asisten Izin Berusaha — **tahap discovery dan mockup perencanaan**.
+Aplikasi Induk Asisten Izin Berusaha — **tahap prototipe eksplorasi zona**.
 
-Repositori berisi PRD, audit sumber dan mockup interaktif yang dapat dijalankan lokal. Belum ada mesin rekomendasi produksi, kandidat lokasi terverifikasi, generator polygon rencana atau integrasi OSS yang telah diuji. Izin melanjutkan tahapan proyek bukan persetujuan otomatis seluruh parameter atau pengajuan OSS.
+Repositori berisi PRD, audit sumber dan prototipe lokal. Sorotan geometri nyata sudah diuji untuk **satu RDTR Tirawuta**, bukan seluruh wilayah pilot. Belum ada mesin rekomendasi produksi, kandidat lokasi terverifikasi, generator polygon rencana atau integrasi OSS yang telah diuji.
 
 ## Visi
 
@@ -28,40 +28,61 @@ Format SHP ZIP dan KML telah dikonfirmasi. Toleransi luas, bentuk/jumlah kandida
 
 ## Dokumen
 
-- [PRD v0.7](docs/PRD.md) — visi, kebutuhan, batas produk dan kriteria penerimaan.
+- [PRD v0.8](docs/PRD.md) — kebutuhan, batas produk dan kriteria penerimaan; bukan persetujuan rilis produksi.
 - [Discovery pilot kakao](docs/discovery/pilot-kakao.md) — pembacaan awal katalog dan kegiatan.
 - [Audit geometri dan sampel ITBX](docs/discovery/rdtr-geometry-audit.md) — delapan layer; batas audit sumber versus penilaian bidang.
 - [Inventaris sumber data](docs/discovery/data-sources.md) — agronomi, medan, tutupan dan jalan; uji akses serta keterbatasan resolusi.
-- [Rubrik indikatif untuk review](docs/design/scoring-rubric.md) — usulan nonaktif sampai disetujui, bukan hasil penilaian lahan.
-- [Mockup dan laporan uji](docs/design/mockup.md) — alur, dependensi, bukti uji dan batas hasil.
-- [Daftar keputusan](docs/decisions.md) dan [roadmap](docs/roadmap.md) — keputusan pengguna, usulan dan gerbang pelaksanaan.
+- [Rubrik indikatif untuk review](docs/design/scoring-rubric.md) — usulan nonaktif sampai disetujui.
+- [Antarmuka dan riwayat uji](docs/design/mockup.md).
+- [Kontrak sorotan dan bukti integrasi](docs/design/zone-overlay.md), [hasil 18 pemeriksaan browser](docs/design/zone-overlay-verification.json) dan [API lokal](docs/design/zone-api.md).
+- [Daftar keputusan](docs/decisions.md) dan [roadmap](docs/roadmap.md).
 
-## Menjalankan mockup lokal
+## Menjalankan prototipe lokal
 
-Dari root repositori:
+Python **3.11+**, internet dan dependency geometri diperlukan. Dari root repositori:
 
 ```sh
-python3 -m http.server 8765 --bind 127.0.0.1 --directory prototype
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements-prototype.txt
+python tools/dev_server.py --port 8765
 ```
 
-Buka `http://127.0.0.1:8765/`. Hentikan dengan Ctrl+C. Tidak memerlukan instalasi paket atau kredensial. Peta Leaflet/OpenStreetMap hanya dimuat setelah tombol **Muat peta publik** dipilih dan memerlukan internet. Tanpa peta, filter, bukti lokal dan ekspor konfigurasi tetap dapat digunakan.
+Buka `http://127.0.0.1:8765/prototype/`, lalu pilih **Muat peta publik**. Hentikan server dengan Ctrl+C. Server hanya bind ke loopback; bukan deployment produksi. **Server statis `python -m http.server` tidak menyediakan API geometri.** Tidak memerlukan login atau kredensial.
 
-Modul eksplorasi kini hanya memakai **KBLI dan wilayah**, tanpa input luas atau preferensi jalan. Tab Zona menyatakan evaluasi/sorotan belum tersedia; filter saat ini membatasi inventaris bukti, belum menyorot zona yang terbukti sesuai. Ekspor konfigurasi memakai skema v2 khusus eksplorasi tanpa luas/parameter kandidat. Pencarian, pembuatan dan ekspor polygon berada pada modul terpisah yang belum dibangun.
+Modul eksplorasi hanya memakai **KBLI dan wilayah**, tanpa luas atau preferensi jalan. Jika Kolaka Timur dipilih, prototipe memuat polygon filter kegiatan sumber untuk Tirawuta. Pada pengujian 25 Oktober 2026, **20 polygon P-3** tampil dan dapat diklik untuk melihat ID, dasar sorotan, atribut peraturan, waktu sumber dan batas bukti.
+
+**Biru putus-putus berarti relevan untuk ditelaah, bukan diizinkan.** Relasi exact-KBLI belum direview, ruang lingkup budidaya belum dikonfirmasi dan ITBX seluruh bidang belum diperiksa. Tujuh rencana lainnya masih inventaris metadata, bukan sorotan zona terverifikasi. Wilayah di luar cakupan tidak dinyatakan dilarang.
+
+API memakai sumber publik yang dibatasi, rekonsiliasi ID dan validasi topologi. Cache berada di `private/rdtr-cache/`, tidak disajikan atau diterbitkan. Cache selalu dilabeli snapshot dengan waktu sumber asli. Sumber rusak/tidak lengkap tidak diganti data contoh.
+
+Ekspor konfigurasi berupa JSON skema v2, **tanpa geometri atau parameter kandidat**. Pencarian, pembentukan dan ekspor polygon SHP ZIP/KML tetap modul terpisah yang belum dibangun.
+
+## Verifikasi
+
+Dengan venv aktif:
+
+```sh
+python -B -m unittest discover -s tests -p test_zone_server.py -v
+node --test tests/zone-data.test.cjs
+node --check prototype/app.js
+```
+
+Hasil aktual: **11 test backend offline** dan **1 test kontrak frontend** lulus. Integrasi pada Chromium terisolasi lulus **18 pemeriksaan browser**, termasuk polygon nyata, klik pada interior polygon, keyboard, perubahan filter, respons rusak/terlambat, unduhan JSON yang dibaca ulang, seluler dan pemulihan CDN. Ini bukan UAT seluruh produk, pengujian lintas browser atau penerimaan OSS.
+
+Probe sumber tanpa fallback dapat dijalankan terpisah dengan `python -B tools/dev_server.py --probe-live`; memerlukan internet dan melakukan permintaan baru ke sumber resmi. Rincian batas/provenance ada pada dokumentasi API.
 
 ## Status dan gerbang berikutnya
 
-**Tersedia untuk review:** PRD v0.7, audit teknis terbatas RDTR, inventaris sumber dan uji akses sampel, rancangan rubrik, serta mockup eksplorasi. Laporan pengujian membedakan pemeriksaan UI dari pengujian GIS/OSS.
+**Tersedia:** PRD v0.8, audit RDTR terbatas, inventaris sumber, rancangan rubrik, prototipe eksplorasi dan sorotan nyata satu rencana. Review pengguna belum dianggap selesai hanya karena tes teknis lulus.
 
-**Belum selesai:** pembacaan aturan lengkap dan pemetaan exact-KBLI, analisis agronomi seluruh wilayah/bidang, persetujuan rubrik/parameter, kandidat nyata, generator GIS, desain teknis produksi dan otomasi OSS.
-
-Tahap berikutnya: **review mockup dan parameter → validasi aturan/data lanjutan → finalisasi PRD serta desain teknis → persetujuan pembangunan mesin analisis**. Belum ada janji jadwal, biaya atau peluang izin.
+**Berikutnya:** telaah relasi exact-KBLI dan ketentuan Tirawuta sebelum menerbitkan indikasi kesesuaian terverifikasi; perluas rencana secara bertahap dengan validasi yang sama. Pembacaan aturan lengkap, analisis agronomi, persetujuan parameter/rubrik, kandidat, generator GIS, desain produksi dan otomasi OSS belum selesai.
 
 ## Batas hasil dan publikasi
 
-- Polygon rencana bukan batas kepemilikan, bukti tanah tersedia, hasil survei atau jaminan izin.
+- Geometri sumber untuk tampilan bukan batas kepemilikan, bidang proyek, bukti tanah tersedia, hasil survei atau jaminan izin.
 - Ketersediaan/hak tanah dan realisasi bukan prasyarat rekomendasi rencana; kesiapan pengajuan resmi ditinjau terpisah.
-- Area tanpa bukti tidak otomatis dilabeli sesuai atau dilarang; ketidakpastian tetap terlihat.
 - Jangan mengunggah dokumen klien, identitas sensitif, rahasia, OTP, token, cookie, sesi OSS atau ekspor proyek ke repo publik.
-- Snapshot mentah, PDF sumber dan arsip kerja tetap di luar repo. Bukti uji lokal di `prototype/test-output/` juga tidak ikut publikasi; laporan ringkas ada pada dokumentasi mockup.
-- Akses publik tidak sama dengan izin publikasi ulang data atau integrasi produksi. `.gitignore` bukan pengganti pemeriksaan sebelum commit.
-- Stack produksi dalam PRD masih usulan; mockup HTML/CSS/JavaScript tidak menetapkan stack final. Perubahan cakupan harus memperbarui kebutuhan, keputusan dan uji terkait.
+- Snapshot mentah, cache, PDF sumber, screenshot dan arsip kerja tetap di luar publikasi. Bukti lama di `prototype/test-output/` juga diabaikan Git; ringkasan portabel tersedia pada dokumentasi.
+- Akses publik bukan izin publikasi ulang data atau integrasi produksi. `.gitignore` bukan pengganti pemeriksaan sebelum commit.
+- Leaflet serta backend lokal ini merupakan pembuktian implementasi kecil, bukan penetapan seluruh stack produksi. Mandat kelanjutan bukan izin pengajuan OSS, penggunaan data klien atau layanan berbayar.

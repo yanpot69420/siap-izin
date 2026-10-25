@@ -1,0 +1,110 @@
+{
+  "time": "2026-10-25T14:27:12.224Z",
+  "passed": true,
+  "assertionCount": 18,
+  "results": [
+    {
+      "test": "Polygon sumber benar-benar dirender dan count cocok",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Seluruh sorotan biru belum direview; bukan izin",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Eksplorasi tanpa input luas atau jalan",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Klik nyata di interior polygon membuka fitur sumber yang benar",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Escape menutup dialog",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Daftar zona dapat membuka detail lewat keyboard",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Draf tidak mengubah sorotan atau konfigurasi terapan",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "KBLI kosong ditolak; peta tetap berlabel KBLI terapan",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Wilayah di luar pilot menghapus polygon dan tidak disebut dilarang",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Reset memulihkan polygon dengan provenance sumber/cache jujur",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Respons rusak gagal aman tanpa polygon lama atau pengganti",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Respons lama yang terlambat tidak menghidupkan polygon setelah filter berubah",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Unduhan nyata dibaca ulang dan cocok dengan snapshot pratinjau tanpa geometri/luas",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Navigasi tab keyboard",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Seluler 390px tidak overflow horizontal",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Desktop tidak overflow horizontal",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Kegagalan CDN memulihkan gate dan tombol coba ulang tanpa polygon rekaan",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "Tidak ada exception JavaScript tertangkap selama skenario",
+      "passed": true,
+      "observed": []
+    }
+  ],
+  "source": {
+    "counts": {
+      "excludedInvalid": 0,
+      "matched": 20,
+      "returned": 20
+    },
+    "status": "cached_snapshot",
+    "retrievedAt": "2026-10-25T14:25:12.754767Z",
+    "filterZoneCodes": [
+      "P-3"
+    ]
+  },
+  "javascriptExceptions": []
+}

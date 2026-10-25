@@ -1,6 +1,6 @@
 # PRD — Aplikasi Induk Asisten Perizinan Berusaha
 
-**Versi:** 0.7 — eksplorasi zona dipisahkan dari pencarian kandidat/pembuatan polygon; parameter lanjutan tetap terbuka
+**Versi:** 0.8 — pilot sorotan geometri Tirawuta terintegrasi; pemetaan exact-KBLI, parameter lanjutan dan rilis produksi tetap terbuka
 
 **Pemilik kebutuhan:** Anton
 
@@ -10,7 +10,7 @@
 
 **Cakupan visi:** dokumen perusahaan → KBLI → pemeriksaan lokasi/RDTR → polygon → persiapan dan penginputan OSS → tindak lanjut perizinan.
 
-> Dokumen ini adalah rancangan produk, bukan pendapat hukum atau bukti bahwa suatu kegiatan/lokasi telah disetujui pemerintah. Seluruh target, peran tambahan, dan pembagian fase yang belum dikonfirmasi Anton berstatus usulan. Tidak ada development, pengujian akun OSS, atau validasi berkas klien yang telah dilakukan dalam penyusunan PRD ini.
+> Dokumen ini adalah rancangan produk, bukan pendapat hukum atau bukti bahwa suatu kegiatan/lokasi telah disetujui pemerintah. Seluruh target, peran tambahan, dan pembagian fase yang belum dikonfirmasi Anton berstatus usulan. Prototipe eksplorasi satu rencana sudah diimplementasikan dan diuji; bukan mesin produksi. Tidak ada pengujian akun OSS atau validasi berkas klien yang telah dilakukan.
 
 ## 1. Ringkasan produk
 
@@ -449,7 +449,17 @@ Izin melanjutkan proyek memungkinkan tahap audit, rubrik dan mockup dikerjakan. 
 
 [Inventaris sumber](discovery/data-sources.md) dan [rubrik usulan](design/scoring-rubric.md) sudah tersedia untuk review. Uji akses sampel tidak disamakan dengan cakupan lengkap empat kabupaten; raster regional bukan bukti kondisi mikro bidang 5000m2. Ambang dalam rancangan tetap nonaktif sampai disetujui reviewer/pengguna yang berwenang. PDF referensi Kementan telah diperoleh, tetapi pembacaan OCR bagian agronomi belum selesai.
 
-[Mockup interaktif](design/mockup.md) dapat dijalankan lokal, memuat filter pilot, peta dasar opt-in, inventaris/ringkasan audit, panel batas bukti dan ekspor konfigurasi. Ini bukan mesin analisis: nol kandidat dievaluasi, tidak ada polygon rekaan, ekspor GIS nonaktif. Format tujuan SHP ZIP + KML tetap tercatat sebagai keputusan pengguna. Uji UI tidak menggantikan UAT produk GIS, validasi agronomi, uji OSS atau persetujuan alur oleh Anton.
+[Prototipe interaktif](design/mockup.md) dapat dijalankan lokal, memuat filter KBLI/wilayah, peta dasar opt-in, inventaris/ringkasan audit, panel bukti dan ekspor konfigurasi. Sorotan nyata satu rencana dijelaskan pada bagian 8.11. Ini bukan mesin rekomendasi kandidat: nol kandidat proyek dievaluasi, tidak ada polygon rekaan atau ekspor GIS. Format tujuan SHP ZIP + KML tetap tercatat sebagai keputusan pengguna. Tes teknis tidak menggantikan UAT seluruh produk, validasi agronomi, uji OSS atau persetujuan alur oleh Anton.
+
+### 8.11 Pembuktian sorotan Tirawuta — implementasi terbatas
+
+Atas permintaan kelanjutan implementasi, satu irisan geometri **RDTR Kawasan Perkotaan Tirawuta (`7411000000:001`)** telah dihubungkan ke API lokal dan peta. Pemilihan satu rencana adalah urutan pembuktian teknis, bukan penggantian empat kabupaten pilot atau persetujuan stack produksi. Tujuh rencana lain masih inventaris metadata.
+
+Pada 25 Oktober 2026, sumber publik menghasilkan **20 polygon P-3** yang direkonsiliasi dan tampil di peta. Dasar sorotan adalah filter kegiatan lokal `041`; relasi exact-KBLI `01273` versi `2025` dan asumsi budidaya belum direview/dikonfirmasi. Seluruh fitur tetap `permission: unknown`, `evidence_status: unreviewed_mapping`, dengan legenda **biru putus-putus: relevan untuk ditelaah**. Bukan hasil kesesuaian terverifikasi atau persetujuan OSS.
+
+API dibatasi pada pilot, memvalidasi ID/CRS/topologi, mengarantina invalid tanpa perbaikan diam-diam, serta memberi provenance cache/waktu sumber. Tidak ada input luas/jalan, kandidat bidang atau geometri dalam ekspor konfigurasi. Kegagalan API atau perubahan kriteria membersihkan lapisan; respons lama tidak boleh diterapkan ke konteks baru.
+
+Hasil eksekusi terpisah: **11 test backend offline**, **1 test kontrak frontend** dan **18 pemeriksaan browser** lulus. Browser membuktikan polygon nyata, klik interior, detail sumber, filter/kegagalan, keyboard/seluler dan unduhan yang dibaca ulang. [Kontrak dan laporan](design/zone-overlay.md), [rekaman hasil](design/zone-overlay-verification.json), [API serta probe live](design/zone-api.md). Ini belum memenuhi Definition of Done seluruh produk pada bagian 17.
 
 ## 9. Pengalaman pengguna
 
@@ -550,8 +560,10 @@ Keberhasilan penerbitan izin tidak menjadi ukuran tunggal kualitas produk, karen
 | UAT-38 | Fitur sumber RDTR invalid atau perbaikan belum diperiksa | Tidak dipakai diam-diam untuk kandidat; asli, temuan dan status karantina dapat ditelusuri |
 | UAT-39 | Nama/kode subzona sama tetapi aturan lokal atau blok berbeda | Tidak menyamakan seluruh izin berdasarkan nama zona atau satu titik sampel; ruang lingkup bukti dan syarat per konteks tetap terlihat |
 | UAT-40 | Eksplorasi KBLI tanpa input luas | Tidak ada field/validasi/ringkasan luas atau parameter kandidat di konfigurasi eksplorasi; filter, reset dan ekspor konfigurasi tetap bekerja |
+| UAT-41 | Geometri filter kelompok kegiatan tampil, relasi exact-KBLI belum direview | Sorotan hanya relevan untuk ditelaah, tanpa warna/keputusan izin; fitur dan detail memuat ID, sumber, waktu, cakupan serta unknown. Tile peta dasar saja tidak dianggap kelulusan sorotan |
+| UAT-42 | Respons geometri rusak atau respons lama tiba setelah filter berubah | Lapisan lama dibersihkan; payload rusak tidak digambar dan respons konteks sebelumnya diabaikan. Cache sah berlabel snapshot dengan timestamp sumber asli; tidak ada polygon contoh sebagai fallback |
 
-UAT-15 dan UAT-16 adalah gerbang fase otomasi, bukan syarat MVP tanpa integrasi. UAT-17 sampai UAT-20 dan UAT-22 sampai UAT-40 mencakup eksplorasi serta modul rekomendasi rencana yang terpisah; UAT-21 berlaku jika multi-KBLI masuk rilis. Rincian berkas uji, label pembanding dan cakupan sektor/lokasi harus disepakati sebelum development.
+UAT-15 dan UAT-16 adalah gerbang fase otomasi, bukan syarat MVP tanpa integrasi. UAT-17 sampai UAT-20 dan UAT-22 sampai UAT-42 mencakup eksplorasi serta modul rekomendasi rencana yang terpisah; UAT-21 berlaku jika multi-KBLI masuk rilis. Uji teknis eksplorasi satu rencana tidak menyatakan seluruh UAT produk lulus; rincian korpus/label pembanding untuk rilis harus disepakati.
 
 ## 13. Cakupan rilis dan gerbang kelulusan
 
@@ -682,6 +694,7 @@ Penyedia AI/OCR, antrean tugas, pustaka ekspor, layanan hosting dan autentikasi 
 - v0.5: menetapkan jawaban Anton bahwa kedekatan jalan hanya preferensi, memperbarui persyaratan/status pertanyaan/uji terkait, dan menjabarkan tahap audit data–rubrik–mockup–persetujuan development. Tidak ada audit geometri/ITBX atau kandidat baru pada revisi ini.
 - v0.6: merekam izin kelanjutan, format SHP ZIP + KML, audit geometri/sampel ITBX, inventaris sumber, rubrik usulan dan mockup teruji; karantina geometri invalid dan parameter terbuka dipertahankan. Tidak ada kandidat lahan atau persetujuan resmi yang dinyatakan selesai.
 - v0.7: menindaklanjuti arahan Anton: eksplorasi hanya KBLI/wilayah; luas dan parameter kandidat dikeluarkan dari tampilan, validasi serta konfigurasi. Kebutuhan polygon tetap pada modul terpisah; sorotan zona belum diimplementasikan.
+- v0.8: merekam implementasi dan pembuktian 20 polygon sumber Tirawuta, API lokal/validator serta 18 pemeriksaan browser; menambahkan UAT-41/42. Seluruh sorotan masih unreviewed/unknown; exact-KBLI, agronomi, kandidat/generator dan OSS tidak dinyatakan selesai.
 - Referensi resmi di bawah mendukung konteks tertentu saja, bukan pemeriksaan hukum menyeluruh atau verifikasi operasional OSS.
 - Sumber regulasi, katalog dan antarmuka perlu diperiksa ulang saat discovery dan sebelum produksi.
 - Langkah berikutnya: review mockup/parameter → validasi aturan/data lanjutan → finalisasi PRD serta desain teknis/backlog → persetujuan development mesin produksi. Tidak ada komitmen biaya atau waktu yang dianggap telah disetujui melalui draf ini.

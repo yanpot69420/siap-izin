@@ -1,31 +1,34 @@
 # Mockup interaktif — eksplorasi lokasi Siap Izin
 
-**Status terbaru:** mockup eksplorasi zona, mengikuti PRD v0.7 dan arahan Anton. Kriteria hanya KBLI/wilayah. Field, state, validasi, ringkasan dan ekspor luas dihapus; preferensi jalan serta pencarian/pembuatan polygon berada pada modul terpisah. Sorotan geometri zona masih belum diimplementasikan.
+**Status terbaru:** prototipe eksplorasi zona, mengikuti PRD v0.8 dan arahan Anton. Kriteria hanya KBLI/wilayah; luas, preferensi jalan dan pencarian/pembuatan polygon berada pada modul terpisah. **Sorotan nyata satu RDTR Tirawuta sudah terintegrasi dan diuji: 20 polygon sumber, 18 pemeriksaan browser lulus.** Seluruh sorotan masih relevan untuk ditelaah, bukan kesesuaian exact-KBLI terverifikasi. [Kontrak dan hasil integrasi](zone-overlay.md).
 
 ## Menjalankan
 
 Dari root repositori:
 
 ```sh
-python3 -m http.server 8765 --bind 127.0.0.1 --directory prototype
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements-prototype.txt
+python tools/dev_server.py --port 8765
 ```
 
-Buka `http://127.0.0.1:8765/`. Hentikan dengan Ctrl+C. Tidak ada instalasi paket, backend, AI, login, atau kredensial. Gunakan HTTP lokal agar ringkasan JSON dapat dibaca; membuka `file://` bukan jalur uji utama.
+Buka `http://127.0.0.1:8765/prototype/`. Python 3.11+ dan dependency geometri diperlukan. Hentikan dengan Ctrl+C. Backend lokal hanya bind loopback, tanpa login/kredensial atau AI. Server statis dan `file://` tidak menyediakan API geometri; [rincian API](zone-api.md).
 
 ## Komposisi dan alur
 
 Permukaan utama **Explore**: kriteria di kiri, peta dan tab hasil di tengah, batas penilaian di kanan. Warna hijau hutan digunakan untuk tindakan, bukan status kesesuaian bidang. Tipografi Avenir Next/Avenir/Segoe UI memakai font sistem, tanpa layanan font eksternal. Pada layar kecil, kolom ditumpuk.
 
 1. Pilih KBLI `01273` dan satu atau beberapa dari empat kabupaten; tidak ada input luas/preferensi jalan.
-2. Tekan **Terapkan kriteria**. Draf tidak otomatis menjadi konfigurasi ekspor. Tombol tidak menjalankan evaluasi GIS.
-3. Filter wilayah membatasi **inventaris sumber metadata**, bukan batas wilayah atau cakupan pada peta. Peta dasar tetap regional; tidak ada geometri administratif/RDTR untuk fit-bounds yang diklaim telah diaudit.
-4. **Muat peta publik** meminta dependensi dan tile eksternal setelah pemberitahuan pengguna. Peta bisa dilihat tanpa memalsukan overlay hasil.
-5. Tab **Zona** menyatakan **Zona belum dievaluasi / Sorotan zona belum tersedia**. Tab **Bukti RDTR** memuat delapan nama rencana aktual dari discovery, dapat difilter dan dibuka ke panel bukti.
+2. Tekan **Terapkan kriteria**. Draf tidak otomatis menjadi konfigurasi ekspor. Setelah peta diaktifkan, kriteria memuat ulang irisan sumber pilot; bukan penilaian izin/seluruh bidang.
+3. Filter wilayah membatasi inventaris metadata dan menentukan apakah pilot Tirawuta aktif. Sorotan hanya tersedia jika Kolaka Timur dipilih; tidak membuat batas administratif atau menafsirkan wilayah tanpa data sebagai dilarang.
+4. **Muat peta publik** meminta dependensi/tile eksternal dan memicu API lokal untuk sumber geometri resmi. Peta melakukan fit-bounds ke polygon sumber yang valid, bukan batas kabupaten rekaan. API gagal tidak diganti overlay contoh.
+5. Tab **Zona** memuat daftar polygon relevan untuk ditelaah; klik peta/daftar membuka ID, dasar filter, atribut peraturan, provenance dan ketidakpastian. Biru putus-putus bukan izin. Tab **Bukti RDTR** tetap memuat delapan nama rencana aktual dari discovery; tujuh rencana lain masih metadata saja.
 6. Bukti tiap rencana menampilkan identitas sumber, calon relasi kegiatan lokal yang **belum direview**, unknown, tautan katalog dan daftar kegiatan. Wolo memiliki peringatan eksplisit bahwa kemunculan katalog bukan bukti integrasi/siap pengajuan.
 7. Panel hanya membahas **kegiatan/zona** dan bukti. Agronomi serta preferensi jalan tidak menjadi kriteria eksplorasi; kebutuhan tersebut tetap berada pada modul kandidat yang terpisah.
 8. Ekspor hanya **JSON konfigurasi eksplorasi**, `schemaVersion: 2`, `artifactType: zone-exploration-configuration`, `module: zone-exploration`, `containsGeometry: false`. Tidak memuat `targetAreaM2`, `areaTolerance`, `road` atau jumlah kandidat. Kontrol ekspor GIS tidak ditampilkan dalam eksplorasi.
 
-Tidak ada pencocokan KBLI berdasarkan kesamaan istilah atau nama zona. Tidak ada koordinat kandidat, polygon, skor numerik kecocokan, kelas agronomi S1/S2/S3 atau probabilitas izin. Koordinat pada kode Leaflet hanya menentukan pusat viewport regional; bukan titik rencana atau sumber hasil.
+Tidak ada pencocokan izin berdasarkan kesamaan istilah atau nama zona. Ada polygon **sumber RDTR untuk tampilan**, tetapi tidak ada koordinat kandidat/bidang proyek, skor kecocokan, kelas agronomi S1/S2/S3 atau probabilitas izin. Kelompok kegiatan lokal `041` belum merupakan relasi exact-KBLI yang ditinjau. Geometri tampilan tidak menjadi berkas rencana atau bukti hak.
 
 ## Dependensi publik, atribusi dan jaringan
 
@@ -34,7 +37,7 @@ Seluruh aset aplikasi lokal kecuali peta yang dimuat secara opt-in:
 - Leaflet **1.9.4** CSS dan JS: `https://unpkg.com/leaflet@1.9.4/dist/` dengan SRI dan `crossOrigin` sesuai panduan resmi.
 - Tile: `https://tile.openstreetmap.org/{z}/{x}/{y}.png`, hanya area tampilan aktif. Tidak ada prefetch massal, unduhan offline, proxy atau pengarsipan tile.
 - Atribusi **© OpenStreetMap contributors** selalu tampak di peta; tautan lisensi disertakan. Referrer policy `strict-origin-when-cross-origin` tidak meniadakan Referer. Cache browser normal tidak dibypass oleh aplikasi.
-- Pemberitahuan UI menjelaskan IP, referer dan area tampilan dapat diketahui penyedia. Nilai formulir tidak dikirim ke penyedia peta. Tautan sumber GISTARU/OSS tidak dipanggil otomatis oleh aplikasi.
+- Pemberitahuan UI menjelaskan IP, referer dan area tampilan dapat diketahui penyedia peta. Nilai formulir tidak dikirim ke penyedia tile. Backend memanggil endpoint publik GISTARU tetap untuk pilot setelah peta dimuat; tidak memakai sesi akun pengguna. Tautan OSS bukan pengajuan atau integrasi akun.
 - Jika CDN, tile, atau waktu tunggu gagal: tampil pesan kegagalan; tidak ada peta hasil pengganti. Formulir, bukti lokal dan ekspor konfigurasi tetap berfungsi. Gagal CDN memiliki tombol coba ulang; kegagalan tile dapat dipulihkan dengan memuat ulang halaman setelah jaringan pulih.
 
 Panduan resmi dibaca melalui browser pada 25 Oktober 2026:
@@ -78,6 +81,8 @@ Loader gagal aman untuk berkas tidak tersedia, JSON rusak, versi berbeda, ID tid
 ## Verifikasi baseline v0.6 — historis
 
 Bagian hasil awal dan integrasi di bawah mendokumentasikan baseline sebelum pemisahan modul. Kasus input/validasi luas, preferensi jalan dan ekspor GIS yang disebut di sana **tidak lagi menjadi perilaku modul eksplorasi v0.7**. [Rekaman regresi terbaru](exploration-verification.json) membuktikan perubahan dari RED ke GREEN, dengan 12 assertion browser lulus: field/ringkasan luas dihapus, kriteria hanya KBLI/wilayah, konfigurasi v2 tanpa parameter kandidat, penerapan tanpa luas, penolakan KBLI/wilayah kosong, filter, reset, pratinjau JSON serta tidak ada exception JavaScript tertangkap. Pengujian ini tidak membuktikan sorotan zona berfungsi.
+
+Pembuktian sorotan v0.8 berbeda dari angka historis di bawah: [18 pemeriksaan browser](zone-overlay-verification.json) memeriksa lapisan nyata, klik interior sumber, perubahan filter, respons rusak/terlambat, unduhan, keyboard/seluler dan pemulihan CDN. Jangan menjumlahkan sesi berbeda sebagai kasus unik atau menganggap rendering membuktikan penerimaan OSS.
 
 Tanggal sesi: **25 Oktober 2026**, waktu lokal WITA. Browser Chromium melalui browser harness/CDP, tanpa membaca auth/session atau cookie. Resolusi desktop **1512×1100**, seluler **390×844**.
 
@@ -139,7 +144,9 @@ Audit visual: komposisi Explore tanpa hero pemasaran, angka metrik rekaan, gradi
 
 ## Berkas dan batas pekerjaan
 
-- `prototype/index.html`, `prototype/styles.css`, `prototype/app.js`: mockup tanpa framework.
+- `prototype/index.html`, `prototype/styles.css`, `prototype/zones.css`, `prototype/app.js`, `prototype/zone-data.js`: antarmuka/validator tanpa framework.
+- `tools/dev_server.py`, `requirements-prototype.txt`: backend lokal dan dependency geometri; cache privat tidak disajikan.
+- `tests/test_zone_server.py`, `tests/zone-data.test.cjs`: tes offline backend dan kontrak browser, bukan data peta contoh.
 - `prototype/audit-summary.json`: delapan ringkasan audit turunan, bukan data geometri atau hasil lokasi.
 - `prototype/test-output/`: bukti uji aktual dan unduhan konfigurasi lokal, diabaikan Git.
 - `docs/design/mockup.md`: dokumentasi ini.
