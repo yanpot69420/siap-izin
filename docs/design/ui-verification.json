@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-25",
+  "browser": "Chromium via browser harness/CDP",
+  "scope": "Mockup statis; bukan evaluasi GIS, agronomi, atau OSS",
+  "runs": [
+    {
+      "name": "awal-mockup",
+      "assertionCount": 22,
+      "passedCount": 22,
+      "tests": [
+        {
+          "test": "Keadaan awal: 8 sumber dan GIS nonaktif",
+          "passed": true
+        },
+        {
+          "test": "Filter Kolaka: hanya dua metadata, bukan kandidat",
+          "passed": true
+        },
+        {
+          "test": "Panel bukti Wolo menampilkan batas klaim dan tautan sumber",
+          "passed": true
+        },
+        {
+          "test": "Tanpa kabupaten: ditolak tanpa auto-select",
+          "passed": true
+        },
+        {
+          "test": "KBLI kosong: ditolak",
+          "passed": true
+        },
+        {
+          "test": "Luas nol: validasi HTML browser menolak",
+          "passed": true
+        },
+        {
+          "test": "Konfigurasi terapan memuat luas/jalan dan nol kandidat",
+          "passed": true
+        },
+        {
+          "test": "Unduhan JSON benar-benar ditulis dan dibaca ulang",
+          "passed": true
+        },
+        {
+          "test": "Ekspor GIS tetap nonaktif dengan alasan",
+          "passed": true
+        },
+        {
+          "test": "Tidak ada galat JavaScript",
+          "passed": true
+        },
+        {
+          "test": "Seluler 390 px: tanpa overflow horizontal",
+          "passed": true
+        },
+        {
+          "test": "Navigasi tab dengan keyboard",
+          "passed": true
+        },
+        {
+          "test": "Dialog ditutup dengan Escape",
+          "passed": true
+        },
+        {
+          "test": "CDN gagal: pesan jujur, tombol coba lagi, nol kandidat",
+          "passed": true
+        },
+        {
+          "test": "Tile gagal: tidak berpura-pura peta berhasil",
+          "passed": true
+        },
+        {
+          "test": "Tidak ada galat JavaScript setelah pengujian kegagalan jaringan",
+          "passed": true
+        },
+        {
+          "test": "Filter wilayah 7411000000 tepat dua metadata",
+          "passed": true
+        },
+        {
+          "test": "Filter wilayah 7401000000 tepat dua metadata",
+          "passed": true
+        },
+        {
+          "test": "Filter wilayah 7402000000 tepat dua metadata",
+          "passed": true
+        },
+        {
+          "test": "Filter wilayah 7405000000 tepat dua metadata",
+          "passed": true
+        },
+        {
+          "test": "Atur ulang kembali ke 5000 m² dan empat kabupaten",
+          "passed": true
+        },
+        {
+          "test": "Peta publik nyata dan atribusi berhasil dimuat",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "integrasi-ringkasan-audit",
+      "assertionCount": 20,
+      "passedCount": 20,
+      "tests": [
+        {
+          "test": "Integrasi delapan ringkasan; nol kandidat dan GIS nonaktif",
+          "passed": true
+        },
+        {
+          "test": "Filter inventaris 7411000000",
+          "passed": true
+        },
+        {
+          "test": "Filter inventaris 7401000000",
+          "passed": true
+        },
+        {
+          "test": "Filter inventaris 7402000000",
+          "passed": true
+        },
+        {
+          "test": "Filter inventaris 7405000000",
+          "passed": true
+        },
+        {
+          "test": "Dialog Wolo memuat audit faktual dan batas klaim",
+          "passed": true
+        },
+        {
+          "test": "Semua wilayah kosong ditolak tanpa menimpa filter terapan",
+          "passed": true
+        },
+        {
+          "test": "Luas nol tidak mengganti konfigurasi",
+          "passed": true
+        },
+        {
+          "test": "JSON terapan mempertahankan KBLI string, scope terbuka dan tanpa geometri",
+          "passed": true
+        },
+        {
+          "test": "Alasan ekspor menyebut format terkonfirmasi tanpa menjanjikan GIS",
+          "passed": true
+        },
+        {
+          "test": "Tidak ada galat JavaScript",
+          "passed": true
+        },
+        {
+          "test": "Versi ringkasan salah gagal aman",
+          "passed": true
+        },
+        {
+          "test": "ID ringkasan tidak dikenal gagal aman",
+          "passed": true
+        },
+        {
+          "test": "ID ringkasan duplikat gagal aman",
+          "passed": true
+        },
+        {
+          "test": "Pemulihan membaca kembali delapan ringkasan nyata",
+          "passed": true
+        },
+        {
+          "test": "Tab keyboard beralih ke ekspor",
+          "passed": true
+        },
+        {
+          "test": "Seluler 390px tanpa overflow horizontal",
+          "passed": true
+        },
+        {
+          "test": "Desktop tanpa overflow horizontal dan tanpa galat JS",
+          "passed": true
+        },
+        {
+          "test": "Peta nyata setelah integrasi dan atribusi terlihat",
+          "passed": true
+        },
+        {
+          "test": "Unduhan JSON integrasi dibaca ulang: 5000m2, kode utuh, nol kandidat, tanpa geometri",
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "totalAssertions": 42,
+  "note": "Sebagian skenario diulang antarsesi; total bukan jumlah kasus unik atau UAT mesin produksi. Bukti gambar dan unduhan uji tetap lokal."
+}

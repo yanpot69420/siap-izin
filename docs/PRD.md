@@ -1,6 +1,6 @@
 # PRD — Aplikasi Induk Asisten Perizinan Berusaha
 
-**Versi:** 0.5 — pilot 01273/5000m2; jalan sebagai preferensi, bukan syarat gugur; belum menjadi persetujuan development
+**Versi:** 0.6 — audit teknis terbatas dan format keluaran dikonfirmasi; rubrik/parameter penting masih terbuka
 
 **Pemilik kebutuhan:** Anton
 
@@ -49,6 +49,8 @@ Belum tersedia baseline waktu kerja, frekuensi kesalahan, volume berkas, dan bia
 | D-06 | Contoh awal: pertanian, luas 5000 m2, tanah kosong/perhutanan dan dekat jalan | Historis; kode/wilayah/luas pilot diperjelas D-07, jalan diputuskan D-08; arti tutupan dan toleransi masih terbuka |
 | D-07 | Pilot: KBLI 01273; Kolaka Timur, Kolaka, Konawe, Konawe Selatan; target 5000m2; cocok untuk kakao; kandidat di peta dan berkas polygon | Dipilih Anton; parameter detail dan gerbang data masih terbuka |
 | D-08 | Kedekatan jalan hanya preferensi pemeringkatan pada pilot; tidak ada batas maksimum jarak sebagai syarat gugur | Ditetapkan Anton; metode, kelas jalan dan bobot masih perlu ditinjau |
+| D-09 | Tahapan proyek boleh dilanjutkan; pertanyaan penting dikonfirmasi kepada Anton | Disampaikan setelah commit awal; audit/rancangan/mockup dapat dilanjutkan, bukan izin pengajuan OSS atau layanan berbayar |
+| D-10 | Format keluaran SHP ZIP disertai KML | Dikonfirmasi melalui formulir; atribut dan penerimaan target belum diuji |
 | A-01 | Penggunaan awal untuk Anton dan tim internal, bukan SaaS publik | Asumsi |
 | A-02 | Ada pemeriksaan manusia sebelum data final dan pengajuan | Usulan pengamanan |
 | A-03 | MVP berakhir pada paket siap input dan pencatatan hasil input manual | Usulan batas MVP |
@@ -200,6 +202,7 @@ Sistem mempertahankan hasil lama sebagai riwayat dan menandai hasil turunannya `
 | F-34 | P0 usulan | Persetujuan kriteria tambahan | Saran sistem seperti kemiringan/risiko banjir ditampilkan untuk disetujui; tidak diam-diam menjadi syarat wajib atau mengubah luas/KBLI |
 | F-35 | P0 usulan | Evaluasi kakao dua dimensi | Pilot 01273 menampilkan status kegiatan/zona terpisah dari indikasi agronomi; tidak menyimpulkan cocok tumbuh dari zona saja |
 | F-36 | P0 usulan | Skala bukti dan kelengkapan pilot | Hasil mencatat resolusi/cakupan dataset dan batas analisis 5000m2; keempat kabupaten diperiksa, tetapi hasil kosong/unknown diperbolehkan jika bukti tidak memadai |
+| F-37 | P0 usulan | Karantina mutu geometri sumber | Fitur sumber invalid tidak masuk pembentukan kandidat secara diam-diam; asli dipertahankan, alasan tercatat, setiap perbaikan turunan perlu pemeriksaan luas/topologi |
 
 ### 8.1 Ketentuan dokumen dan AI
 
@@ -375,7 +378,7 @@ Keluaran per kandidat: ID, koordinat/polygon, administrasi jika diketahui, luas 
 | Luas target | **5000m2** per polygon kandidat sebagai interpretasi awal | Nilai dipilih Anton; toleransi belum disepakati; bukan total dibagi empat wilayah |
 | Kriteria utama | Kesesuaian kegiatan/zona dan indikasi lahan cocok untuk kakao | Ditegaskan Anton; rubrik/ambang agronomi dan dataset belum dibekukan |
 | Kedekatan jalan | Preferensi saja, bukan syarat gugur | Diputuskan Anton; tidak ada ambang maksimum; metode, kelas jalan dan bobot masih terbuka |
-| Keluaran | Kandidat di peta dan berkas polygon | Dipilih Anton; SHP ZIP dan KML adalah usulan format, bukan keputusan pengguna |
+| Keluaran | Kandidat di peta dan berkas polygon SHP ZIP + KML | Tujuan serta format dikonfirmasi Anton; skema, toleransi dan uji target masih terbuka |
 
 Katalog OSS yang dibaca menyebut dua ruang lingkup pada 01273: produksi benih dan kegiatan budidaya kakao. Dokumen ini tidak menganggap pemilihan kode otomatis menentukan semua rincian ruang lingkup proyek.[10]
 
@@ -413,13 +416,13 @@ Nilai status numerik pada katalog disimpan apa adanya. Wolo tidak dianggap sudah
 2. Inventarisasi sumber jalan, tutupan, medan, tanah dan iklim; catat tanggal, resolusi, hak penggunaan dan kelayakan analisis pada bidang 5000m2. Jangan menyajikan detail tingkat bidang jika sumber hanya mendukung penyaringan regional.
 3. Sepakati toleransi luas, jumlah kandidat, metode/bobot preferensi jalan, perlakuan bersyarat/unknown dan rubrik agronomi. Tidak meminta ulang ambang maksimum jalan karena pengguna menetapkannya sebagai preferensi saja.
 4. Susun matriks cakupan dan data hilang untuk empat kabupaten tanpa memaksakan kandidat di setiap wilayah.
-5. Setelah gerbang data/rubrik disetujui, rancang layar pencarian, perbandingan kandidat dan ekspor; pengujian kandidat nyata dan pembangunan aplikasi memerlukan pekerjaan tersendiri.
+5. Rancang mockup layar pencarian, bukti dan ekspor dengan batas data yang jujur; pekerjaan ini dapat berjalan paralel dengan audit. Pengujian kandidat nyata, generator GIS dan pembangunan mesin produksi memerlukan gerbang data/rubrik serta persetujuan tersendiri.
 
-Belum dilakukan: unduh/overlay seluruh polygon RDTR, pengujian ITBX per bidang, pemeriksaan kesesuaian tumbuh pada koordinat tertentu, pemilihan kandidat lokasi, pembuatan polygon atau pengujian unggah OSS. Ketersediaan metadata tidak sama dengan kelayakan rekomendasi produksi.
+Status sebelum audit geometri lanjutan: baru metadata dan daftar kegiatan. Hasil terbaru ada pada bagian 8.9. Pemeriksaan ITBX seluruh bidang proyek, kesesuaian tumbuh per lokasi, kandidat 5000m2 dan uji unggah OSS tetap belum dilakukan; audit sumber tidak sama dengan kelayakan rekomendasi produksi.
 
 ### 8.8 Tahap kerja terdekat — menutup risiko data dan aturan, bukan menambah konsep
 
-Keputusan jalan sudah cukup untuk melanjutkan perencanaan. Tidak ada permintaan ulang ambang maksimum. Pekerjaan di bawah belum dilaksanakan pada revisi v0.5 dan bukan klaim bahwa data sudah siap.
+Keputusan jalan sudah cukup untuk melanjutkan perencanaan. Tidak ada permintaan ulang ambang maksimum. Tabel ini merupakan urutan kerja yang dirumuskan pada v0.5; perkembangan audit terbaru dicatat pada bagian 8.9, bukan menganggap seluruh gerbang telah lulus.
 
 | Urutan | Pekerjaan | Keluaran yang harus dapat diperiksa | Gerbang sebelum lanjut |
 |---|---|---|---|
@@ -430,6 +433,22 @@ Keputusan jalan sudah cukup untuk melanjutkan perencanaan. Tidak ada permintaan 
 | 5 | Finalisasi PRD dan desain teknis/backlog | Scope rilis, pengecualian, pengamanan, matriks uji, dependensi, rencana pengembangan dan estimasi berbasis lingkup | Persetujuan development eksplisit; tidak menganggap revisi PRD sebagai perintah membangun |
 
 Audit sumber dan penyusunan rubrik dapat berjalan berdampingan. Mockup tidak harus menunggu semua wilayah lengkap, tetapi tidak boleh berisi lokasi yang disajikan sebagai kandidat terverifikasi tanpa pemeriksaan. Penetapan kandidat nyata dan ekspor GIS merupakan langkah uji/pelaksanaan berikutnya setelah data dan kriteria yang diperlukan cukup, bukan sesuatu yang dianggap sudah terjadi pada tahap perencanaan ini.
+
+### 8.9 Perkembangan audit dan batas keputusan terbaru
+
+Audit baca-saja terhadap delapan layer menghasilkan 15859 fitur yang seluruh object ID-nya direkonsiliasi dengan server. Pengujian lokal menemukan 15848 geometri valid dan 11 invalid. Pada 35 sampel interior untuk kelompok kegiatan lokal, wilayah/rencana/subzona respons cocok; kategori berbeda terdiri dari 12 diizinkan, 20 terbatas dan 3 terbatas serta bersyarat. Rincian sumber, metode dan batas bukti tersedia di [laporan audit](discovery/rdtr-geometry-audit.md).
+
+Angka tersebut bukan jumlah calon lahan, bukan seluruh wilayah kabupaten, dan bukan penerimaan exact-KBLI01273. Pemetaan kelompok lokal ke budidaya kakao masih perlu review, ketentuan berbasis luas blok/dokumen sumber belum dituntaskan, dan kesesuaian agronomi belum dinilai. Geometri invalid tidak diperbaiki/diterima diam-diam untuk pembentukan kandidat.
+
+Pengguna mengonfirmasi SHP ZIP dan KML pada formulir, tetapi melewati pertanyaan ruang lingkup budidaya, usulan polygon utuh/toleransi ±1m2, serta kebijakan menampilkan kandidat dengan agronomi belum lengkap. Ketiganya tetap terbuka, bukan persetujuan implisit; pekerjaan audit sumber dan rancangan layar yang tidak bergantung pada jawabannya tetap dapat berjalan.
+
+Izin melanjutkan proyek memungkinkan tahap audit, rubrik dan mockup dikerjakan. Dokumen ini tidak menganggap seluruh usulan MVP, parameter penilaian, penggunaan data klien, layanan berbayar atau pengiriman OSS sudah disetujui.
+
+### 8.10 Bahan review sumber, rubrik dan mockup
+
+[Inventaris sumber](discovery/data-sources.md) dan [rubrik usulan](design/scoring-rubric.md) sudah tersedia untuk review. Uji akses sampel tidak disamakan dengan cakupan lengkap empat kabupaten; raster regional bukan bukti kondisi mikro bidang 5000m2. Ambang dalam rancangan tetap nonaktif sampai disetujui reviewer/pengguna yang berwenang. PDF referensi Kementan telah diperoleh, tetapi pembacaan OCR bagian agronomi belum selesai.
+
+[Mockup interaktif](design/mockup.md) dapat dijalankan lokal, memuat filter pilot, peta dasar opt-in, inventaris/ringkasan audit, panel batas bukti dan ekspor konfigurasi. Ini bukan mesin analisis: nol kandidat dievaluasi, tidak ada polygon rekaan, ekspor GIS nonaktif. Format tujuan SHP ZIP + KML tetap tercatat sebagai keputusan pengguna. Uji UI tidak menggantikan UAT produk GIS, validasi agronomi, uji OSS atau persetujuan alur oleh Anton.
 
 ## 9. Pengalaman pengguna
 
@@ -527,8 +546,10 @@ Keberhasilan penerbitan izin tidak menjadi ukuran tunggal kualitas produk, karen
 | UAT-35 | Data tanah/iklim hanya cocok untuk penyaringan regional | Resolusi dan keterbatasan ditampilkan; tidak menciptakan detail bidang atau kelas kesesuaian palsu |
 | UAT-36 | Satu kabupaten tidak memiliki kandidat terverifikasi | Wilayah tetap tercatat dalam hasil dengan sebab; tidak mengarang kandidat demi memenuhi kuota |
 | UAT-37 | Kandidat memenuhi kriteria wajib tetapi jauh dari jalan, atau data jalan tidak tersedia | Jarak jauh tidak menyebabkan gugur; nilai preferensi/mutu bukti terlihat. Data hilang tidak dianggap jarak nol atau akses baik, dan tidak ada ambang tersembunyi |
+| UAT-38 | Fitur sumber RDTR invalid atau perbaikan belum diperiksa | Tidak dipakai diam-diam untuk kandidat; asli, temuan dan status karantina dapat ditelusuri |
+| UAT-39 | Nama/kode subzona sama tetapi aturan lokal atau blok berbeda | Tidak menyamakan seluruh izin berdasarkan nama zona atau satu titik sampel; ruang lingkup bukti dan syarat per konteks tetap terlihat |
 
-UAT-15 dan UAT-16 adalah gerbang fase otomasi, bukan syarat MVP tanpa integrasi. UAT-17 sampai UAT-20 dan UAT-22 sampai UAT-37 adalah usulan syarat pilot peta serta rekomendasi rencana; UAT-21 berlaku jika multi-KBLI masuk rilis. Rincian berkas uji, label pembanding dan cakupan sektor/lokasi harus disepakati sebelum development.
+UAT-15 dan UAT-16 adalah gerbang fase otomasi, bukan syarat MVP tanpa integrasi. UAT-17 sampai UAT-20 dan UAT-22 sampai UAT-39 adalah usulan syarat pilot peta serta rekomendasi rencana; UAT-21 berlaku jika multi-KBLI masuk rilis. Rincian berkas uji, label pembanding dan cakupan sektor/lokasi harus disepakati sebelum development.
 
 ## 13. Cakupan rilis dan gerbang kelulusan
 
@@ -549,7 +570,7 @@ Keluaran:
 
 ### Fase 1 — MVP paket siap input
 
-Keluaran usulan: F-01 sampai F-16 serta F-20 sampai F-24 dan F-26 sampai F-36 dalam cakupan pilot, termasuk pembentukan kandidat polygon rencana. Kebutuhan ini dicatat sebagai cakupan yang diminta; prioritas dan besar rilis tetap perlu disepakati. Peta memiliki area tampilan Sulawesi Tenggara dengan cakupan dataset yang ditandai jujur; prioritas ini masih memerlukan persetujuan Anton. Pemeriksaan manual dapat melengkapi kasus tertentu, tetapi tidak boleh menggantikan dataset filter otomatis lalu mengklaim cakupannya lengkap. Penginputan OSS tetap dilakukan operator dan hasilnya dicatat.
+Keluaran usulan: F-01 sampai F-16 serta F-20 sampai F-24 dan F-26 sampai F-37 dalam cakupan pilot, termasuk pembentukan kandidat polygon rencana. Kebutuhan ini dicatat sebagai cakupan yang diminta; prioritas dan besar rilis tetap perlu disepakati. Peta memiliki area tampilan Sulawesi Tenggara dengan cakupan dataset yang ditandai jujur; prioritas ini masih memerlukan persetujuan Anton. Pemeriksaan manual dapat melengkapi kasus tertentu, tetapi tidak boleh menggantikan dataset filter otomatis lalu mengklaim cakupannya lengkap. Penginputan OSS tetap dilakukan operator dan hasilnya dicatat.
 
 **Gerbang:** seluruh UAT P0 yang berlaku lulus pada data uji yang disepakati; hak akses, backup/pemulihan, ekspor dan audit teruji; temuan kritis terselesaikan.
 
@@ -611,16 +632,16 @@ Penyedia AI/OCR, antrean tugas, pustaka ekspor, layanan hosting dan autentikasi 
 | Q-09 | Anggaran awal, batas biaya rutin, dan tenggat bisnis? | Anton | Prioritas dan rencana pelaksanaan |
 | Q-10 | Hasil resmi apa yang menjadi definisi selesai untuk tiap jenis kasus? | Anton + reviewer substansi | Status proyek dan penerimaan |
 | Q-11 | Siapa berwenang memvalidasi aturan dan pembaruannya? | Anton | Tata kelola katalog |
-| Q-12 | Apa kanal notifikasi dan kebutuhan ekspor/arsip? | Anton | UX dan integrasi |
+| Q-12 | Format ekspor terjawab: SHP ZIP dan KML. Tersisa kanal notifikasi, skema atribut dan kebijakan arsip | Anton | UX, ekspor dan integrasi |
 | Q-13 | Apakah peta/filter menjadi prioritas wajib MVP, dan apakah satu KBLI dahulu cukup? | Anton | Scope, UX dan agregasi |
 | Q-14 | Siapa meninjau relasi KBLI–kegiatan–ketentuan dan seberapa sering diperbarui? | Anton + reviewer | Kepercayaan hasil dan beban operasi |
 | Q-15 | Apakah ada data resmi Sulawesi Tenggara yang sudah dimiliki dan boleh dipakai/disajikan ulang? | Anton + penanggung jawab data | Sumber, lisensi dan keluasan rilis |
-| Q-16 | Luas harus tepat dalam toleransi berapa, boleh multipart, dan berapa kandidat yang ingin dibandingkan? | Anton + reviewer GIS | Generator geometri dan penerimaan |
+| Q-16 | Toleransi luas, polygon utuh/multipart dan jumlah kandidat belum diputuskan; usulan ±1m2/polygon utuh dilewati pada formulir, bukan disetujui | Anton + reviewer GIS | Generator geometri dan penerimaan |
 | Q-17 | Maksud perhutanan: tutupan berpohon/kebun atau status kawasan tertentu? Tutupan menjadi wajib atau preferensi? | Anton + reviewer | Definisi kriteria dan kebutuhan layer |
 | Q-18 | Terjawab: jalan hanya preferensi, tanpa batas maksimum sebagai syarat gugur. Tersisa pemilihan metode, kelas jalan dan bobot yang dapat diusulkan setelah audit sumber | Anton + reviewer GIS | Pemeringkatan dan bukti, bukan penyaringan wajib |
 | Q-19 | Kriteria tambahan apa yang disetujui: bentuk, kemiringan, banjir, air dan batas pengecualian? | Anton + reviewer | Scope data dan bobot |
-| Q-20 | Bagaimana memperlakukan kandidat bersyarat atau data kriteria wajib yang belum tersedia? | Anton + reviewer | Status kecocokan dan batas penggunaan |
-| Q-21 | Konfirmasi ruang lingkup budidaya, rubrik/ambang cocok kakao dan siapa yang meninjau dasar agronomi? | Anton + reviewer agronomi | Model kecocokan dan batas klaim |
+| Q-20 | Kebijakan kandidat bersyarat/agronomi belum lengkap belum diputuskan; pertanyaan dilewati, bukan persetujuan menampilkan kandidat indikatif | Anton + reviewer | Status kecocokan dan batas penggunaan |
+| Q-21 | Konfirmasi budidaya atau produksi benih dilewati; budidaya tetap asumsi kerja. Rubrik/ambang serta reviewer agronomi belum final | Anton + reviewer agronomi | Model kecocokan dan batas klaim |
 
 ## 17. Definition of Ready dan Definition of Done
 
@@ -657,9 +678,10 @@ Penyedia AI/OCR, antrean tugas, pustaka ekspor, layanan hosting dan autentikasi 
 - v0.3: mengoreksi tujuan sesuai Anton: rekomendasi lokasi dan polygon rencana berbasis kriteria merupakan kebutuhan inti; ketersediaan/realisasi bukan prasyarat rekomendasi. Menambahkan luas, jalan, tutupan, kriteria wajib/preferensi, kandidat berperingkat, ketidakpastian dan pemisahan gerbang pengajuan. Belum ada lokasi nyata/polygon yang dibuat atau dievaluasi. Q-16 sampai Q-20 menambahkan parameter terbuka.
 - v0.4: merekam pilot pilihan Anton dan hasil pembacaan awal katalog OSS serta metadata/kegiatan RDTR keempat kabupaten. Belum ada kandidat atau polygon dibuat, belum ada klaim kesesuaian per bidang. Parameter rubrik agronomi/teknis masih perlu disepakati.
 - v0.5: menetapkan jawaban Anton bahwa kedekatan jalan hanya preferensi, memperbarui persyaratan/status pertanyaan/uji terkait, dan menjabarkan tahap audit data–rubrik–mockup–persetujuan development. Tidak ada audit geometri/ITBX atau kandidat baru pada revisi ini.
+- v0.6: merekam izin kelanjutan, format SHP ZIP + KML, audit geometri/sampel ITBX, inventaris sumber, rubrik usulan dan mockup teruji; karantina geometri invalid dan parameter terbuka dipertahankan. Tidak ada kandidat lahan atau persetujuan resmi yang dinyatakan selesai.
 - Referensi resmi di bawah mendukung konteks tertentu saja, bukan pemeriksaan hukum menyeluruh atau verifikasi operasional OSS.
 - Sumber regulasi, katalog dan antarmuka perlu diperiksa ulang saat discovery dan sebelum produksi.
-- Langkah berikutnya: keputusan cakupan → revisi PRD → mockup → desain teknis/backlog → development. Tidak ada komitmen biaya atau waktu yang dianggap telah disetujui melalui draf ini.
+- Langkah berikutnya: review mockup/parameter → validasi aturan/data lanjutan → finalisasi PRD serta desain teknis/backlog → persetujuan development mesin produksi. Tidak ada komitmen biaya atau waktu yang dianggap telah disetujui melalui draf ini.
 
 ## Sources
 

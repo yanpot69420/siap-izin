@@ -79,3 +79,6 @@ node_modules/
 out/
 dist/
 coverage/
+
+# Bukti UI/unduhan uji lokal; laporan ringkas disertakan dalam dokumentasi
+prototype/test-output/

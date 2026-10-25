@@ -1,6 +1,6 @@
 # Roadmap perencanaan dan gerbang pelaksanaan
 
-**Status:** rencana kerja, bukan komitmen jadwal/biaya atau persetujuan development. Repositori saat ini hanya berisi dokumentasi.
+**Status:** pengguna mengizinkan tahapan proyek dilanjutkan. Audit teknis terbatas selesai; rancangan dan review berikutnya berjalan tanpa menganggap seluruh parameter telah disetujui. Belum ada komitmen jadwal/biaya atau izin pengajuan OSS.
 
 ## Ringkasan posisi
 
@@ -8,9 +8,11 @@
 |---|---|---|
 | Parameter utama pilot | Ditetapkan | Lihat [keputusan](decisions.md); sebagian detail tetap terbuka |
 | Katalog KBLI, metadata RDTR dan daftar kegiatan | Pembacaan awal tercatat | [Discovery](discovery/pilot-kakao.md); bukan pengujian seluruh geometri/ketentuan |
-| Audit geometri, aturan dan data agronomi | Belum selesai | Belum boleh mengklaim kandidat terverifikasi |
-| Rubrik dan kontrak keluaran | Belum disepakati | Ambang, toleransi, jumlah kandidat dan format perlu ditetapkan |
-| Mockup | Belum dibuat/disetujui | Tidak ada aplikasi atau hasil lokasi nyata |
+| Audit geometri dan sampel ITBX | Selesai terbatas pada delapan layer dan 35 titik | [Laporan audit](discovery/rdtr-geometry-audit.md); bukan pengujian seluruh bidang/exact-KBLI |
+| Pembacaan aturan lengkap dan data agronomi | Belum selesai | Belum boleh mengklaim kandidat terverifikasi |
+| Inventaris sumber agronomi/jalan dan uji akses | Selesai terbatas; analisis cakupan penuh belum | [Matriks sumber](discovery/data-sources.md); sampel/akses parsial bukan kesesuaian bidang |
+| Rubrik dan kontrak keluaran | Draf tersedia, belum disepakati | [Rubrik usulan](design/scoring-rubric.md); format SHP ZIP + KML sudah dipilih, skema/ambang/toleransi masih terbuka |
+| Mockup | Dibuat dan diuji; review pengguna belum | [Alur dan uji](design/mockup.md); tanpa kandidat nyata atau ekspor GIS |
 | Desain teknis/backlog/estimasi | Belum difinalisasi | Stack di PRD masih usulan |
 | Development/integrasi OSS | Belum dimulai | Memerlukan persetujuan terpisah |
 
@@ -18,13 +20,14 @@
 
 Cakupan: Kolaka Timur, Kolaka, Konawe dan Konawe Selatan, kegiatan sumber `01273`, target `5000m2`.
 
-- [ ] Periksa geometri, CRS, cakupan dan metadata rencana yang ditemukan.
+- [x] Periksa geometri, CRS, rekonsiliasi ID dan metadata delapan layer yang ditemukan; tidak menyamakan cakupan layer dengan seluruh kabupaten.
 - [ ] Periksa status/keberlakuan rencana serta sumber ketentuan kegiatan.
 - [ ] Telaah pemetaan budidaya kakao ke kegiatan lokal; jangan mengganti dengan industri/perdagangan kakao.
-- [ ] Bedakan daftar filter dengan ketentuan izin/terbatas/bersyarat per zona.
-- [ ] Inventarisasi sumber medan, tanah, iklim, drainase/genangan dan tutupan.
-- [ ] Inventarisasi jaringan jalan untuk preferensi pemeringkatan, bukan syarat gugur.
-- [ ] Catat akses, hak penggunaan, sumber, tanggal, resolusi, cakupan, unknown dan alternatif.
+- [x] Buktikan melalui 35 sampel bahwa daftar filter memuat kategori berbeda; pemeriksaan setiap bidang/blok tetap belum selesai.
+- [x] Inventarisasi sumber medan, tanah, iklim, drainase/genangan dan tutupan; uji akses terbatas dicatat, bukan analisis seluruh wilayah.
+- [x] Inventarisasi sumber jaringan jalan untuk preferensi; kelengkapan jaringan pilot belum diaudit.
+- [x] Catat akses, ketentuan penggunaan yang terbaca, sumber, tanggal, resolusi, unknown dan alternatif; pemeriksaan lisensi produksi tetap terbuka.
+- [ ] Selesaikan OCR/review referensi Kementan dan analisis cakupan/NoData masing-masing kabupaten sebelum menilai bidang.
 
 **Keluaran:** matriks sumber dan cakupan per wilayah/rencana; bukti yang bisa ditelusuri; daftar keterbatasan.
 
@@ -37,8 +40,11 @@ Cakupan: Kolaka Timur, Kolaka, Konawe dan Konawe Selatan, kegiatan sumber `01273
 - [ ] Tentukan kriteria wajib, preferensi dan penanganan bukti yang hilang.
 - [ ] Tentukan toleransi luas, polygon utuh/multipart, jumlah kandidat dan metode evaluasi.
 - [ ] Tinjau metode/kelas jalan dan bobot; pertahankan jalan sebagai preferensi saja.
-- [ ] Sepakati skema ekspor serta label polygon rencana.
+- [x] Konfirmasi pilihan format SHP ZIP dan KML.
+- [ ] Sepakati skema atribut, label polygon rencana dan uji kontrak ekspor/unggah.
 - [ ] Susun kasus penerimaan positif/negatif dengan label pembanding.
+
+Draf rubrik dan skenario penerimaan sudah tersedia pada [rancangan rubrik](design/scoring-rubric.md); checkbox di atas menyatakan keputusan/validasi akhir, bukan ketiadaan draf. Aturan belum diaktifkan hanya karena angka referensi berhasil dibaca.
 
 **Gerbang:** rubrik dan contoh penilaiannya dapat diperiksa; tidak mengklaim kesesuaian tingkat bidang hanya dari data regional. Tidak ada skor peluang izin yang dibuat-buat.
 
@@ -46,9 +52,9 @@ Cakupan: Kolaka Timur, Kolaka, Konawe dan Konawe Selatan, kegiatan sumber `01273
 
 Layar yang direncanakan: peta/filter → kriteria → perbandingan kandidat → detail bukti/unknown → pilihan kandidat → ekspor rencana.
 
-- [ ] Rancang mockup berlabel ilustrasi jika belum memakai hasil nyata.
-- [ ] Tampilkan cakupan data dan status bersyarat/unknown, bukan hanya warna hijau.
-- [ ] Pisahkan pilihan rencana dari kesiapan pengajuan resmi.
+- [x] Buat mockup interaktif berlabel perencanaan tanpa kandidat/polygon rekaan.
+- [x] Tampilkan batas cakupan, bukti turunan dan unknown; tidak menggambar zona sesuai tanpa evaluasi.
+- [x] Pisahkan konfigurasi/rencana dari kesiapan pengajuan resmi; ekspor GIS nonaktif.
 - [ ] Tinjau alur bersama pemilik kebutuhan.
 
 **Gerbang:** alur disetujui tanpa menyamakan mockup dengan bukti kelayakan lokasi.

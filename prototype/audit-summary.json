@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-25",
+  "plans": [
+    {
+      "id": "7411000000:001",
+      "summary": "1875 fitur sumber diterima dan ID direkonsiliasi; 1875 geometri valid, 0 invalid. 1 sampel interior kelompok kegiatan lokal: 1 terbatas dan bersyarat. Ini audit sumber dan sampling, bukan evaluasi seluruh bidang atau persetujuan KBLI 01273.",
+      "reviewStatus": "Audit teknis terbatas; mapping exact-KBLI dan syarat per bidang belum direview.",
+      "unknowns": [
+        "Kesesuaian agronomi, ketentuan seluruh bidang/blok dan penerimaan OSS belum dinilai.",
+        "Geometri invalid tidak diperbaiki atau dipakai diam-diam untuk kandidat."
+      ]
+    },
+    {
+      "id": "7411000000:002",
+      "summary": "2136 fitur sumber diterima dan ID direkonsiliasi; 2136 geometri valid, 0 invalid. 4 sampel interior kelompok kegiatan lokal: 1 diizinkan; 3 terbatas. Ini audit sumber dan sampling, bukan evaluasi seluruh bidang atau persetujuan KBLI 01273.",
+      "reviewStatus": "Audit teknis terbatas; mapping exact-KBLI dan syarat per bidang belum direview.",
+      "unknowns": [
+        "Kesesuaian agronomi, ketentuan seluruh bidang/blok dan penerimaan OSS belum dinilai.",
+        "Geometri invalid tidak diperbaiki atau dipakai diam-diam untuk kandidat."
+      ]
+    },
+    {
+      "id": "7401000000:001",
+      "summary": "4618 fitur sumber diterima dan ID direkonsiliasi; 4618 geometri valid, 0 invalid. 6 sampel interior kelompok kegiatan lokal: 1 diizinkan; 3 terbatas; 2 terbatas dan bersyarat. Ini audit sumber dan sampling, bukan evaluasi seluruh bidang atau persetujuan KBLI 01273.",
+      "reviewStatus": "Audit teknis terbatas; mapping exact-KBLI dan syarat per bidang belum direview.",
+      "unknowns": [
+        "Kesesuaian agronomi, ketentuan seluruh bidang/blok dan penerimaan OSS belum dinilai.",
+        "Geometri invalid tidak diperbaiki atau dipakai diam-diam untuk kandidat."
+      ]
+    },
+    {
+      "id": "7401000000:002",
+      "summary": "728 fitur sumber diterima dan ID direkonsiliasi; 727 geometri valid, 1 invalid. 7 sampel interior kelompok kegiatan lokal: 1 diizinkan; 6 terbatas. Ini audit sumber dan sampling, bukan evaluasi seluruh bidang atau persetujuan KBLI 01273.",
+      "reviewStatus": "Audit teknis terbatas; mapping exact-KBLI dan syarat per bidang belum direview.",
+      "unknowns": [
+        "Kesesuaian agronomi, ketentuan seluruh bidang/blok dan penerimaan OSS belum dinilai.",
+        "Geometri invalid tidak diperbaiki atau dipakai diam-diam untuk kandidat."
+      ]
+    },
+    {
+      "id": "7402000000:003",
+      "summary": "3123 fitur sumber diterima dan ID direkonsiliasi; 3123 geometri valid, 0 invalid. 3 sampel interior kelompok kegiatan lokal: 3 diizinkan. Ini audit sumber dan sampling, bukan evaluasi seluruh bidang atau persetujuan KBLI 01273.",
+      "reviewStatus": "Audit teknis terbatas; mapping exact-KBLI dan syarat per bidang belum direview.",
+      "unknowns": [
+        "Kesesuaian agronomi, ketentuan seluruh bidang/blok dan penerimaan OSS belum dinilai.",
+        "Geometri invalid tidak diperbaiki atau dipakai diam-diam untuk kandidat."
+      ]
+    },
+    {
+      "id": "7402000000:002",
+      "summary": "1829 fitur sumber diterima dan ID direkonsiliasi; 1821 geometri valid, 8 invalid. 2 sampel interior kelompok kegiatan lokal: 1 diizinkan; 1 terbatas. Ini audit sumber dan sampling, bukan evaluasi seluruh bidang atau persetujuan KBLI 01273.",
+      "reviewStatus": "Audit teknis terbatas; mapping exact-KBLI dan syarat per bidang belum direview.",
+      "unknowns": [
+        "Kesesuaian agronomi, ketentuan seluruh bidang/blok dan penerimaan OSS belum dinilai.",
+        "Geometri invalid tidak diperbaiki atau dipakai diam-diam untuk kandidat."
+      ]
+    },
+    {
+      "id": "7405000000:002",
+      "summary": "761 fitur sumber diterima dan ID direkonsiliasi; 760 geometri valid, 1 invalid. 5 sampel interior kelompok kegiatan lokal: 2 diizinkan; 3 terbatas. Ini audit sumber dan sampling, bukan evaluasi seluruh bidang atau persetujuan KBLI 01273.",
+      "reviewStatus": "Audit teknis terbatas; mapping exact-KBLI dan syarat per bidang belum direview.",
+      "unknowns": [
+        "Kesesuaian agronomi, ketentuan seluruh bidang/blok dan penerimaan OSS belum dinilai.",
+        "Geometri invalid tidak diperbaiki atau dipakai diam-diam untuk kandidat."
+      ]
+    },
+    {
+      "id": "7405000000:001",
+      "summary": "789 fitur sumber diterima dan ID direkonsiliasi; 788 geometri valid, 1 invalid. 7 sampel interior kelompok kegiatan lokal: 3 diizinkan; 4 terbatas. Ini audit sumber dan sampling, bukan evaluasi seluruh bidang atau persetujuan KBLI 01273.",
+      "reviewStatus": "Audit teknis terbatas; mapping exact-KBLI dan syarat per bidang belum direview.",
+      "unknowns": [
+        "Kesesuaian agronomi, ketentuan seluruh bidang/blok dan penerimaan OSS belum dinilai.",
+        "Geometri invalid tidak diperbaiki atau dipakai diam-diam untuk kandidat."
+      ]
+    }
+  ]
+}

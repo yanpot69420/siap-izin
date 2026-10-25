@@ -2,6 +2,8 @@
 
 **Status:** parameter utama dipilih Anton; pemeriksaan awal katalog selesai; bukan hasil pencarian kandidat lahan atau persetujuan development.
 
+Dokumen ini mempertahankan **baseline discovery awal**; status “belum diuji” pada tabel di bawah merujuk tahap tersebut. Perkembangan terbaru ada pada [audit geometri/ITBX](rdtr-geometry-audit.md), [matriks sumber](data-sources.md), [rubrik usulan](../design/scoring-rubric.md) dan [mockup](../design/mockup.md). Tidak ada kandidat lahan atau pengujian penerimaan OSS yang dinyatakan selesai.
+
 ## 1. Parameter pilot
 
 - KBLI input: `01273`, disimpan dengan nol awal.
@@ -67,7 +69,7 @@ Ketersediaan/hak tanah tidak menjadi filter wajib rekomendasi. Ketidaktahuan men
 2. Jumlah kandidat keseluruhan/per kabupaten; tidak memaksakan kuota saat bukti tidak cukup.
 3. Jenis jalan, cara ukur dan bobot preferensi; tidak ada ambang maksimum sebagai syarat gugur. Kedekatan geometris berbeda dari akses yang dapat dilalui.
 4. Rubrik cocok kakao dan tingkat bukti yang diterima.
-5. Bentuk file: usulan SHP ZIP dan KML; bukan keputusan final pengguna.
+5. Bentuk file sudah dikonfirmasi pada tahap berikutnya: SHP ZIP dan KML; skema atribut dan penerimaan target masih terbuka.
 6. Perlakuan kondisi bersyarat serta data yang belum tersedia.
 
 ## 6. Langkah berikutnya dan batas hasil
@@ -84,7 +86,7 @@ Literatur agronomi terkait kakao ditemukan melalui indeks pencarian, tetapi peng
 4. Mockup peta → kriteria → kandidat → bukti → ekspor, diperiksa Anton.
 5. PRD siap bangun, desain teknis/backlog dan persetujuan development.
 
-Daftar ini adalah rencana kerja, bukan laporan bahwa audit lanjutan sudah selesai. Keputusan jalan tidak mengubah temuan metadata sebelumnya. Lihat [PRD v0.5](../PRD.md), bagian 8.8.
+Daftar ini adalah urutan awal, bukan status pekerjaan terkini. Keputusan jalan tidak mengubah temuan metadata sebelumnya. Lihat [PRD v0.6](../PRD.md), bagian 8.8–8.10, dan [roadmap](../roadmap.md) untuk perkembangan audit/rancangan.
 
 ## 7. Bukti kerja
 
