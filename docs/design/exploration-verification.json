@@ -1,0 +1,76 @@
+{
+  "time": "2026-10-25T08:57:04.228Z",
+  "test": "Modul eksplorasi hanya memerlukan KBLI dan wilayah, tanpa luas/pencarian kandidat",
+  "expected": "Input, validasi, ringkasan dan konfigurasi luas dihapus; alur filter/reset/ekspor tetap berjalan",
+  "passed": true,
+  "checks": {
+    "areaInputRemoved": true,
+    "areaSummaryRemoved": true,
+    "onlyExplorationCriteria": true,
+    "noParcelDataInConfiguration": true,
+    "configurationIsZoneExploration": true,
+    "appliedWithoutArea": true,
+    "invalidKbli": true,
+    "invalidRegions": true,
+    "regionFilterWorks": true,
+    "jsonPreviewWorks": true,
+    "resetWorks": true,
+    "noJavascriptExceptions": true
+  },
+  "observed": {
+    "areaFieldPresent": false,
+    "roadFieldPresent": false,
+    "areaSummaryPresent": false,
+    "criterionKeys": [
+      "kbli",
+      "region"
+    ],
+    "formStatus": "Kriteria eksplorasi diterapkan. Sorotan zona belum diimplementasikan; inventaris bukti diperbarui.",
+    "auditEntries": 8,
+    "mapStatus": "Peta dasar publik dimuat · tidak ada overlay penilaian",
+    "loadedTiles": 15,
+    "config": {
+      "schemaVersion": 2,
+      "artifactType": "zone-exploration-configuration",
+      "module": "zone-exploration",
+      "status": "mockup-eksplorasi-bukan-hasil-kesesuaian",
+      "kbli": {
+        "code": "01273",
+        "version": "2025",
+        "scope": "budidaya-kakao",
+        "scopeConfirmed": false
+      },
+      "regions": [
+        {
+          "id": "7411000000",
+          "name": "Kolaka Timur"
+        },
+        {
+          "id": "7401000000",
+          "name": "Kolaka"
+        },
+        {
+          "id": "7402000000",
+          "name": "Konawe"
+        },
+        {
+          "id": "7405000000",
+          "name": "Konawe Selatan"
+        }
+      ],
+      "assessments": {
+        "zoning": "belum-dinilai"
+      },
+      "evaluatedZoneCount": 0,
+      "containsGeometry": false,
+      "limitations": [
+        "Konfigurasi eksplorasi zona saja, bukan GeoJSON atau hasil analisis.",
+        "Luas, preferensi jalan dan pembuatan polygon merupakan modul terpisah.",
+        "Sorotan zona dan pemetaan exact-KBLI belum diimplementasikan.",
+        "Tidak siap untuk unggah OSS."
+      ]
+    }
+  },
+  "javascriptExceptions": [],
+  "scope": "Regresi pemisahan modul eksplorasi; tidak membuktikan sorotan zona terimplementasi."
+}

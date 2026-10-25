@@ -11,11 +11,11 @@ const plans = [
  ['7405000000','002','RDTR Wilayah Perencanaan Laonti','044','Perkebunan Tanaman Aromatik/Penyegar'],
  ['7405000000','001','RDTR Wilayah Perencanaan Angata','044','Perkebunan Tanaman Aromatik/Penyegar']
 ].map(([region,rtr,name,activity,activityName]) => ({id:`${region}:${rtr}`,region,rtr,name,activity,activityName}));
-let applied = {kbli:'01273',regions:Object.keys(regions),area:5000,road:'preferred'};
+let applied = {kbli:'01273',regions:Object.keys(regions)};
 let audit = new Map();
 let checkedAt = null;
 let map = null;
-const numberFormat = new Intl.NumberFormat('id-ID',{maximumFractionDigits:4});
+
 function text(tag, value, className) {const el=document.createElement(tag);el.textContent=value;if(className)el.className=className;return el;}
 function sourceLink(label, url) {const a=text('a',label+' ↗');a.href=url;a.target='_blank';a.rel='noopener';return a;}
 function fact(label, value) {const d=text('div','','detail-fact');d.append(text('strong',label),text('p',value));return d;}
@@ -51,20 +51,19 @@ function openPlan(p) {
 }
 $('#criteriaForm').addEventListener('input',()=>{$('#formStatus').textContent='Ada perubahan draf. Terapkan sebelum mengekspor.';$('#formError').hidden=true;});
 $('#criteriaForm').addEventListener('submit',(event)=>{
- event.preventDefault();const form=event.currentTarget;const data=new FormData(form);const chosen=data.getAll('region');const area=Number(data.get('area'));let error='';
+ event.preventDefault();const form=event.currentTarget;const data=new FormData(form);const chosen=data.getAll('region');let error='';
  if(data.get('kbli')!=='01273')error='Pilih KBLI 01273. Mockup ini hanya mencakup pilot kakao.';
  else if(!chosen.length)error='Pilih setidaknya satu kabupaten pilot. Tidak ada wilayah yang dipilih otomatis.';
- else if(!Number.isFinite(area)||area<=0)error='Masukkan luas target yang lebih besar dari nol.';
+
  if(error){$('#formError').textContent=error;$('#formError').hidden=false;return;}
- applied={kbli:'01273',regions:chosen,area,road:data.get('road')};$('#formError').hidden=true;
- $('#targetSummary').textContent=`Target ${numberFormat.format(area)} m² / kandidat`;
- $('#formStatus').textContent='Kriteria diterapkan. 0 kandidat dievaluasi; analisis tidak dijalankan.';renderAudit();
+ applied={kbli:'01273',regions:chosen};$('#formError').hidden=true;
+ $('#formStatus').textContent='Kriteria eksplorasi diterapkan. Sorotan zona belum diimplementasikan; inventaris bukti diperbarui.';renderAudit();
 });
 $('#resetButton').addEventListener('click',()=>{$('#criteriaForm').reset();$('#criteriaForm').requestSubmit();});
-function configuration(){return {schemaVersion:1,artifactType:'search-configuration',status:'mockup-perencanaan-bukan-hasil-rekomendasi',kbli:{code:applied.kbli,version:'2025',scope:'budidaya-kakao',scopeConfirmed:false},regions:applied.regions.map(id=>({id,name:regions[id]})),targetAreaM2:applied.area,areaTolerance:null,road:{role:'preference',enabled:applied.road==='preferred',maximumDistanceM:null,method:null,weight:null},assessments:{zoning:'belum-dinilai',agronomy:'belum-dinilai'},evaluatedCandidateCount:0,containsGeometry:false,limitations:['Konfigurasi saja, bukan GeoJSON atau hasil analisis.','Tidak siap untuk unggah OSS.','Geometri, aturan per bidang dan rubrik belum divalidasi.']};}
+function configuration(){return {schemaVersion:2,artifactType:'zone-exploration-configuration',module:'zone-exploration',status:'mockup-eksplorasi-bukan-hasil-kesesuaian',kbli:{code:applied.kbli,version:'2025',scope:'budidaya-kakao',scopeConfirmed:false},regions:applied.regions.map(id=>({id,name:regions[id]})),assessments:{zoning:'belum-dinilai'},evaluatedZoneCount:0,containsGeometry:false,limitations:['Konfigurasi eksplorasi zona saja, bukan GeoJSON atau hasil analisis.','Luas, preferensi jalan dan pembuatan polygon merupakan modul terpisah.','Sorotan zona dan pemetaan exact-KBLI belum diimplementasikan.','Tidak siap untuk unggah OSS.']};}
 function previewExport(){$('#jsonPreview').textContent=JSON.stringify(configuration(),null,2);$('#downloadStatus').textContent='';showDialog('exportDialog');}
 for(const id of ['exportTop','exportConfig'])$('#'+id).addEventListener('click',previewExport);
-$('#downloadConfig').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(configuration(),null,2)+'\n'],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='siap-izin-konfigurasi-pencarian.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);$('#downloadStatus').textContent='Unduhan konfigurasi diminta ke browser. Berkas tidak memuat polygon.';});
+$('#downloadConfig').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(configuration(),null,2)+'\n'],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='siap-izin-konfigurasi-eksplorasi.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);$('#downloadStatus').textContent='Unduhan konfigurasi eksplorasi diminta ke browser. Berkas tidak memuat polygon.';});
 async function loadAudit(){
  try {
   const response=await fetch('audit-summary.json');if(!response.ok)throw new Error('unavailable');

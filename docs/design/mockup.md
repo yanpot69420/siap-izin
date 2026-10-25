@@ -1,6 +1,6 @@
 # Mockup interaktif — eksplorasi lokasi Siap Izin
 
-**Status:** mockup perencanaan, bukan aplikasi produksi atau hasil rekomendasi. Mengikuti PRD v0.6 dan discovery pilot kakao. Belum ada kandidat atau geometri rencana hasil evaluasi. Format target SHP ZIP + KML sudah dipilih pengguna; ekspor GIS tetap nonaktif.
+**Status terbaru:** mockup eksplorasi zona, mengikuti PRD v0.7 dan arahan Anton. Kriteria hanya KBLI/wilayah. Field, state, validasi, ringkasan dan ekspor luas dihapus; preferensi jalan serta pencarian/pembuatan polygon berada pada modul terpisah. Sorotan geometri zona masih belum diimplementasikan.
 
 ## Menjalankan
 
@@ -16,14 +16,14 @@ Buka `http://127.0.0.1:8765/`. Hentikan dengan Ctrl+C. Tidak ada instalasi paket
 
 Permukaan utama **Explore**: kriteria di kiri, peta dan tab hasil di tengah, batas penilaian di kanan. Warna hijau hutan digunakan untuk tindakan, bukan status kesesuaian bidang. Tipografi Avenir Next/Avenir/Segoe UI memakai font sistem, tanpa layanan font eksternal. Pada layar kecil, kolom ditumpuk.
 
-1. Pilih KBLI `01273`, satu atau beberapa dari empat kabupaten, luas target dan preferensi jalan.
+1. Pilih KBLI `01273` dan satu atau beberapa dari empat kabupaten; tidak ada input luas/preferensi jalan.
 2. Tekan **Terapkan kriteria**. Draf tidak otomatis menjadi konfigurasi ekspor. Tombol tidak menjalankan evaluasi GIS.
 3. Filter wilayah membatasi **inventaris sumber metadata**, bukan batas wilayah atau cakupan pada peta. Peta dasar tetap regional; tidak ada geometri administratif/RDTR untuk fit-bounds yang diklaim telah diaudit.
 4. **Muat peta publik** meminta dependensi dan tile eksternal setelah pemberitahuan pengguna. Peta bisa dilihat tanpa memalsukan overlay hasil.
-5. Tab **Kandidat** selalu menyatakan **0 kandidat dievaluasi**. Tab **Bukti RDTR** memuat delapan nama rencana aktual dari discovery, dapat difilter dan dibuka ke panel bukti.
+5. Tab **Zona** menyatakan **Zona belum dievaluasi / Sorotan zona belum tersedia**. Tab **Bukti RDTR** memuat delapan nama rencana aktual dari discovery, dapat difilter dan dibuka ke panel bukti.
 6. Bukti tiap rencana menampilkan identitas sumber, calon relasi kegiatan lokal yang **belum direview**, unknown, tautan katalog dan daftar kegiatan. Wolo memiliki peringatan eksplisit bahwa kemunculan katalog bukan bukti integrasi/siap pengajuan.
-7. Penilaian **kegiatan/zona** dan **indikasi agronomi** tetap terpisah. Mutu/provenance bukti bukan skor peluang izin. Jalan tidak memiliki ambang maksimum dan tidak menjadi syarat gugur.
-8. Ekspor yang aktif hanya **JSON konfigurasi pencarian**, dengan `artifactType: search-configuration`, `containsGeometry: false`, kode string bernol awal dan status belum dinilai. Bukan GeoJSON, SHP/KML atau paket OSS. **Ekspor GIS nonaktif** dengan alasan belum ada kandidat/geometri tervalidasi.
+7. Panel hanya membahas **kegiatan/zona** dan bukti. Agronomi serta preferensi jalan tidak menjadi kriteria eksplorasi; kebutuhan tersebut tetap berada pada modul kandidat yang terpisah.
+8. Ekspor hanya **JSON konfigurasi eksplorasi**, `schemaVersion: 2`, `artifactType: zone-exploration-configuration`, `module: zone-exploration`, `containsGeometry: false`. Tidak memuat `targetAreaM2`, `areaTolerance`, `road` atau jumlah kandidat. Kontrol ekspor GIS tidak ditampilkan dalam eksplorasi.
 
 Tidak ada pencocokan KBLI berdasarkan kesamaan istilah atau nama zona. Tidak ada koordinat kandidat, polygon, skor numerik kecocokan, kelas agronomi S1/S2/S3 atau probabilitas izin. Koordinat pada kode Leaflet hanya menentukan pusat viewport regional; bukan titik rencana atau sumber hasil.
 
@@ -75,7 +75,9 @@ Penggantian isi hanya boleh memakai ringkasan audit **turunan tersanitasi**, buk
 
 Loader gagal aman untuk berkas tidak tersedia, JSON rusak, versi berbeda, ID tidak dikenal, ID duplikat atau ringkasan tidak valid; metadata discovery tetap tersedia. Semua teks audit dirender dengan `textContent`, bukan HTML. Field lain tidak dipakai; kontrak tidak menerima kandidat, geometri atau skor dan tidak mengaktifkan ekspor GIS. Jangan memasukkan data sensitif, raw geodata, klaim verifikasi tanpa bukti, maupun informasi yang belum boleh dipublikasikan. Ringkasan tambahan ditampilkan di dialog rencana terkait; status utama tetap belum dinilai karena mockup tidak mengevaluasi bidang.
 
-## Verifikasi nyata
+## Verifikasi baseline v0.6 — historis
+
+Bagian hasil awal dan integrasi di bawah mendokumentasikan baseline sebelum pemisahan modul. Kasus input/validasi luas, preferensi jalan dan ekspor GIS yang disebut di sana **tidak lagi menjadi perilaku modul eksplorasi v0.7**. [Rekaman regresi terbaru](exploration-verification.json) membuktikan perubahan dari RED ke GREEN, dengan 12 assertion browser lulus: field/ringkasan luas dihapus, kriteria hanya KBLI/wilayah, konfigurasi v2 tanpa parameter kandidat, penerapan tanpa luas, penolakan KBLI/wilayah kosong, filter, reset, pratinjau JSON serta tidak ada exception JavaScript tertangkap. Pengujian ini tidak membuktikan sorotan zona berfungsi.
 
 Tanggal sesi: **25 Oktober 2026**, waktu lokal WITA. Browser Chromium melalui browser harness/CDP, tanpa membaca auth/session atau cookie. Resolusi desktop **1512×1100**, seluler **390×844**.
 

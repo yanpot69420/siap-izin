@@ -16,6 +16,7 @@
 | DEC-08 | Inisialisasi repo dengan dokumen perencanaan dan commit/push awal | Disetujui pengguna; tanpa development aplikasi |
 | DEC-09 | Lanjutkan tahapan proyek dan tanyakan hal penting yang belum pasti | Disetujui pengguna setelah commit awal; bukan izin pengajuan OSS, penggunaan data klien atau layanan berbayar |
 | DEC-10 | Keluaran SHP dalam ZIP dan KML | Dikonfirmasi melalui formulir; kontrak atribut/unggah masih perlu diuji |
+| DEC-11 | Hapus textfield luas pada eksplorasi; tujuan modul ini hanya melihat zona sesuai KBLI pilihan | Ditegaskan pengguna. Eksplorasi hanya KBLI/wilayah; luas dan preferensi kandidat untuk modul pencarian/pembuatan polygon terpisah |
 
 ## Usulan yang belum otomatis disetujui
 
@@ -31,7 +32,7 @@
 ## Pertanyaan yang masih terbuka
 
 - Ruang lingkup pilot budidaya kakao atau produksi benih; asumsi kerja saat ini budidaya.
-- Toleransi luas, polygon utuh/multipart dan jumlah kandidat.
+- Toleransi luas, polygon utuh/multipart dan jumlah kandidat untuk modul polygon; bukan penghambat atau input eksplorasi zona.
 - Rubrik agronomi, sumber dan skala bukti yang cukup untuk bidang `5000m2`.
 - Definisi tutupan yang diinginkan, status kawasan yang relevan, serta cara menangani kondisi bersyarat/unknown.
 - Metode/kelas jalan dan bobot preferensi; **tidak meminta ulang batas jarak maksimum**.

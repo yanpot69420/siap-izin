@@ -1,6 +1,6 @@
 # PRD — Aplikasi Induk Asisten Perizinan Berusaha
 
-**Versi:** 0.6 — audit teknis terbatas dan format keluaran dikonfirmasi; rubrik/parameter penting masih terbuka
+**Versi:** 0.7 — eksplorasi zona dipisahkan dari pencarian kandidat/pembuatan polygon; parameter lanjutan tetap terbuka
 
 **Pemilik kebutuhan:** Anton
 
@@ -51,6 +51,7 @@ Belum tersedia baseline waktu kerja, frekuensi kesalahan, volume berkas, dan bia
 | D-08 | Kedekatan jalan hanya preferensi pemeringkatan pada pilot; tidak ada batas maksimum jarak sebagai syarat gugur | Ditetapkan Anton; metode, kelas jalan dan bobot masih perlu ditinjau |
 | D-09 | Tahapan proyek boleh dilanjutkan; pertanyaan penting dikonfirmasi kepada Anton | Disampaikan setelah commit awal; audit/rancangan/mockup dapat dilanjutkan, bukan izin pengajuan OSS atau layanan berbayar |
 | D-10 | Format keluaran SHP ZIP disertai KML | Dikonfirmasi melalui formulir; atribut dan penerimaan target belum diuji |
+| D-11 | Modul eksplorasi hanya untuk melihat zona berdasarkan KBLI terpilih; input luas dihapus | Ditegaskan Anton; kriteria eksplorasi KBLI/wilayah, parameter kandidat berada pada modul terpisah |
 | A-01 | Penggunaan awal untuk Anton dan tim internal, bukan SaaS publik | Asumsi |
 | A-02 | Ada pemeriksaan manusia sebelum data final dan pengajuan | Usulan pengamanan |
 | A-03 | MVP berakhir pada paket siap input dan pencatatan hasil input manual | Usulan batas MVP |
@@ -185,14 +186,14 @@ Sistem mempertahankan hasil lama sebagai riwayat dan menandai hasil turunannya `
 | F-17 | P1 | Bantuan pengisian OSS | Hanya skenario pilot yang diuji; berhenti pada autentikasi/tantangan atau halaman tidak dikenali; tidak menekan kirim akhir tanpa otorisasi |
 | F-18 | P1 | Pemantauan terjadwal | Status berubah hanya berdasarkan pembacaan/bukti aktual; kegagalan akses bukan perubahan status perizinan |
 | F-19 | P1 | Notifikasi | Pengguna menerima pengingat tugas/klarifikasi sesuai preferensi yang disetujui |
-| F-20 | P0 usulan | Peta eksplorasi KBLI Sulawesi Tenggara | Peta awal meliputi provinsi; filter KBLI menyorot zona berbukti dengan legenda status; wilayah tanpa data tidak dianggap dilarang atau diizinkan |
+| F-20 | P0 usulan | Peta eksplorasi KBLI Sulawesi Tenggara | Hanya kriteria KBLI dan wilayah; tidak meminta luas atau parameter kandidat. Filter menyorot zona berbukti dengan legenda status; area tanpa data tetap unknown |
 | F-21 | P0 usulan | Detail zona | Klik zona menampilkan RDTR/subzona, kegiatan yang dicocokkan, status, syarat, dasar pemetaan, versi dan sumber |
 | F-22 | P0 usulan | Pemetaan KBLI ke ketentuan | Hanya pemetaan yang ditinjau masuk hasil terverifikasi; dugaan AI/kemiripan istilah tampil terpisah sebagai belum terverifikasi |
 | F-23 | P0 usulan | Cakupan dan mutu data | Bedakan belum tercakup, aturan belum tersedia, pemetaan belum terverifikasi, konflik dan data kedaluwarsa; tidak disatukan sebagai tidak sesuai |
 | F-24 | P0 usulan | Peta ke proyek dan ekspor rencana | Kandidat dapat dibentuk/diekspor tanpa bukti ketersediaan tanah; asal geometri dan label rencana wajib, pemeriksaan seluruh geometri dijalankan; pemakaian untuk pengajuan memiliki gerbang review terpisah |
 | F-25 | P1 usulan | Filter beberapa KBLI | Mode semua/salah satu eksplisit, hasil per KBLI tetap terlihat dan kondisi tidak dihilangkan oleh agregasi |
 | F-26 | P0 usulan | Publikasi dan pembaruan data peta | Dataset dan pemetaan diperiksa sebelum tayang; perubahan versi menandai kandidat/pemeriksaan terdampak untuk review tanpa menimpa bukti historis |
-| F-27 | P0 usulan | Formulir kriteria rencana | Pengguna memasukkan kegiatan/KBLI, luas target, toleransi, wilayah dan kriteria tambahan; nilai contoh tidak menjadi aturan semua proyek |
+| F-27 | P0 usulan | Formulir kriteria rencana | Pada modul pencarian/pembuatan polygon terpisah, pengguna memasukkan KBLI, luas, toleransi dan kriteria tambahan; bukan formulir wajib eksplorasi zona |
 | F-28 | P0 usulan | Pembentukan polygon rencana | Geometri dibentuk pada koordinat nyata, valid dan memenuhi luas dalam toleransi yang disetujui; seluruh bidang diuji, bukan titik pusat; hasil ditandai rencana |
 | F-29 | P0 usulan | Beberapa kandidat dan alasan | Jumlah kandidat dipilih pada discovery; hasil dibandingkan per kriteria dan peringkat dapat dijelaskan, tanpa persentase peluang izin yang tidak diukur |
 | F-30 | P0 usulan | Kriteria wajib vs preferensi | Pelanggaran kriteria wajib tidak ditutup skor preferensi; sistem tidak melonggarkan ambang tanpa konfirmasi dan dapat mengembalikan tidak ada hasil |
@@ -267,7 +268,7 @@ Persyaratan produk:
 
 ### 8.5 Peta Eksplorasi KBLI Sulawesi Tenggara — usulan revisi
 
-**Tujuan:** pengguna dapat memulai dari KBLI dan kriteria untuk menemukan lokasi serta membentuk polygon rencana, atau memulai dari titik/polygon untuk memeriksa lokasi yang sudah ada. Peta eksplorasi dapat dibuka sebelum membuat proyek; pilihan yang disimpan mengacu pada versi data, KBLI dan kriteria tertentu. Bukti ketersediaan tanah/realisasi tidak diminta untuk menghasilkan kandidat rencana.
+**Tujuan modul eksplorasi:** melihat zona yang sesuai/relevan berdasarkan KBLI yang dipilih dan batas wilayah opsional. Tidak ada input luas, preferensi jalan, penilaian agronomi atau pembentukan kandidat pada modul ini. Pencarian/pembuatan polygon rencana dan pemeriksaan batas existing tetap bagian visi aplikasi, tetapi dijalankan pada modul terpisah. Target 5000m2 tetap parameter pilot polygon, bukan prasyarat eksplorasi atau nilai tersembunyi dalam ekspornya.
 
 **Peta provinsi bukan klaim cakupan RDTR provinsi lengkap.** Seluruh Sulawesi Tenggara dapat menjadi area tampilan awal, tetapi hanya bagian yang sumber geometri dan aturannya telah diperiksa yang memperoleh hasil kesesuaian. Area kosong tetap diberi penjelasan, bukan disembunyikan seolah tidak memiliki ketentuan.
 
@@ -278,8 +279,8 @@ Persyaratan produk:
 3. Opsional: batasi kabupaten/kota/kecamatan; filter hanya membatasi tampilan, tidak mengubah dasar aturan.
 4. Lihat sorotan zona dengan kategori status yang berbeda.
 5. Klik zona untuk membaca dasar pencocokan, syarat, kegiatan lokal dan sumbernya.
-6. Masukkan luas dan kriteria tambahan; sistem menghasilkan kandidat polygon rencana dan menjelaskan hasil per kriteria.
-7. Pilih/simpan kandidat atau bandingkan dengan lokasi yang sudah ada; periksa seluruh bidang. Ekspor rencana tersedia setelah validasi dan diberi label; pengajuan resmi memiliki pemeriksaan/persetujuan tersendiri.
+6. Simpan pilihan KBLI/wilayah bila diperlukan; konfigurasi eksplorasi tidak membawa luas atau parameter pembentukan kandidat.
+7. Jika pengguna kemudian membutuhkan polygon rencana, lanjutkan ke modul terpisah. Luas, kriteria, validasi seluruh bidang, ekspor GIS dan pengajuan resmi bukan fungsi tahap eksplorasi ini.
 
 #### Legenda yang diusulkan
 
@@ -548,8 +549,9 @@ Keberhasilan penerbitan izin tidak menjadi ukuran tunggal kualitas produk, karen
 | UAT-37 | Kandidat memenuhi kriteria wajib tetapi jauh dari jalan, atau data jalan tidak tersedia | Jarak jauh tidak menyebabkan gugur; nilai preferensi/mutu bukti terlihat. Data hilang tidak dianggap jarak nol atau akses baik, dan tidak ada ambang tersembunyi |
 | UAT-38 | Fitur sumber RDTR invalid atau perbaikan belum diperiksa | Tidak dipakai diam-diam untuk kandidat; asli, temuan dan status karantina dapat ditelusuri |
 | UAT-39 | Nama/kode subzona sama tetapi aturan lokal atau blok berbeda | Tidak menyamakan seluruh izin berdasarkan nama zona atau satu titik sampel; ruang lingkup bukti dan syarat per konteks tetap terlihat |
+| UAT-40 | Eksplorasi KBLI tanpa input luas | Tidak ada field/validasi/ringkasan luas atau parameter kandidat di konfigurasi eksplorasi; filter, reset dan ekspor konfigurasi tetap bekerja |
 
-UAT-15 dan UAT-16 adalah gerbang fase otomasi, bukan syarat MVP tanpa integrasi. UAT-17 sampai UAT-20 dan UAT-22 sampai UAT-39 adalah usulan syarat pilot peta serta rekomendasi rencana; UAT-21 berlaku jika multi-KBLI masuk rilis. Rincian berkas uji, label pembanding dan cakupan sektor/lokasi harus disepakati sebelum development.
+UAT-15 dan UAT-16 adalah gerbang fase otomasi, bukan syarat MVP tanpa integrasi. UAT-17 sampai UAT-20 dan UAT-22 sampai UAT-40 mencakup eksplorasi serta modul rekomendasi rencana yang terpisah; UAT-21 berlaku jika multi-KBLI masuk rilis. Rincian berkas uji, label pembanding dan cakupan sektor/lokasi harus disepakati sebelum development.
 
 ## 13. Cakupan rilis dan gerbang kelulusan
 
@@ -679,6 +681,7 @@ Penyedia AI/OCR, antrean tugas, pustaka ekspor, layanan hosting dan autentikasi 
 - v0.4: merekam pilot pilihan Anton dan hasil pembacaan awal katalog OSS serta metadata/kegiatan RDTR keempat kabupaten. Belum ada kandidat atau polygon dibuat, belum ada klaim kesesuaian per bidang. Parameter rubrik agronomi/teknis masih perlu disepakati.
 - v0.5: menetapkan jawaban Anton bahwa kedekatan jalan hanya preferensi, memperbarui persyaratan/status pertanyaan/uji terkait, dan menjabarkan tahap audit data–rubrik–mockup–persetujuan development. Tidak ada audit geometri/ITBX atau kandidat baru pada revisi ini.
 - v0.6: merekam izin kelanjutan, format SHP ZIP + KML, audit geometri/sampel ITBX, inventaris sumber, rubrik usulan dan mockup teruji; karantina geometri invalid dan parameter terbuka dipertahankan. Tidak ada kandidat lahan atau persetujuan resmi yang dinyatakan selesai.
+- v0.7: menindaklanjuti arahan Anton: eksplorasi hanya KBLI/wilayah; luas dan parameter kandidat dikeluarkan dari tampilan, validasi serta konfigurasi. Kebutuhan polygon tetap pada modul terpisah; sorotan zona belum diimplementasikan.
 - Referensi resmi di bawah mendukung konteks tertentu saja, bukan pemeriksaan hukum menyeluruh atau verifikasi operasional OSS.
 - Sumber regulasi, katalog dan antarmuka perlu diperiksa ulang saat discovery dan sebelum produksi.
 - Langkah berikutnya: review mockup/parameter → validasi aturan/data lanjutan → finalisasi PRD serta desain teknis/backlog → persetujuan development mesin produksi. Tidak ada komitmen biaya atau waktu yang dianggap telah disetujui melalui draf ini.
