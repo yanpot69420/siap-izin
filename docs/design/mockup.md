@@ -1,6 +1,6 @@
 # Mockup interaktif — eksplorasi lokasi Siap Izin
 
-**Status terbaru:** prototipe eksplorasi zona, mengikuti PRD v0.8 dan arahan Anton. Kriteria hanya KBLI/wilayah; luas, preferensi jalan dan pencarian/pembuatan polygon berada pada modul terpisah. **Sorotan nyata satu RDTR Tirawuta sudah terintegrasi dan diuji: 20 polygon sumber, 18 pemeriksaan browser lulus.** Seluruh sorotan masih relevan untuk ditelaah, bukan kesesuaian exact-KBLI terverifikasi. [Kontrak dan hasil integrasi](zone-overlay.md).
+**Status terbaru:** prototipe eksplorasi zona, mengikuti PRD v0.9 dan arahan Anton. Filter mencakup seluruh 17 kabupaten/kota dengan kontrol massal dan 32 pemeriksaan browser lulus; [kontrak/sumber filter](region-filter.md). Kriteria tetap hanya KBLI/wilayah; luas, preferensi jalan dan pencarian/pembuatan polygon berada pada modul terpisah. Sorotan geometri tetap **20 polygon sumber Tirawuta**, relevan untuk ditelaah, bukan kesesuaian exact-KBLI terverifikasi. [Kontrak sorotan dan hasil versi sebelumnya](zone-overlay.md).
 
 ## Menjalankan
 
@@ -19,7 +19,7 @@ Buka `http://127.0.0.1:8765/prototype/`. Python 3.11+ dan dependency geometri di
 
 Permukaan utama **Explore**: kriteria di kiri, peta dan tab hasil di tengah, batas penilaian di kanan. Warna hijau hutan digunakan untuk tindakan, bukan status kesesuaian bidang. Tipografi Avenir Next/Avenir/Segoe UI memakai font sistem, tanpa layanan font eksternal. Pada layar kecil, kolom ditumpuk.
 
-1. Pilih KBLI `01273` dan satu atau beberapa dari empat kabupaten; tidak ada input luas/preferensi jalan.
+1. Pilih KBLI `01273` dan satu atau beberapa dari 17 kabupaten/kota. Pilih semua/Kosongkan mengubah draf; awal/reset memilih seluruh wilayah. Tidak ada input luas/preferensi jalan.
 2. Tekan **Terapkan kriteria**. Draf tidak otomatis menjadi konfigurasi ekspor. Setelah peta diaktifkan, kriteria memuat ulang irisan sumber pilot; bukan penilaian izin/seluruh bidang.
 3. Filter wilayah membatasi inventaris metadata dan menentukan apakah pilot Tirawuta aktif. Sorotan hanya tersedia jika Kolaka Timur dipilih; tidak membuat batas administratif atau menafsirkan wilayah tanpa data sebagai dilarang.
 4. **Muat peta publik** meminta dependensi/tile eksternal dan memicu API lokal untuk sumber geometri resmi. Peta melakukan fit-bounds ke polygon sumber yang valid, bukan batas kabupaten rekaan. API gagal tidak diganti overlay contoh.
@@ -145,6 +145,7 @@ Audit visual: komposisi Explore tanpa hero pemasaran, angka metrik rekaan, gradi
 ## Berkas dan batas pekerjaan
 
 - `prototype/index.html`, `prototype/styles.css`, `prototype/zones.css`, `prototype/app.js`, `prototype/zone-data.js`: antarmuka/validator tanpa framework.
+- `prototype/region-data.js`, `tests/region-data.test.cjs`: katalog 17 wilayah, namespace sumber/internal dan tes kontraknya.
 - `tools/dev_server.py`, `requirements-prototype.txt`: backend lokal dan dependency geometri; cache privat tidak disajikan.
 - `tests/test_zone_server.py`, `tests/zone-data.test.cjs`: tes offline backend dan kontrak browser, bukan data peta contoh.
 - `prototype/audit-summary.json`: delapan ringkasan audit turunan, bukan data geometri atau hasil lokasi.

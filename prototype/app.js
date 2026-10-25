@@ -1,6 +1,7 @@
 'use strict';
 const $ = selector => document.querySelector(selector);
-const regions = {'7411000000':'Kolaka Timur','7401000000':'Kolaka','7402000000':'Konawe','7405000000':'Konawe Selatan'};
+const regionEntries = window.RegionData.entries;
+const regions = Object.fromEntries(regionEntries.map(region=>[region.id,region.name]));
 const plans = [
  ['7411000000','001','RDTR Kawasan Perkotaan Tirawuta','041','Perkebunan tanaman aromatik/penyegar'],
  ['7411000000','002','RDTR Kawasan Agropolitan Mowewe, Lalolae, Tinondo','041','Perkebunan tanaman aromatik/penyegar'],
@@ -32,6 +33,23 @@ function sourceLink(label,url){
 }
 function fact(label,value){const d=text('div','','detail-fact');d.append(text('strong',label),text('p',value));return d;}
 function showDialog(id){const dialog=$('#'+id);if(!dialog.open)dialog.showModal();}
+function updateRegionSelectionCount(){
+ const count=document.querySelectorAll('[name=region]:checked').length;
+ $('#regionSelectionCount').textContent=`${count} dari ${regionEntries.length} kabupaten/kota dipilih`;
+}
+function renderRegionOptions(){
+ const list=$('#regionOptions');list.replaceChildren();
+ for(const region of regionEntries){
+  const label=text('label','','check');const input=document.createElement('input');
+  input.type='checkbox';input.name='region';input.value=region.id;input.defaultChecked=true;
+  label.append(input,document.createTextNode(region.name));list.append(label);
+ }
+ updateRegionSelectionCount();
+}
+for(const [id,checked] of [['selectAllRegions',true],['clearRegions',false]])$('#'+id).addEventListener('click',()=>{
+ document.querySelectorAll('[name=region]').forEach(input=>{input.checked=checked;});
+ $('#regionOptions').dispatchEvent(new Event('input',{bubbles:true}));
+});
 for(const close of document.querySelectorAll('[data-close]'))close.addEventListener('click',()=>$('#'+close.dataset.close).close());
 $('#aboutButton').addEventListener('click',()=>showDialog('aboutDialog'));
 function activateTab(name,focus=false){
@@ -51,7 +69,9 @@ for(const id of ['inspectEvidence','openSources'])$('#'+id).addEventListener('cl
 function renderAudit(){
  const visible=plans.filter(p=>applied.regions.includes(p.region));
  $('#auditCount').textContent=visible.length;
- $('#regionSummary').textContent=`KBLI ${applied.kbli} · ${applied.regions.length} kabupaten dipilih · ${visible.length} entri metadata`;
+ $('#regionSummary').textContent=`KBLI ${applied.kbli} · ${applied.regions.length} kabupaten/kota dipilih · ${visible.length} entri metadata`;
+ $('#mapTitle').textContent=`Sulawesi Tenggara / ${applied.regions.length===1?regions[applied.regions[0]]:'Eksplorasi zona'}`;
+ $('#auditEmpty').hidden=visible.length!==0;
  $('#auditList').replaceChildren();
  for(const [index,p] of visible.entries()){
   const row=text('button','','audit-row');row.type='button';row.dataset.plan=p.id;
@@ -63,7 +83,7 @@ function renderAudit(){
 function openPlan(p){
  $('#detailTitle').textContent=p.name;
  const body=$('#detailContent');body.replaceChildren();
- body.append(fact('Kabupaten / ID rencana',`${regions[p.region]} / ${p.id}`),fact('Bukti terdokumentasi','Inventaris katalog dan daftar kegiatan; geometri yang diaktifkan dibaca melalui API lokal dengan waktu sumber tersendiri.'),fact('Calon relasi kegiatan — belum direview',`${p.activity} — ${p.activityName}`),fact('Yang belum terbukti','Pemetaan exact-KBLI 01273, semua syarat/blok dan penerimaan pengajuan OSS.'));
+ body.append(fact('Kabupaten/kota / ID rencana',`${regions[p.region]} / ${p.id}`),fact('Bukti terdokumentasi','Inventaris katalog dan daftar kegiatan; geometri yang diaktifkan dibaca melalui API lokal dengan waktu sumber tersendiri.'),fact('Calon relasi kegiatan — belum direview',`${p.activity} — ${p.activityName}`),fact('Yang belum terbukti','Pemetaan exact-KBLI 01273, semua syarat/blok dan penerimaan pengajuan OSS.'));
  if(p.name.endsWith('Wolo'))body.append(text('p','Wolo: muncul pada katalog tidak berarti sudah terintegrasi atau siap pengajuan.','detail-note'));
  const extra=audit.get(p.id);
  if(extra){body.append(fact('Ringkasan audit historis — bukan hasil evaluasi lokasi',extra.summary),fact('Waktu audit historis',checkedAt||'Tidak dicantumkan'),fact('Status review ringkasan',extra.reviewStatus||'Belum dicantumkan'));if(extra.unknowns.length)body.append(fact('Ketidakpastian audit',extra.unknowns.join(' · ')));}
@@ -119,7 +139,7 @@ async function loadZones(){
  const revision=++zoneRevision;
  if(zoneRequest)zoneRequest.abort();zoneRequest=null;clearZones();
  if(!map){setZoneMessage('idle','Aktifkan peta untuk melihat sorotan','Peta memerlukan persetujuan memuat layanan eksternal. Setelah aktif, geometri pilot dibaca melalui API lokal.');return;}
- if(!applied.regions.includes('7411000000')){setZoneMessage('unavailable','Belum ada pilot geometri pada wilayah terpilih','Tirawuta berada di Kolaka Timur. Wilayah pilihan lain tetap memiliki inventaris bukti, tetapi belum diaktifkan untuk sorotan.');return;}
+ if(!applied.regions.includes('7411000000')){map.setView([-4.05,122.1],7);setZoneMessage('unavailable','Sorotan belum diaktifkan pada wilayah terpilih','Geometri aktif baru Tirawuta, Kabupaten Kolaka Timur. Inventaris RDTR wilayah lain belum lengkap; ini bukan kesimpulan bahwa tidak ada RDTR atau kegiatan dilarang.');return;}
  setZoneMessage('loading','Memuat polygon sumber…','Mengambil geometri nyata untuk pilot Tirawuta. Tidak membuat polygon pengganti jika sumber gagal.');
  const controller=new AbortController();zoneRequest=controller;
  const timer=setTimeout(()=>controller.abort(),45000);
@@ -137,20 +157,20 @@ async function loadZones(){
  }finally{clearTimeout(timer);if(revision===zoneRevision)zoneRequest=null;}
 }
 $('#retryZones').addEventListener('click',loadZones);
-$('#criteriaForm').addEventListener('input',()=>{$('#formStatus').textContent='Ada perubahan draf. Peta dan ekspor masih memakai kriteria terakhir yang diterapkan.';$('#formError').hidden=true;});
+$('#criteriaForm').addEventListener('input',()=>{updateRegionSelectionCount();$('#formStatus').textContent='Ada perubahan draf. Peta dan ekspor masih memakai kriteria terakhir yang diterapkan.';$('#formError').hidden=true;});
 $('#criteriaForm').addEventListener('submit',event=>{
  event.preventDefault();const data=new FormData(event.currentTarget);const chosen=data.getAll('region');let error='';
  if(data.get('kbli')!=='01273')error='Pilih KBLI 01273. Pilot ini hanya mencakup kakao.';
- else if(!chosen.length||chosen.some(id=>!Object.hasOwn(regions,id)))error='Pilih setidaknya satu kabupaten pilot yang tersedia.';
+ else if(!chosen.length||chosen.some(id=>!Object.hasOwn(regions,id)))error='Pilih setidaknya satu kabupaten/kota Sulawesi Tenggara yang tersedia.';
  if(error){$('#formError').textContent=error;$('#formError').hidden=false;return;}
  applied={kbli:'01273',regions:chosen};$('#formError').hidden=true;
  $('#formStatus').textContent='Kriteria eksplorasi diterapkan. Sorotan mempertahankan status belum direview; inventaris bukti diperbarui.';
- renderAudit();loadZones();
+ updateRegionSelectionCount();renderAudit();loadZones();
 });
 $('#resetButton').addEventListener('click',()=>{$('#criteriaForm').reset();$('#criteriaForm').requestSubmit();});
 function configuration(){return {
  schemaVersion:2,artifactType:'zone-exploration-configuration',module:'zone-exploration',status:'eksplorasi-pilot-pemetaan-belum-direview',
- kbli:{code:applied.kbli,version:'2025',scope:'budidaya-kakao',scopeConfirmed:false},regions:applied.regions.map(id=>({id,name:regions[id]})),
+ kbli:{code:applied.kbli,version:'2025',scope:'budidaya-kakao',scopeConfirmed:false},regions:applied.regions.map(id=>{const region=regionEntries.find(item=>item.id===id);return {id,name:region.name,idNamespace:region.idNamespace,gistaruId:region.gistaruId};}),
  assessments:{zoning:'belum-dinilai'},evaluatedZoneCount:0,containsGeometry:false,
  overlay:{state:zonePhase,planId:zoneData?PILOT_PLAN_ID:null,highlightedFeatureCount:zoneData?.features.length??0,mappingReviewed:false,source:zoneData?{status:zoneData.meta.source.status,retrievedAt:zoneData.meta.source.retrievedAt}:null},
  limitations:['Konfigurasi saja, bukan GeoJSON atau hasil kesesuaian.','Sorotan adalah relevansi kelompok kegiatan lokal; bukan penerimaan exact-KBLI atau izin OSS.','Cakupan pilot Tirawuta saja; wilayah lain belum dievaluasi.','Luas, jalan dan pembuatan polygon merupakan modul terpisah.']
@@ -201,4 +221,4 @@ $('#loadMap').addEventListener('click',async()=>{
  }
 });
 $('#resetMap').addEventListener('click',()=>{if(zoneLayer&&zoneData?.features.length)map.fitBounds(zoneLayer.getBounds(),{padding:[28,28],maxZoom:15});else if(map)map.setView([-4.05,122.1],7);});
-renderAudit();loadAudit();clearZones();setZoneMessage('idle','Aktifkan peta untuk melihat sorotan','Pilot geometri Tirawuta; pemetaan exact-KBLI dan kondisi izin belum direview.');
+renderRegionOptions();renderAudit();loadAudit();clearZones();setZoneMessage('idle','Aktifkan peta untuk melihat sorotan','Pilot geometri Tirawuta; pemetaan exact-KBLI dan kondisi izin belum direview.');

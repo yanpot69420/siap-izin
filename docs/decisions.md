@@ -17,6 +17,7 @@
 | DEC-09 | Lanjutkan tahapan proyek dan tanyakan hal penting yang belum pasti | Disetujui pengguna setelah commit awal; bukan izin pengajuan OSS, penggunaan data klien atau layanan berbayar |
 | DEC-10 | Keluaran SHP dalam ZIP dan KML | Dikonfirmasi melalui formulir; kontrak atribut/unggah masih perlu diuji |
 | DEC-11 | Hapus textfield luas pada eksplorasi; tujuan modul ini hanya melihat zona sesuai KBLI pilihan | Ditegaskan pengguna. Eksplorasi hanya KBLI/wilayah; luas dan preferensi kandidat untuk modul pencarian/pembuatan polygon terpisah |
+| DEC-12 | Buat filter seluruh kabupaten/kota Sulawesi Tenggara | Diminta pengguna. Seluruh 17 pilihan tersedia; geometri tidak otomatis menjadi seluruh provinsi dan pilot kandidat empat kabupaten tetap terpisah |
 
 ## Usulan yang belum otomatis disetujui
 

@@ -18,7 +18,8 @@ AI membantu membaca dan menjelaskan; aturan terverifikasi dan GIS mendukung peme
 |---|---|
 | KBLI input | `01273` |
 | Kegiatan yang diuji | Kakao; budidaya merupakan asumsi ruang lingkup yang perlu dikonfirmasi |
-| Wilayah | Kolaka Timur, Kolaka, Konawe, Konawe Selatan — Sulawesi Tenggara |
+| Wilayah pilot kandidat | Kolaka Timur, Kolaka, Konawe, Konawe Selatan — Sulawesi Tenggara |
+| Cakupan filter eksplorasi | Seluruh 15 kabupaten dan 2 kota Sulawesi Tenggara; bukan klaim cakupan geometri seluruh wilayah |
 | Luas target | `5000m2` untuk modul polygon rencana; bukan input modul eksplorasi |
 | Tujuan | Kesesuaian kegiatan/zona dan indikasi lahan cocok untuk kakao |
 | Jalan | Preferensi pemeringkatan saja, bukan syarat gugur atau batas jarak maksimum |
@@ -28,7 +29,8 @@ Format SHP ZIP dan KML telah dikonfirmasi. Toleransi luas, bentuk/jumlah kandida
 
 ## Dokumen
 
-- [PRD v0.8](docs/PRD.md) — kebutuhan, batas produk dan kriteria penerimaan; bukan persetujuan rilis produksi.
+- [PRD v0.9](docs/PRD.md) — kebutuhan, batas produk dan kriteria penerimaan; bukan persetujuan rilis produksi.
+- [Filter seluruh kabupaten/kota](docs/design/region-filter.md) dan [32 pemeriksaan browser](docs/design/region-filter-verification.json) — 17 pilihan, kontrol massal, cakupan data dan namespace ID.
 - [Discovery pilot kakao](docs/discovery/pilot-kakao.md) — pembacaan awal katalog dan kegiatan.
 - [Audit geometri dan sampel ITBX](docs/discovery/rdtr-geometry-audit.md) — delapan layer; batas audit sumber versus penilaian bidang.
 - [Inventaris sumber data](docs/discovery/data-sources.md) — agronomi, medan, tutupan dan jalan; uji akses serta keterbatasan resolusi.
@@ -50,7 +52,7 @@ python tools/dev_server.py --port 8765
 
 Buka `http://127.0.0.1:8765/prototype/`, lalu pilih **Muat peta publik**. Hentikan server dengan Ctrl+C. Server hanya bind ke loopback; bukan deployment produksi. **Server statis `python -m http.server` tidak menyediakan API geometri.** Tidak memerlukan login atau kredensial.
 
-Modul eksplorasi hanya memakai **KBLI dan wilayah**, tanpa luas atau preferensi jalan. Jika Kolaka Timur dipilih, prototipe memuat polygon filter kegiatan sumber untuk Tirawuta. Pada pengujian 25 Oktober 2026, **20 polygon P-3** tampil dan dapat diklik untuk melihat ID, dasar sorotan, atribut peraturan, waktu sumber dan batas bukti.
+Modul eksplorasi hanya memakai **KBLI dan wilayah**, tanpa luas atau preferensi jalan. Filter menyediakan seluruh **17 kabupaten/kota**, dengan **Pilih semua**, **Kosongkan**, daftar bergulir dan jumlah pilihan. Awal/reset memilih semua; kontrol massal hanya mengubah draf hingga **Terapkan kriteria**. Jika Kolaka Timur dipilih, prototipe memuat polygon filter kegiatan sumber untuk Tirawuta. Pada pengujian 25 Oktober 2026, **20 polygon P-3** tampil dan dapat diklik untuk melihat ID, dasar sorotan, atribut peraturan, waktu sumber dan batas bukti.
 
 **Biru putus-putus berarti relevan untuk ditelaah, bukan diizinkan.** Relasi exact-KBLI belum direview, ruang lingkup budidaya belum dikonfirmasi dan ITBX seluruh bidang belum diperiksa. Tujuh rencana lainnya masih inventaris metadata, bukan sorotan zona terverifikasi. Wilayah di luar cakupan tidak dinyatakan dilarang.
 
@@ -74,7 +76,7 @@ Probe sumber tanpa fallback dapat dijalankan terpisah dengan `python -B tools/de
 
 ## Status dan gerbang berikutnya
 
-**Tersedia:** PRD v0.8, audit RDTR terbatas, inventaris sumber, rancangan rubrik, prototipe eksplorasi dan sorotan nyata satu rencana. Review pengguna belum dianggap selesai hanya karena tes teknis lulus.
+**Tersedia:** PRD v0.9, filter seluruh kabupaten/kota dengan 32 pemeriksaan browser lulus, audit RDTR terbatas, inventaris sumber, rancangan rubrik, prototipe eksplorasi dan sorotan nyata satu rencana. Review pengguna belum dianggap selesai hanya karena tes teknis lulus. Pilihan tanpa inventaris tidak dianggap tanpa RDTR atau dilarang; ID GISTARU yang belum ditemukan tetap null dengan kunci internal eksplisit pada ekspor.
 
 **Berikutnya:** telaah relasi exact-KBLI dan ketentuan Tirawuta sebelum menerbitkan indikasi kesesuaian terverifikasi; perluas rencana secara bertahap dengan validasi yang sama. Pembacaan aturan lengkap, analisis agronomi, persetujuan parameter/rubrik, kandidat, generator GIS, desain produksi dan otomasi OSS belum selesai.
 

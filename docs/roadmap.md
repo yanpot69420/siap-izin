@@ -14,6 +14,7 @@
 | Rubrik dan kontrak keluaran | Draf tersedia, belum disepakati | [Rubrik usulan](design/scoring-rubric.md); format SHP ZIP + KML sudah dipilih, skema/ambang/toleransi masih terbuka |
 | Prototipe eksplorasi | Dibuat dan diuji; review pengguna belum | [Alur dan uji](design/mockup.md); hanya KBLI/wilayah, tanpa kandidat atau ekspor GIS |
 | Sorotan geometri pilot | Terintegrasi dan teruji pada satu RDTR Tirawuta | [20 polygon sumber dan 18 pemeriksaan browser](design/zone-overlay.md); relevan untuk ditelaah, bukan izin/exact-KBLI terverifikasi |
+| Filter seluruh kabupaten/kota | 17 pilihan tersedia; 32 pemeriksaan browser lulus | [Kontrak filter](design/region-filter.md); sumber ID GISTARU baru 11, enam kunci internal eksplisit; bukan perluasan geometri |
 | Desain teknis/backlog/estimasi | Belum difinalisasi | Stack di PRD masih usulan |
 | Mesin produksi/integrasi OSS | Belum dimulai | Prototipe eksplorasi bukan persetujuan seluruh cakupan atau tindakan OSS |
 

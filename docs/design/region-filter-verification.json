@@ -1,0 +1,216 @@
+{
+  "time": "2026-10-25T15:08:32.501Z",
+  "passed": true,
+  "assertionCount": 32,
+  "regionCount": 17,
+  "regionsTested": [
+    {
+      "id": "7406000000",
+      "name": "Kabupaten Bombana"
+    },
+    {
+      "id": "7404000000",
+      "name": "Kabupaten Buton"
+    },
+    {
+      "id": "local:sultra:buton-selatan",
+      "name": "Kabupaten Buton Selatan"
+    },
+    {
+      "id": "7414000000",
+      "name": "Kabupaten Buton Tengah"
+    },
+    {
+      "id": "local:sultra:buton-utara",
+      "name": "Kabupaten Buton Utara"
+    },
+    {
+      "id": "7401000000",
+      "name": "Kabupaten Kolaka"
+    },
+    {
+      "id": "7411000000",
+      "name": "Kabupaten Kolaka Timur"
+    },
+    {
+      "id": "local:sultra:kolaka-utara",
+      "name": "Kabupaten Kolaka Utara"
+    },
+    {
+      "id": "7402000000",
+      "name": "Kabupaten Konawe"
+    },
+    {
+      "id": "7412000000",
+      "name": "Kabupaten Konawe Kepulauan"
+    },
+    {
+      "id": "7405000000",
+      "name": "Kabupaten Konawe Selatan"
+    },
+    {
+      "id": "7409000000",
+      "name": "Kabupaten Konawe Utara"
+    },
+    {
+      "id": "local:sultra:muna",
+      "name": "Kabupaten Muna"
+    },
+    {
+      "id": "local:sultra:muna-barat",
+      "name": "Kabupaten Muna Barat"
+    },
+    {
+      "id": "7407000000",
+      "name": "Kabupaten Wakatobi"
+    },
+    {
+      "id": "local:sultra:baubau",
+      "name": "Kota Baubau"
+    },
+    {
+      "id": "7471000000",
+      "name": "Kota Kendari"
+    }
+  ],
+  "results": [
+    {
+      "test": "Semua 17 kabupaten/kota tersedia dan terpilih awal",
+      "passed": true
+    },
+    {
+      "test": "Counter awal dan cakupan inventaris jujur",
+      "passed": true
+    },
+    {
+      "test": "Kosongkan hanya draf; konfigurasi terapan tetap",
+      "passed": true
+    },
+    {
+      "test": "Wilayah kosong ditolak tanpa mengganti konfigurasi",
+      "passed": true
+    },
+    {
+      "test": "Pilih semua memulihkan 17 draf",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Bombana",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Buton",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Buton Selatan",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Buton Tengah",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Buton Utara",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Kolaka",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Kolaka Timur",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Kolaka Utara",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Konawe",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Konawe Kepulauan",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Konawe Selatan",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Konawe Utara",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Muna",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Muna Barat",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kabupaten Wakatobi",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kota Baubau",
+      "passed": true
+    },
+    {
+      "test": "Pilihan individual: Kota Kendari",
+      "passed": true
+    },
+    {
+      "test": "Pilihan campuran kota/kabupaten dan namespace diekspor jelas",
+      "passed": true
+    },
+    {
+      "test": "Wilayah baru tidak memunculkan polygon pilot atau menyatakan dilarang",
+      "passed": true
+    },
+    {
+      "test": "Reset 17 wilayah tetap mempertahankan sorotan sumber Tirawuta",
+      "passed": true
+    },
+    {
+      "test": "Perubahan draf tidak menghapus atau mengganti sorotan terapan",
+      "passed": true
+    },
+    {
+      "test": "Submit kosong tidak merusak sorotan terapan",
+      "passed": true
+    },
+    {
+      "test": "Checkbox dapat diubah dengan keyboard tanpa menerapkan draf",
+      "passed": true
+    },
+    {
+      "test": "Unduhan nyata 17 wilayah dibaca ulang dan cocok dengan pratinjau",
+      "passed": true
+    },
+    {
+      "test": "Desktop tanpa overflow dan daftar bisa digulir",
+      "passed": true
+    },
+    {
+      "test": "Seluler tanpa overflow; kota terakhir bisa dijangkau lewat gulir",
+      "passed": true
+    },
+    {
+      "test": "Tidak ada exception JavaScript",
+      "passed": true
+    }
+  ],
+  "source": {
+    "counts": {
+      "excludedInvalid": 0,
+      "matched": 20,
+      "returned": 20
+    },
+    "status": "cached_snapshot",
+    "retrievedAt": "2026-10-25T15:07:41.818094Z"
+  },
+  "javascriptExceptions": []
+}
