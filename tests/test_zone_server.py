@@ -23,7 +23,7 @@ class QueryTests(unittest.TestCase):
         for query in ['', 'plan=7411000000:001', 'plan=7411000000:001&kbli=1273',
                       'plan=7411000000:001&kbli=01273&kbli=01273',
                       'plan=7411000000:001&plan=7411000000:001&kbli=01273',
-                      'plan=7411000000:002&kbli=01273',
+                      'plan=7411000000:003&kbli=01273',
                       'plan=7411000000:001&kbli=01273&url=https://example.org',
                       'plan=7411000000:001&kbli=+01273',
                       'plan=7411000000:001&kbli=%30%31%32%37%33',
@@ -54,8 +54,12 @@ class FixtureSource:
         self.server = server
         self.ids = list(range(1, total + 1))
         self.calls = []
+        self.catalog = {'status': 200, 'data': [{
+            'id_wilayah': '7411000000', 'id_rtr': '001', 'rtr': 'RDTR Kawasan Perkotaan Tirawuta',
+            'url_mapserver': server.context_for(server.PLAN_ID).service_path,
+            'sublayer_mapserver': 0, 'kolom_unik': 'KODSZN'}]}
         self.activities = {'status': 200, 'data': [
-            {'id_kegiatan': '041', 'kegiatan': 'Fixture broad activity',
+            {'id_kegiatan': '041', 'kegiatan': 'Perkebunan tanaman aromatik/penyegar',
              'nilai_kolom_unik': json.dumps({'data': ['P-3']})}]}
         self.metadata = {'name': 'Fixture Tirawuta layer',
                          'geometryType': 'esriGeometryPolygon',
@@ -68,7 +72,9 @@ class FixtureSource:
 
     def __call__(self, url, params=None):
         self.calls.append((url, params))
-        if url == self.server.ACTIVITIES_URL:
+        if url == self.server.context_for(self.server.PLAN_ID).catalog_url:
+            data = self.catalog
+        elif url == self.server.ACTIVITIES_URL:
             data = self.activities
         elif url == self.server.METADATA_URL:
             data = self.metadata
@@ -187,10 +193,10 @@ class SourceTests(unittest.TestCase):
         feature = result['features'][0]
         self.assertEqual(feature['id'], 1)
         self.assertEqual(feature['properties'], {
-            'object_id': 1, 'zone_code': 'P-3', 'zone_name': 'Fixture subzone',
+            'object_id': 1, 'zone_code': 'P-3', 'filter_value': 'P-3', 'zone_name': 'Fixture subzone',
             'zone_group': 'Fixture group', 'regulation': None,
             'plan_id': '7411000000:001', 'activity_id': '041',
-            'activity_name': 'Fixture broad activity',
+            'activity_name': 'Perkebunan tanaman aromatik/penyegar',
             'evidence_status': 'unreviewed_mapping', 'permission': 'unknown'})
         batches = [p for u, p in fixture.calls if p and 'objectIds' in p]
         self.assertEqual([len(p['objectIds'].split(',')) for p in batches], [200, 1])
@@ -275,7 +281,7 @@ class CacheTests(unittest.TestCase):
             self.assertEqual(second['meta']['source']['cacheReason'], 'fresh_cache_ttl')
             stamp = first['meta']['source']['retrievedAt']
             self.assertEqual(second['meta']['source']['retrievedAt'], stamp)
-            self.assertEqual(len(fixture.calls), 5)
+            self.assertEqual(len(fixture.calls), 6)
             def network_failure(*args):
                 raise server.APIError('upstream_network')
             fallback = server.ZoneService(cache, fetch_factory=lambda: network_failure, ttl=0)
@@ -294,6 +300,95 @@ class CacheTests(unittest.TestCase):
                              ['meta']['source']['retrievedAt'], stamp)
             with self.assertRaises(server.APIError):
                 expired.get_zones(force_live=True, allow_fallback=False)
+
+    def test_network_fallback_uses_age_after_refresh_without_extending_snapshot(self):
+        from datetime import datetime, timedelta, timezone
+        from unittest.mock import patch
+        server = load_server()
+        acquired = datetime(2026, 1, 1, tzinfo=timezone.utc)
+        for refresh_seconds in (2, 1, 0):
+            with self.subTest(refresh_seconds=refresh_seconds), tempfile.TemporaryDirectory(
+                    prefix='zone-fixture-') as directory, patch.object(server, 'datetime', wraps=datetime) as clock:
+                clock.now.return_value = acquired
+                fixture = FixtureSource(server, 1)
+                service = server.ZoneService(Path(directory).resolve(), fetch_factory=lambda: fixture,
+                                             ttl=0, max_stale=3600)
+                original = service.get_zones()
+                original_bytes = service.cache_path.read_bytes()
+                original_mtime = service.cache_path.stat().st_mtime_ns
+                clock.now.return_value = acquired + timedelta(seconds=3599)
+                self.assertEqual(service._read_cache()[1], 3599)
+
+                def network_failure(*args):
+                    clock.now.return_value += timedelta(seconds=refresh_seconds)
+                    raise server.APIError('upstream_network')
+
+                service.fetch_factory = lambda: network_failure
+                if refresh_seconds:
+                    with self.assertRaises(server.APIError) as error:
+                        service.get_zones()
+                    self.assertEqual(error.exception.code, 'upstream_network')
+                else:
+                    fallback = service.get_zones()
+                    self.assertEqual(fallback['meta']['source']['status'], 'cached_snapshot')
+                    self.assertEqual(fallback['meta']['source']['cacheReason'], 'upstream_network')
+                    self.assertEqual(fallback['meta']['source']['retrievedAt'],
+                                     original['meta']['source']['retrievedAt'])
+                    clock.now.return_value = acquired + timedelta(seconds=3600)
+                    with self.assertRaises(server.APIError) as error:
+                        service.get_zones()
+                    self.assertEqual(error.exception.code, 'upstream_network')
+                self.assertEqual(service.cache_path.read_bytes(), original_bytes)
+                self.assertEqual(service.cache_path.stat().st_mtime_ns, original_mtime)
+
+    def test_geometry_validation_time_counts_against_ttl_and_fallback_limits(self):
+        from datetime import datetime, timedelta, timezone
+        from unittest.mock import patch
+        server = load_server()
+        acquired = datetime(2026, 1, 1, tzinfo=timezone.utc)
+        for initial_age in (299, 3599):
+            with self.subTest(initial_age=initial_age), tempfile.TemporaryDirectory(
+                    prefix='zone-fixture-') as directory, patch.object(server, 'datetime', wraps=datetime) as clock:
+                clock.now.return_value = acquired
+                fixture = FixtureSource(server, 1)
+                service = server.ZoneService(Path(directory).resolve(), fetch_factory=lambda: fixture)
+                original = service.get_zones()
+                original_bytes = service.cache_path.read_bytes()
+                original_mtime = service.cache_path.stat().st_mtime_ns
+                clock.now.return_value = acquired + timedelta(seconds=initial_age)
+                self.assertEqual(service._read_cache()[1], initial_age)
+                refresh_failed = False
+
+                def network_failure(*args):
+                    nonlocal refresh_failed
+                    refresh_failed = True
+                    raise server.APIError('upstream_network')
+
+                geometry_problem = server.geometry_problem
+                def slow_geometry_validation(geometry):
+                    # For max_stale, advance only during the post-failure validation.
+                    if initial_age == 299 or refresh_failed:
+                        clock.now.return_value = acquired + timedelta(seconds=initial_age + 2)
+                    return geometry_problem(geometry)
+
+                failure = Mock(side_effect=network_failure)
+                service.fetch_factory = lambda: failure
+                with patch.object(server, 'geometry_problem', side_effect=slow_geometry_validation):
+                    if initial_age == 299:
+                        fallback = service.get_zones()
+                        self.assertEqual(fallback['meta']['source']['cacheReason'], 'upstream_network')
+                        self.assertEqual(fallback['meta']['source']['retrievedAt'],
+                                         original['meta']['source']['retrievedAt'])
+                    else:
+                        with self.assertRaises(server.APIError) as error:
+                            service.get_zones()
+                        self.assertEqual(error.exception.code, 'upstream_network')
+                failure.assert_called_once()
+                self.assertEqual(clock.now.return_value, acquired + timedelta(seconds=initial_age + 2))
+                self.assertEqual(service.cache_path.read_bytes(), original_bytes)
+                self.assertEqual(service.cache_path.stat().st_mtime_ns, original_mtime)
+                self.assertEqual(server.strict_json(original_bytes)['data']['payload']['meta']['source'],
+                                 original['meta']['source'])
 
     def test_fixture_cache_corruption_rejected_and_no_partial_write(self):
         server = load_server()
@@ -405,7 +500,7 @@ class CLITests(unittest.TestCase):
             self.assertEqual(report['counts']['matched'], 2)
             self.assertGreater(report['responseBytes'], 500)
             self.assertTrue(report['completeResponseVerified'])
-            self.assertEqual(len(fixture.calls), 5)
+            self.assertEqual(len(fixture.calls), 6)
 
 
 if __name__ == '__main__':

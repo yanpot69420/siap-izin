@@ -1,4 +1,6 @@
-# API zona lokal: Tirawuta saja
+# API zona lokal — checkpoint historis Tirawuta
+
+**Dokumen historis 25 Oktober 2026.** Untuk versi lintas-rencana berjalan gunakan [kontrak provinsi](province-api.md). Pembatasan satu rencana dan angka uji di bawah merekam checkpoint lama, bukan cakupan aplikasi sekarang.
 
 Backend pengembangan ini menyajikan `prototype/` dan satu irisan RDTR resmi untuk sorotan **belum direview**. Tidak menyediakan kandidat bidang, luas, jalan, overlay bidang, warna izin, delapan rencana, atau proxy URL umum. Frontend telah diintegrasikan melalui endpoint di bawah.
 

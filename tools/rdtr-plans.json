@@ -1,0 +1,566 @@
+{
+  "schemaVersion": 1,
+  "kbli": "01273",
+  "province": {
+    "id": "7400000000",
+    "name": "Sulawesi Tenggara"
+  },
+  "checkedAt": "2026-10-25T15:29:06.943216+00:00",
+  "sourceStatus": "curated_source_snapshot",
+  "citiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/cities/7400000000",
+  "regions": [
+    {
+      "id": "7406000000",
+      "name": "Kabupaten Bombana",
+      "type": "kabupaten",
+      "gistaruId": "7406000000",
+      "idNamespace": "gistaru",
+      "planIds": [
+        "7406000000:001"
+      ],
+      "catalogStatus": "listed"
+    },
+    {
+      "id": "7404000000",
+      "name": "Kabupaten Buton",
+      "type": "kabupaten",
+      "gistaruId": "7404000000",
+      "idNamespace": "gistaru",
+      "planIds": [
+        "7404000000:001"
+      ],
+      "catalogStatus": "listed"
+    },
+    {
+      "id": "local:sultra:buton-selatan",
+      "name": "Kabupaten Buton Selatan",
+      "type": "kabupaten",
+      "gistaruId": null,
+      "idNamespace": "internal",
+      "planIds": [],
+      "catalogStatus": "not_listed_in_public_catalog"
+    },
+    {
+      "id": "7414000000",
+      "name": "Kabupaten Buton Tengah",
+      "type": "kabupaten",
+      "gistaruId": "7414000000",
+      "idNamespace": "gistaru",
+      "planIds": [
+        "7414000000:001",
+        "7414000000:002"
+      ],
+      "catalogStatus": "listed"
+    },
+    {
+      "id": "local:sultra:buton-utara",
+      "name": "Kabupaten Buton Utara",
+      "type": "kabupaten",
+      "gistaruId": null,
+      "idNamespace": "internal",
+      "planIds": [],
+      "catalogStatus": "not_listed_in_public_catalog"
+    },
+    {
+      "id": "7401000000",
+      "name": "Kabupaten Kolaka",
+      "type": "kabupaten",
+      "gistaruId": "7401000000",
+      "idNamespace": "gistaru",
+      "planIds": [
+        "7401000000:001",
+        "7401000000:002"
+      ],
+      "catalogStatus": "listed"
+    },
+    {
+      "id": "7411000000",
+      "name": "Kabupaten Kolaka Timur",
+      "type": "kabupaten",
+      "gistaruId": "7411000000",
+      "idNamespace": "gistaru",
+      "planIds": [
+        "7411000000:001",
+        "7411000000:002"
+      ],
+      "catalogStatus": "listed"
+    },
+    {
+      "id": "local:sultra:kolaka-utara",
+      "name": "Kabupaten Kolaka Utara",
+      "type": "kabupaten",
+      "gistaruId": null,
+      "idNamespace": "internal",
+      "planIds": [],
+      "catalogStatus": "not_listed_in_public_catalog"
+    },
+    {
+      "id": "7402000000",
+      "name": "Kabupaten Konawe",
+      "type": "kabupaten",
+      "gistaruId": "7402000000",
+      "idNamespace": "gistaru",
+      "planIds": [
+        "7402000000:003",
+        "7402000000:002"
+      ],
+      "catalogStatus": "listed"
+    },
+    {
+      "id": "7412000000",
+      "name": "Kabupaten Konawe Kepulauan",
+      "type": "kabupaten",
+      "gistaruId": "7412000000",
+      "idNamespace": "gistaru",
+      "planIds": [
+        "7412000000:001"
+      ],
+      "catalogStatus": "listed"
+    },
+    {
+      "id": "7405000000",
+      "name": "Kabupaten Konawe Selatan",
+      "type": "kabupaten",
+      "gistaruId": "7405000000",
+      "idNamespace": "gistaru",
+      "planIds": [
+        "7405000000:002",
+        "7405000000:001"
+      ],
+      "catalogStatus": "listed"
+    },
+    {
+      "id": "7409000000",
+      "name": "Kabupaten Konawe Utara",
+      "type": "kabupaten",
+      "gistaruId": "7409000000",
+      "idNamespace": "gistaru",
+      "planIds": [
+        "7409000000:001"
+      ],
+      "catalogStatus": "listed"
+    },
+    {
+      "id": "local:sultra:muna",
+      "name": "Kabupaten Muna",
+      "type": "kabupaten",
+      "gistaruId": null,
+      "idNamespace": "internal",
+      "planIds": [],
+      "catalogStatus": "not_listed_in_public_catalog"
+    },
+    {
+      "id": "local:sultra:muna-barat",
+      "name": "Kabupaten Muna Barat",
+      "type": "kabupaten",
+      "gistaruId": null,
+      "idNamespace": "internal",
+      "planIds": [],
+      "catalogStatus": "not_listed_in_public_catalog"
+    },
+    {
+      "id": "7407000000",
+      "name": "Kabupaten Wakatobi",
+      "type": "kabupaten",
+      "gistaruId": "7407000000",
+      "idNamespace": "gistaru",
+      "planIds": [
+        "7407000000:002",
+        "7407000000:001",
+        "7407000000:003"
+      ],
+      "catalogStatus": "listed"
+    },
+    {
+      "id": "local:sultra:baubau",
+      "name": "Kota Baubau",
+      "type": "kota",
+      "gistaruId": null,
+      "idNamespace": "internal",
+      "planIds": [],
+      "catalogStatus": "not_listed_in_public_catalog"
+    },
+    {
+      "id": "7471000000",
+      "name": "Kota Kendari",
+      "type": "kota",
+      "gistaruId": "7471000000",
+      "idNamespace": "gistaru",
+      "planIds": [
+        "7471000000:001"
+      ],
+      "catalogStatus": "listed"
+    }
+  ],
+  "plans": [
+    {
+      "id": "7401000000:001",
+      "regionId": "7401000000",
+      "rtr": "001",
+      "name": "RDTR Kawasan Perkotaan Kolaka",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7401000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7401000000&id_rtr=001",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A4_KAWASAN_PERKOTAAN_KOLAKA_KABUPATEN_KOLAKA/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "025",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2023-08-09T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7401000000:002",
+      "regionId": "7401000000",
+      "rtr": "002",
+      "name": "RDTR Kawasan Perkotaan Wolo",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7401000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7401000000&id_rtr=002",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B9_KAWASAN_PERKOTAAN_WOLO/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "034",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "sourceStatus": 5,
+      "integrationDate": null,
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7402000000:003",
+      "regionId": "7402000000",
+      "rtr": "003",
+      "name": "RDTR Wilayah Perencanaan Routa",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7402000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7402000000&id_rtr=003",
+      "servicePath": "PARKIRAN/_RDTR_7402_WP_ROUTA/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 32749,
+      "activity": {
+        "id": "043",
+        "name": "Perkebunan Tanaman Aromatik/Penyegaran",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2025-12-15T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7402000000:002",
+      "regionId": "7402000000",
+      "rtr": "002",
+      "name": "RDTR Pondidaha",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7402000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7402000000&id_rtr=002",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A3_WILAYAH_PERENCANAAN_PONDIDAHA/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "016",
+        "name": "PERKEBUNAN TANAMAN AROMATIK/PENYEGAR",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2025-12-15T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7404000000:001",
+      "regionId": "7404000000",
+      "rtr": "001",
+      "name": "RDTR Kec.Lasalimu",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7404000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7404000000&id_rtr=001",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B1_KECAMATAN_LASALIMU/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "014",
+        "name": "Pertanian Tanaman Untuk Bahan Minuman",
+        "mappingReviewed": false,
+        "basis": "candidate_beverage_crop_group_kbli0127_not_exact_crosswalk"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2026-07-22T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7405000000:002",
+      "regionId": "7405000000",
+      "rtr": "002",
+      "name": "RDTR Wilayah Perencanaan Laonti",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7405000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7405000000&id_rtr=002",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B6_WILAYAH_PERENCANAAN_LAONTI/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "044",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2025-12-15T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7405000000:001",
+      "regionId": "7405000000",
+      "rtr": "001",
+      "name": "RDTR Wilayah Perencanaan Angata",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7405000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7405000000&id_rtr=001",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B5_WILAYAH_PERENCANAAN_ANGATA/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 32751,
+      "activity": {
+        "id": "044",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2025-12-15T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7406000000:001",
+      "regionId": "7406000000",
+      "rtr": "001",
+      "name": "RDTR Kawasan Perkotaan Rumbia",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7406000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7406000000&id_rtr=001",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A2_KAWASAN_PERKOTAAN_RUMBIA/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "043",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2023-08-09T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7407000000:002",
+      "geometryBatchSize": 5,
+      "regionId": "7407000000",
+      "rtr": "002",
+      "name": "RDTR Matahora Sekitar Kawasan Pariwisata",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7407000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7407000000&id_rtr=002",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A6_MATAHORA_SEKITAR_KAWASAN_PARIWISATA/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "060",
+        "name": "Pertanian Tanaman untuk Bahan Minimum",
+        "mappingReviewed": false,
+        "basis": "candidate_beverage_crop_group_source_typo"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2023-08-09T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7407000000:001",
+      "regionId": "7407000000",
+      "rtr": "001",
+      "name": "RDTR Perkotaan Wangi-Wangi",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7407000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7407000000&id_rtr=001",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A5_KAWASAN_PERKOTAAN_WANGI_WANGI/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "060",
+        "name": "Pertanian Tanaman untuk Bahan Minimum",
+        "mappingReviewed": false,
+        "basis": "candidate_beverage_crop_group_source_typo"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2023-09-15T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7407000000:003",
+      "regionId": "7407000000",
+      "rtr": "003",
+      "name": "RDTR Kawasan Perktoaan Usuku dan Sekitarnya",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7407000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7407000000&id_rtr=003",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B8_KAWASAN_PERKOTAAN_USUKU_DSK/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "039",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2025-09-18T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7409000000:001",
+      "regionId": "7409000000",
+      "rtr": "001",
+      "name": "RDTR Kawasan Perkotaan Wanggudu",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7409000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7409000000&id_rtr=001",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B4_KAWASAN_PERKOTAAN_WANGGUDU/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": null,
+      "sourceStatus": 6,
+      "integrationDate": "2025-10-09T00:00:00",
+      "mappingStatus": "activity_mapping_unavailable"
+    },
+    {
+      "id": "7411000000:001",
+      "regionId": "7411000000",
+      "rtr": "001",
+      "name": "RDTR Kawasan Perkotaan Tirawuta",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7411000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7411000000&id_rtr=001",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A8_KAWASAN_PERKOTAAN_TIRAWUTA/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "041",
+        "name": "Perkebunan tanaman aromatik/penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2024-12-30T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7411000000:002",
+      "regionId": "7411000000",
+      "rtr": "002",
+      "name": "RDTR Kawasan Agropolitan Mowewe, Lalolae, Tinondo",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7411000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7411000000&id_rtr=002",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B2_KAWASAN_AGROPOLITAN_MOWEWE_LALOLAE_TINONDO/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "041",
+        "name": "Perkebunan tanaman aromatik/penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2025-12-15T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7412000000:001",
+      "regionId": "7412000000",
+      "rtr": "001",
+      "name": "RDTR Kawasan Perkotaan Langara",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7412000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7412000000&id_rtr=001",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A9_KAWASAN_PERKOTAAN_LANGARA/MapServer",
+      "sublayer": 0,
+      "filterField": "KODUNK",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "320",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2025-07-31T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7414000000:001",
+      "regionId": "7414000000",
+      "rtr": "001",
+      "name": "RDTR Kawasan Perkotaan Labungkari",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7414000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7414000000&id_rtr=001",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A7_KAWASAN_PERKOTAAN_LABUNGKARI/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "002",
+        "name": "Pertanian Tanaman Tahunan",
+        "mappingReviewed": false,
+        "basis": "candidate_perennial_crop_group"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2024-05-17T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7414000000:002",
+      "regionId": "7414000000",
+      "rtr": "002",
+      "name": "RDTR Kawasan Perkotaan Mawasangka",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7414000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7414000000&id_rtr=002",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B7_KAWASAN_PERKOTAAN_MAWASANGKA/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": {
+        "id": "043",
+        "name": "Perkebunan Tanaman Aromatik/Penyegaran",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "sourceStatus": 6,
+      "integrationDate": "2025-12-15T00:00:00",
+      "mappingStatus": "unreviewed_relation"
+    },
+    {
+      "id": "7471000000:001",
+      "regionId": "7471000000",
+      "rtr": "001",
+      "name": "RDTR WP I Central Business Districk (CBD) Teluk Kendari",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7471000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7471000000&id_rtr=001",
+      "servicePath": "071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A1_BWP_I_CBD_TELUK_KENDARI/MapServer",
+      "sublayer": 0,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "activity": null,
+      "sourceStatus": 6,
+      "integrationDate": "2023-03-28T00:00:00",
+      "mappingStatus": "activity_mapping_unavailable"
+    }
+  ]
+}

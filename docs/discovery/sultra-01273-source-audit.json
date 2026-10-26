@@ -1,0 +1,960 @@
+{
+  "checkedAt": "2026-10-25T15:44:36.522584+00:00",
+  "discoveredPlanCount": 18,
+  "geometryReconciledPlanCount": 16,
+  "activityMappingUnavailablePlanCount": 2,
+  "counts": {
+    "matched": 6009,
+    "returned": 5994,
+    "excludedInvalid": 15
+  },
+  "plans": [
+    {
+      "id": "7401000000:001",
+      "name": "RDTR Kawasan Perkotaan Kolaka",
+      "regionId": "7401000000",
+      "activity": {
+        "id": "025",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "PS",
+        "RTH-8",
+        "EM",
+        "P-3",
+        "R-4",
+        "R-5"
+      ],
+      "counts": {
+        "matched": 1054,
+        "returned": 1054,
+        "excludedInvalid": 0
+      }
+    },
+    {
+      "id": "7401000000:002",
+      "name": "RDTR Kawasan Perkotaan Wolo",
+      "regionId": "7401000000",
+      "activity": {
+        "id": "034",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "R-3",
+        "R-4",
+        "K-3",
+        "P-1",
+        "P-2",
+        "P-3",
+        "W"
+      ],
+      "counts": {
+        "matched": 254,
+        "returned": 253,
+        "excludedInvalid": 1
+      }
+    },
+    {
+      "id": "7402000000:003",
+      "name": "RDTR Wilayah Perencanaan Routa",
+      "regionId": "7402000000",
+      "activity": {
+        "id": "043",
+        "name": "Perkebunan Tanaman Aromatik/Penyegaran",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 32749,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "P-1",
+        "P-2",
+        "P-3"
+      ],
+      "counts": {
+        "matched": 1688,
+        "returned": 1688,
+        "excludedInvalid": 0
+      }
+    },
+    {
+      "id": "7402000000:002",
+      "name": "RDTR Pondidaha",
+      "regionId": "7402000000",
+      "activity": {
+        "id": "016",
+        "name": "PERKEBUNAN TANAMAN AROMATIK/PENYEGAR",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "P-2",
+        "P-3"
+      ],
+      "counts": {
+        "matched": 197,
+        "returned": 196,
+        "excludedInvalid": 1
+      }
+    },
+    {
+      "id": "7404000000:001",
+      "name": "RDTR Kec.Lasalimu",
+      "regionId": "7404000000",
+      "activity": {
+        "id": "014",
+        "name": "Pertanian Tanaman Untuk Bahan Minuman",
+        "mappingReviewed": false,
+        "basis": "candidate_beverage_crop_group_kbli0127_not_exact_crosswalk"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "P-2",
+        "P-3",
+        "R-5"
+      ],
+      "counts": {
+        "matched": 182,
+        "returned": 178,
+        "excludedInvalid": 4
+      }
+    },
+    {
+      "id": "7405000000:002",
+      "name": "RDTR Wilayah Perencanaan Laonti",
+      "regionId": "7405000000",
+      "activity": {
+        "id": "044",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "RTH-1",
+        "P-2",
+        "P-3",
+        "R-3",
+        "R-4"
+      ],
+      "counts": {
+        "matched": 322,
+        "returned": 321,
+        "excludedInvalid": 1
+      }
+    },
+    {
+      "id": "7405000000:001",
+      "name": "RDTR Wilayah Perencanaan Angata",
+      "regionId": "7405000000",
+      "activity": {
+        "id": "044",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 32751,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "RTH-2",
+        "P-1",
+        "P-2",
+        "P-3",
+        "R-3",
+        "R-4",
+        "R-5"
+      ],
+      "counts": {
+        "matched": 381,
+        "returned": 380,
+        "excludedInvalid": 1
+      }
+    },
+    {
+      "id": "7406000000:001",
+      "name": "RDTR Kawasan Perkotaan Rumbia",
+      "regionId": "7406000000",
+      "activity": {
+        "id": "043",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "P-3"
+      ],
+      "counts": {
+        "matched": 51,
+        "returned": 51,
+        "excludedInvalid": 0
+      }
+    },
+    {
+      "id": "7407000000:002",
+      "name": "RDTR Matahora Sekitar Kawasan Pariwisata",
+      "regionId": "7407000000",
+      "activity": {
+        "id": "060",
+        "name": "Pertanian Tanaman untuk Bahan Minimum",
+        "mappingReviewed": false,
+        "basis": "candidate_beverage_crop_group_source_typo"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "P-3"
+      ],
+      "counts": {
+        "matched": 58,
+        "returned": 57,
+        "excludedInvalid": 1
+      }
+    },
+    {
+      "id": "7407000000:001",
+      "name": "RDTR Perkotaan Wangi-Wangi",
+      "regionId": "7407000000",
+      "activity": {
+        "id": "060",
+        "name": "Pertanian Tanaman untuk Bahan Minimum",
+        "mappingReviewed": false,
+        "basis": "candidate_beverage_crop_group_source_typo"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "KR",
+        "P-1",
+        "P-3",
+        "KPI"
+      ],
+      "counts": {
+        "matched": 72,
+        "returned": 72,
+        "excludedInvalid": 0
+      }
+    },
+    {
+      "id": "7407000000:003",
+      "name": "RDTR Kawasan Perktoaan Usuku dan Sekitarnya",
+      "regionId": "7407000000",
+      "activity": {
+        "id": "039",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "HL",
+        "P-3",
+        "R-4"
+      ],
+      "counts": {
+        "matched": 389,
+        "returned": 383,
+        "excludedInvalid": 6
+      }
+    },
+    {
+      "id": "7409000000:001",
+      "name": "RDTR Kawasan Perkotaan Wanggudu",
+      "regionId": "7409000000",
+      "activity": null,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "activity_mapping_unavailable"
+    },
+    {
+      "id": "7411000000:001",
+      "name": "RDTR Kawasan Perkotaan Tirawuta",
+      "regionId": "7411000000",
+      "activity": {
+        "id": "041",
+        "name": "Perkebunan tanaman aromatik/penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "P-3"
+      ],
+      "counts": {
+        "matched": 20,
+        "returned": 20,
+        "excludedInvalid": 0
+      }
+    },
+    {
+      "id": "7411000000:002",
+      "name": "RDTR Kawasan Agropolitan Mowewe, Lalolae, Tinondo",
+      "regionId": "7411000000",
+      "activity": {
+        "id": "041",
+        "name": "Perkebunan tanaman aromatik/penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "P-2",
+        "P-3",
+        "R-4",
+        "R-5"
+      ],
+      "counts": {
+        "matched": 373,
+        "returned": 373,
+        "excludedInvalid": 0
+      }
+    },
+    {
+      "id": "7412000000:001",
+      "name": "RDTR Kawasan Perkotaan Langara",
+      "regionId": "7412000000",
+      "activity": {
+        "id": "320",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODUNK",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "HPK.00",
+        "HPK.01",
+        "HPK.02",
+        "P-2.00",
+        "P-2.01",
+        "P-2.02",
+        "P-2.03",
+        "P-2.04",
+        "P-3.00",
+        "P-3.01",
+        "P-3.02",
+        "P-3.03",
+        "P-3.04",
+        "P-3.05",
+        "P-3.06",
+        "P-3.07",
+        "P-3.08",
+        "P-3.09",
+        "P-4.01",
+        "P-4.02"
+      ],
+      "counts": {
+        "matched": 502,
+        "returned": 502,
+        "excludedInvalid": 0
+      }
+    },
+    {
+      "id": "7414000000:001",
+      "name": "RDTR Kawasan Perkotaan Labungkari",
+      "regionId": "7414000000",
+      "activity": {
+        "id": "002",
+        "name": "Pertanian Tanaman Tahunan",
+        "mappingReviewed": false,
+        "basis": "candidate_perennial_crop_group"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "PS",
+        "P-3",
+        "KPI",
+        "W",
+        "R-4",
+        "R-5",
+        "SPU-1",
+        "SPU-2",
+        "SPU-3",
+        "PL-6"
+      ],
+      "counts": {
+        "matched": 346,
+        "returned": 346,
+        "excludedInvalid": 0
+      }
+    },
+    {
+      "id": "7414000000:002",
+      "name": "RDTR Kawasan Perkotaan Mawasangka",
+      "regionId": "7414000000",
+      "activity": {
+        "id": "043",
+        "name": "Perkebunan Tanaman Aromatik/Penyegaran",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "source_reconciled",
+      "filterZoneCodes": [
+        "RTH-1",
+        "RTH-2",
+        "RTH-3",
+        "RTH-4",
+        "RTH-5",
+        "P-3",
+        "R-3",
+        "R-4"
+      ],
+      "counts": {
+        "matched": 120,
+        "returned": 120,
+        "excludedInvalid": 0
+      }
+    },
+    {
+      "id": "7471000000:001",
+      "name": "RDTR WP I Central Business Districk (CBD) Teluk Kendari",
+      "regionId": "7471000000",
+      "activity": null,
+      "filterField": "KODSZN",
+      "nativeWkid": 4326,
+      "status": "activity_mapping_unavailable"
+    }
+  ],
+  "pointSamples": {
+    "count": 32,
+    "locationMatches": 32,
+    "filterMatches": 32,
+    "categories": {
+      "terbatas_pada_titik": 9,
+      "diizinkan_pada_titik": 19,
+      "terbatas_bersyarat_pada_titik": 4
+    },
+    "records": [
+      {
+        "planId": "7401000000:001",
+        "objectId": 4717,
+        "actualPlanId": "7401000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "025",
+        "pointCategories": [
+          "terbatas_pada_titik"
+        ],
+        "pointConditions": [
+          "pembatasan luas"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7401000000:001",
+        "objectId": 4718,
+        "actualPlanId": "7401000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "025",
+        "pointCategories": [
+          "terbatas_pada_titik"
+        ],
+        "pointConditions": [
+          "pembatasan luas"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7401000000:002",
+        "objectId": 182,
+        "actualPlanId": "7401000000:002",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "034",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7401000000:002",
+        "objectId": 183,
+        "actualPlanId": "7401000000:002",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "034",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7402000000:003",
+        "objectId": 1,
+        "actualPlanId": "7402000000:003",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "043",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7402000000:003",
+        "objectId": 3,
+        "actualPlanId": "7402000000:003",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "043",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7402000000:002",
+        "objectId": 3,
+        "actualPlanId": "7402000000:002",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "016",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7402000000:002",
+        "objectId": 4,
+        "actualPlanId": "7402000000:002",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "016",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7404000000:001",
+        "objectId": 9,
+        "actualPlanId": "7404000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "014",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7404000000:001",
+        "objectId": 10,
+        "actualPlanId": "7404000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "014",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7405000000:002",
+        "objectId": 3,
+        "actualPlanId": "7405000000:002",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "044",
+        "pointCategories": [
+          "terbatas_pada_titik"
+        ],
+        "pointConditions": [
+          "T2"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7405000000:002",
+        "objectId": 4,
+        "actualPlanId": "7405000000:002",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "044",
+        "pointCategories": [
+          "terbatas_pada_titik"
+        ],
+        "pointConditions": [
+          "T2"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7405000000:001",
+        "objectId": 25,
+        "actualPlanId": "7405000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "044",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7405000000:001",
+        "objectId": 26,
+        "actualPlanId": "7405000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "044",
+        "pointCategories": [
+          "terbatas_pada_titik"
+        ],
+        "pointConditions": [
+          "T2"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7406000000:001",
+        "objectId": 208,
+        "actualPlanId": "7406000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "043",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7406000000:001",
+        "objectId": 209,
+        "actualPlanId": "7406000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "043",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7407000000:002",
+        "objectId": 14,
+        "actualPlanId": "7407000000:002",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "060",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7407000000:002",
+        "objectId": 15,
+        "actualPlanId": "7407000000:002",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "060",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7407000000:001",
+        "objectId": 144,
+        "actualPlanId": "7407000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "060",
+        "pointCategories": [
+          "terbatas_bersyarat_pada_titik"
+        ],
+        "pointConditions": [
+          "Pembatasan Jumlah Pemanfaatan dan Skala Pelayanan tertentu",
+          "Bersyarat melakukan Kajian Kelayakan Strategis dan Kajian Lingkungan Hidup"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7407000000:001",
+        "objectId": 145,
+        "actualPlanId": "7407000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "060",
+        "pointCategories": [
+          "terbatas_bersyarat_pada_titik"
+        ],
+        "pointConditions": [
+          "Pembatasan Jumlah Pemanfaatan dan Skala Pelayanan tertentu",
+          "Bersyarat melakukan Kajian Kelayakan Strategis dan Kajian Lingkungan Hidup"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7407000000:003",
+        "objectId": 11,
+        "actualPlanId": "7407000000:003",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "039",
+        "pointCategories": [
+          "terbatas_pada_titik"
+        ],
+        "pointConditions": [
+          "berupa pembatasan waktu pemanfaatan lahan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7407000000:003",
+        "objectId": 12,
+        "actualPlanId": "7407000000:003",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "039",
+        "pointCategories": [
+          "terbatas_pada_titik"
+        ],
+        "pointConditions": [
+          "berupa pembatasan waktu pemanfaatan lahan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7411000000:001",
+        "objectId": 82,
+        "actualPlanId": "7411000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "041",
+        "pointCategories": [
+          "terbatas_bersyarat_pada_titik"
+        ],
+        "pointConditions": [
+          "Terbatas Bersyarat"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7411000000:001",
+        "objectId": 383,
+        "actualPlanId": "7411000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "041",
+        "pointCategories": [
+          "terbatas_bersyarat_pada_titik"
+        ],
+        "pointConditions": [
+          "Terbatas Bersyarat"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7411000000:002",
+        "objectId": 62,
+        "actualPlanId": "7411000000:002",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "041",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7411000000:002",
+        "objectId": 63,
+        "actualPlanId": "7411000000:002",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "041",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7412000000:001",
+        "objectId": 3,
+        "actualPlanId": "7412000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "320",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7412000000:001",
+        "objectId": 114,
+        "actualPlanId": "7412000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "320",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7414000000:001",
+        "objectId": 2,
+        "actualPlanId": "7414000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "002",
+        "pointCategories": [
+          "terbatas_pada_titik"
+        ],
+        "pointConditions": [
+          "Pembatasan intensitas bangunan yang telah ditentukan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7414000000:001",
+        "objectId": 6,
+        "actualPlanId": "7414000000:001",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "002",
+        "pointCategories": [
+          "terbatas_pada_titik"
+        ],
+        "pointConditions": [
+          "Pembatasan intensitas bangunan yang telah ditentukan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7414000000:002",
+        "objectId": 14,
+        "actualPlanId": "7414000000:002",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "043",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      },
+      {
+        "planId": "7414000000:002",
+        "objectId": 38,
+        "actualPlanId": "7414000000:002",
+        "locationMatch": true,
+        "filterMatch": true,
+        "activityId": "043",
+        "pointCategories": [
+          "diizinkan_pada_titik"
+        ],
+        "pointConditions": [
+          "Diperbolehkan/Diizinkan"
+        ],
+        "wholePolygonPermission": "unknown"
+      }
+    ],
+    "limitation": "Titik interior saja; tidak diekstrapolasi menjadi izin seluruh polygon atau penerimaan exact-KBLI."
+  },
+  "mappingCorrection": {
+    "date": "2026-10-26",
+    "planId": "7404000000:001",
+    "previousActivityId": "015",
+    "activityId": "014",
+    "geometryFilterUnchanged": true,
+    "explanation": "Lasalimu014 bahan minuman menggantikan015 rempah/aromatik. Respons aktivitas tersimpan memuat filter P-2,P-3,R-5 yang sama; predicate audit historis tidak berubah. Kedua respons titik asli dibaca ulang untuk014: bgnizn dan detail iznktg014 cocok. Tanggal sumber historis tidak dinaikkan menjadi live."
+  },
+  "limitations": [
+    "Geometri filter kegiatan adalah relevansi untuk ditelaah, bukan status izin.",
+    "Dua rencana belum mempunyai relasi kegiatan teridentifikasi; enam wilayah tidak tercantum dalam katalog yang dibaca.",
+    "Pemetaan exact-KBLI, ketentuan seluruh bidang dan penerimaan OSS belum dinyatakan terverifikasi."
+  ]
+}

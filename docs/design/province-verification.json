@@ -1,0 +1,989 @@
+{
+  "passed": true,
+  "browser": "isolated Chromium",
+  "viewports": [
+    {
+      "width": 1512,
+      "height": 1100
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "networkEnvironment": "User-approved Google Public DNS fallback scoped to server process only; system DNS and HTTPS certificate verification unchanged.",
+  "requestedPlanCount": 16,
+  "loadedPlanCount": 16,
+  "unmappedPlanCount": 2,
+  "notListedRegionCount": 6,
+  "renderedPathCount": 5994,
+  "maxConcurrentRequests": 3,
+  "javascriptExceptions": [],
+  "limitations": [
+    "Technical source/geometry/rendering verification only; exact-KBLI mapping remains unreviewed.",
+    "No whole-polygon ITBX approval, agronomy, land title, OSS submission or production UAT.",
+    "Source timestamps and live/cached_snapshot status retained per plan."
+  ],
+  "checkedAt": "2026-10-26T04:30:37.372Z",
+  "assertionCount": 98,
+  "offlineUnitTests": {
+    "python": 27,
+    "node": 15
+  },
+  "counts": {
+    "matched": 6009,
+    "returned": 5994,
+    "excludedInvalid": 15
+  },
+  "livePlanCount": 1,
+  "cachedPlanCount": 15,
+  "plans": [
+    {
+      "id": "7401000000:001",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "025",
+        "mappingReviewed": false,
+        "name": "Perkebunan Tanaman Aromatik/Penyegar"
+      },
+      "filterZoneCodes": [
+        "PS",
+        "RTH-8",
+        "EM",
+        "P-3",
+        "R-4",
+        "R-5"
+      ],
+      "counts": {
+        "excludedInvalid": 0,
+        "matched": 1054,
+        "returned": 1054
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7401000000&id_rtr=001",
+        "cacheReason": "fresh_cache_ttl",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7401000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A4_KAWASAN_PERKOTAAN_KOLAKA_KABUPATEN_KOLAKA/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A4_KAWASAN_PERKOTAAN_KOLAKA_KABUPATEN_KOLAKA/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:23:29.868046Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7401000000:002",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "034",
+        "mappingReviewed": false,
+        "name": "Perkebunan Tanaman Aromatik/Penyegar"
+      },
+      "filterZoneCodes": [
+        "R-3",
+        "R-4",
+        "K-3",
+        "P-1",
+        "P-2",
+        "P-3",
+        "W"
+      ],
+      "counts": {
+        "excludedInvalid": 1,
+        "matched": 254,
+        "returned": 253
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7401000000&id_rtr=002",
+        "cacheReason": "fresh_cache_ttl",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7401000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B9_KAWASAN_PERKOTAAN_WOLO/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B9_KAWASAN_PERKOTAAN_WOLO/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:23:30.145514Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7402000000:003",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "043",
+        "mappingReviewed": false,
+        "name": "Perkebunan Tanaman Aromatik/Penyegaran"
+      },
+      "filterZoneCodes": [
+        "P-1",
+        "P-2",
+        "P-3"
+      ],
+      "counts": {
+        "excludedInvalid": 0,
+        "matched": 1688,
+        "returned": 1688
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7402000000&id_rtr=003",
+        "cacheReason": "upstream_network",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7402000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/PARKIRAN/_RDTR_7402_WP_ROUTA/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/PARKIRAN/_RDTR_7402_WP_ROUTA/MapServer/0?f=pjson",
+        "nativeWkid": 32749,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T03:49:28.868774Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7402000000:002",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "016",
+        "mappingReviewed": false,
+        "name": "PERKEBUNAN TANAMAN AROMATIK/PENYEGAR"
+      },
+      "filterZoneCodes": [
+        "P-2",
+        "P-3"
+      ],
+      "counts": {
+        "excludedInvalid": 1,
+        "matched": 197,
+        "returned": 196
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7402000000&id_rtr=002",
+        "cacheReason": "fresh_cache_ttl",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7402000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A3_WILAYAH_PERENCANAAN_PONDIDAHA/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A3_WILAYAH_PERENCANAAN_PONDIDAHA/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:23:42.402070Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7404000000:001",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "014",
+        "mappingReviewed": false,
+        "name": "Pertanian Tanaman Untuk Bahan Minuman"
+      },
+      "filterZoneCodes": [
+        "P-2",
+        "P-3",
+        "R-5"
+      ],
+      "counts": {
+        "excludedInvalid": 4,
+        "matched": 182,
+        "returned": 178
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7404000000&id_rtr=001",
+        "cacheReason": "fresh_cache_ttl",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7404000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B1_KECAMATAN_LASALIMU/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B1_KECAMATAN_LASALIMU/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:23:56.136306Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7405000000:002",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "044",
+        "mappingReviewed": false,
+        "name": "Perkebunan Tanaman Aromatik/Penyegar"
+      },
+      "filterZoneCodes": [
+        "RTH-1",
+        "P-2",
+        "P-3",
+        "R-3",
+        "R-4"
+      ],
+      "counts": {
+        "excludedInvalid": 1,
+        "matched": 322,
+        "returned": 321
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7405000000&id_rtr=002",
+        "cacheReason": "upstream_network",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7405000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B6_WILAYAH_PERENCANAAN_LAONTI/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B6_WILAYAH_PERENCANAAN_LAONTI/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:18:09.729583Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7405000000:001",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "044",
+        "mappingReviewed": false,
+        "name": "Perkebunan Tanaman Aromatik/Penyegar"
+      },
+      "filterZoneCodes": [
+        "RTH-2",
+        "P-1",
+        "P-2",
+        "P-3",
+        "R-3",
+        "R-4",
+        "R-5"
+      ],
+      "counts": {
+        "excludedInvalid": 1,
+        "matched": 381,
+        "returned": 380
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7405000000&id_rtr=001",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7405000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B5_WILAYAH_PERENCANAAN_ANGATA/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B5_WILAYAH_PERENCANAAN_ANGATA/MapServer/0?f=pjson",
+        "nativeWkid": 32751,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:28:16.420247Z",
+        "status": "live"
+      }
+    },
+    {
+      "id": "7406000000:001",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "043",
+        "mappingReviewed": false,
+        "name": "Perkebunan Tanaman Aromatik/Penyegar"
+      },
+      "filterZoneCodes": [
+        "P-3"
+      ],
+      "counts": {
+        "excludedInvalid": 0,
+        "matched": 51,
+        "returned": 51
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7406000000&id_rtr=001",
+        "cacheReason": "fresh_cache_ttl",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7406000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A2_KAWASAN_PERKOTAAN_RUMBIA/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A2_KAWASAN_PERKOTAAN_RUMBIA/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:24:24.373479Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7407000000:002",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "060",
+        "mappingReviewed": false,
+        "name": "Pertanian Tanaman untuk Bahan Minimum"
+      },
+      "filterZoneCodes": [
+        "P-3"
+      ],
+      "counts": {
+        "excludedInvalid": 1,
+        "matched": 58,
+        "returned": 57
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7407000000&id_rtr=002",
+        "cacheReason": "fresh_cache_ttl",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7407000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A6_MATAHORA_SEKITAR_KAWASAN_PARIWISATA/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A6_MATAHORA_SEKITAR_KAWASAN_PARIWISATA/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:24:28.867404Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7407000000:001",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "060",
+        "mappingReviewed": false,
+        "name": "Pertanian Tanaman untuk Bahan Minimum"
+      },
+      "filterZoneCodes": [
+        "KR",
+        "P-1",
+        "P-3",
+        "KPI"
+      ],
+      "counts": {
+        "excludedInvalid": 0,
+        "matched": 72,
+        "returned": 72
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7407000000&id_rtr=001",
+        "cacheReason": "fresh_cache_ttl",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7407000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A5_KAWASAN_PERKOTAAN_WANGI_WANGI/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A5_KAWASAN_PERKOTAAN_WANGI_WANGI/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:24:28.919265Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7407000000:003",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "039",
+        "mappingReviewed": false,
+        "name": "Perkebunan Tanaman Aromatik/Penyegar"
+      },
+      "filterZoneCodes": [
+        "HL",
+        "P-3",
+        "R-4"
+      ],
+      "counts": {
+        "excludedInvalid": 6,
+        "matched": 389,
+        "returned": 383
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7407000000&id_rtr=003",
+        "cacheReason": "fresh_cache_ttl",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7407000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B8_KAWASAN_PERKOTAAN_USUKU_DSK/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B8_KAWASAN_PERKOTAAN_USUKU_DSK/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:24:31.521933Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7409000000:001",
+      "status": "unavailable"
+    },
+    {
+      "id": "7411000000:001",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "041",
+        "mappingReviewed": false,
+        "name": "Perkebunan tanaman aromatik/penyegar"
+      },
+      "filterZoneCodes": [
+        "P-3"
+      ],
+      "counts": {
+        "excludedInvalid": 0,
+        "matched": 20,
+        "returned": 20
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7411000000&id_rtr=001",
+        "cacheReason": "fresh_cache_ttl",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7411000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A8_KAWASAN_PERKOTAAN_TIRAWUTA/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A8_KAWASAN_PERKOTAAN_TIRAWUTA/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:24:33.370573Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7411000000:002",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "041",
+        "mappingReviewed": false,
+        "name": "Perkebunan tanaman aromatik/penyegar"
+      },
+      "filterZoneCodes": [
+        "P-2",
+        "P-3",
+        "R-4",
+        "R-5"
+      ],
+      "counts": {
+        "excludedInvalid": 0,
+        "matched": 373,
+        "returned": 373
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7411000000&id_rtr=002",
+        "cacheReason": "fresh_cache_ttl",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7411000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B2_KAWASAN_AGROPOLITAN_MOWEWE_LALOLAE_TINONDO/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B2_KAWASAN_AGROPOLITAN_MOWEWE_LALOLAE_TINONDO/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:24:36.218060Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7412000000:001",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODUNK",
+        "id": "320",
+        "mappingReviewed": false,
+        "name": "Perkebunan Tanaman Aromatik/Penyegar"
+      },
+      "filterZoneCodes": [
+        "HPK.00",
+        "HPK.01",
+        "HPK.02",
+        "P-2.00",
+        "P-2.01",
+        "P-2.02",
+        "P-2.03",
+        "P-2.04",
+        "P-3.00",
+        "P-3.01",
+        "P-3.02",
+        "P-3.03",
+        "P-3.04",
+        "P-3.05",
+        "P-3.06",
+        "P-3.07",
+        "P-3.08",
+        "P-3.09",
+        "P-4.01",
+        "P-4.02"
+      ],
+      "counts": {
+        "excludedInvalid": 0,
+        "matched": 502,
+        "returned": 502
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7412000000&id_rtr=001",
+        "cacheReason": "fresh_cache_ttl",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7412000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A9_KAWASAN_PERKOTAAN_LANGARA/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A9_KAWASAN_PERKOTAAN_LANGARA/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:24:37.195578Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7414000000:001",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "002",
+        "mappingReviewed": false,
+        "name": "Pertanian Tanaman Tahunan"
+      },
+      "filterZoneCodes": [
+        "PS",
+        "P-3",
+        "KPI",
+        "W",
+        "R-4",
+        "R-5",
+        "SPU-1",
+        "SPU-2",
+        "SPU-3",
+        "PL-6"
+      ],
+      "counts": {
+        "excludedInvalid": 0,
+        "matched": 346,
+        "returned": 346
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7414000000&id_rtr=001",
+        "cacheReason": "fresh_cache_ttl",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7414000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A7_KAWASAN_PERKOTAAN_LABUNGKARI/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74A7_KAWASAN_PERKOTAAN_LABUNGKARI/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:24:37.271306Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7414000000:002",
+      "status": "ready",
+      "activity": {
+        "filterField": "KODSZN",
+        "id": "043",
+        "mappingReviewed": false,
+        "name": "Perkebunan Tanaman Aromatik/Penyegaran"
+      },
+      "filterZoneCodes": [
+        "RTH-1",
+        "RTH-2",
+        "RTH-3",
+        "RTH-4",
+        "RTH-5",
+        "P-3",
+        "R-3",
+        "R-4"
+      ],
+      "counts": {
+        "excludedInvalid": 0,
+        "matched": 120,
+        "returned": 120
+      },
+      "source": {
+        "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7414000000&id_rtr=002",
+        "cacheReason": "fresh_cache_ttl",
+        "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7414000000",
+        "geometryQueryUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B7_KAWASAN_PERKOTAAN_MAWASANGKA/MapServer/0/query",
+        "metadataUrl": "https://gistaru-proxy.atrbpn.go.id/proxy.ashx?https://gistaru.atrbpn.go.id/arcgis/rest/services/071_RDTR_PROVINSI_SULAWESI_TENGGARA/_RDTR_74B7_KAWASAN_PERKOTAAN_MAWASANGKA/MapServer/0?f=pjson",
+        "nativeWkid": 4326,
+        "outputWkid": 4326,
+        "retrievedAt": "2026-10-26T04:24:41.492247Z",
+        "status": "cached_snapshot"
+      }
+    },
+    {
+      "id": "7471000000:001",
+      "status": "unavailable"
+    }
+  ],
+  "results": [
+    {
+      "test": "Validated snapshot: 17 regions, 18 plans, 16 candidate activities, 2 unavailable",
+      "passed": true
+    },
+    {
+      "test": "No geometry or external map before map opt-in",
+      "passed": true
+    },
+    {
+      "test": "Snapshot and six gaps are explicitly labelled, no permission claim",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Bombana",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Buton",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Buton Selatan",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Buton Tengah",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Buton Utara",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Kolaka",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Kolaka Timur",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Kolaka Utara",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Konawe",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Konawe Kepulauan",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Konawe Selatan",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Konawe Utara",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Muna",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Muna Barat",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kabupaten Wakatobi",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kota Baubau",
+      "passed": true
+    },
+    {
+      "test": "Individual region: Kota Kendari",
+      "passed": true
+    },
+    {
+      "test": "All 16 source-mappable plans actually loaded, with only two unmapped plans",
+      "passed": true
+    },
+    {
+      "test": "Exactly 16 literal plan queries at concurrency at most three",
+      "passed": true
+    },
+    {
+      "test": "Every returned feature drawn and identities remain plan-local",
+      "passed": true
+    },
+    {
+      "test": "All features remain unknown/unreviewed and source counts reconcile",
+      "passed": true
+    },
+    {
+      "test": "Province remains partial, not full territorial or permission coverage",
+      "passed": true
+    },
+    {
+      "test": "Pagination is mandatory beyond 200, with native stable controls and live page totals",
+      "passed": true
+    },
+    {
+      "test": "Native keyboard Next crosses feature 200 without replacing controls or truncating the map",
+      "passed": true
+    },
+    {
+      "test": "Tab from Next reaches the first later feature",
+      "passed": true
+    },
+    {
+      "test": "Keyboard opens feature beyond 200 with its own plan-local provenance",
+      "passed": true
+    },
+    {
+      "test": "Closing later feature returns keyboard focus to its source row",
+      "passed": true
+    },
+    {
+      "test": "Native keyboard Previous returns to the first page with usable focus",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 1 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 2 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 3 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 4 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 5 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 6 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 7 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 8 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 9 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 10 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 11 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 12 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 13 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 14 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 15 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 16 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 17 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 18 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 19 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 20 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 21 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 22 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 23 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 24 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 25 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 26 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 27 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 28 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 29 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Keyboard page 30 reports correct total without changing source layers",
+      "passed": true
+    },
+    {
+      "test": "Every loaded feature is reachable exactly once through native keyboard pagination",
+      "passed": true
+    },
+    {
+      "test": "Last page disables Next and keeps keyboard focus on Previous",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Kawasan Perkotaan Kolaka",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Kawasan Perkotaan Wolo",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Wilayah Perencanaan Routa",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Pondidaha",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Kec.Lasalimu",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Wilayah Perencanaan Laonti",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Wilayah Perencanaan Angata",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Kawasan Perkotaan Rumbia",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Matahora Sekitar Kawasan Pariwisata",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Perkotaan Wangi-Wangi",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Kawasan Perktoaan Usuku dan Sekitarnya",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Kawasan Perkotaan Tirawuta",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Kawasan Agropolitan Mowewe, Lalolae, Tinondo",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Kawasan Perkotaan Langara",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Kawasan Perkotaan Labungkari",
+      "passed": true
+    },
+    {
+      "test": "Per-plan polygon detail: RDTR Kawasan Perkotaan Mawasangka",
+      "passed": true
+    },
+    {
+      "test": "Lasalimu corrected to activity 014 and Langara retains KODUNK dot filter",
+      "passed": true
+    },
+    {
+      "test": "Real download reopened, immutable preview with all plan provenance and no geometry/candidate inputs",
+      "passed": true
+    },
+    {
+      "test": "Unavailable region clears previous polygons and pagination without implying prohibition",
+      "passed": true
+    },
+    {
+      "test": "Two unmapped plans displayed without borrowed activities or source geometry requests",
+      "passed": true
+    },
+    {
+      "test": "Selected region loads both of its available plans, not only Tirawuta",
+      "passed": true
+    },
+    {
+      "test": "Draft and empty submission preserve applied overlay",
+      "passed": true
+    },
+    {
+      "test": "Empty selection rejected",
+      "passed": true
+    },
+    {
+      "test": "Invalid API response fails closed, clears old data and offers retry",
+      "passed": true
+    },
+    {
+      "test": "Late genuine old responses cannot repopulate a different selected region",
+      "passed": true
+    },
+    {
+      "test": "Desktop has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "test": "Trusted pointer opens the interior of a rendered source polygon",
+      "passed": true
+    },
+    {
+      "test": "Native keyboard opens source polygon detail",
+      "passed": true
+    },
+    {
+      "test": "Escape closes detail",
+      "passed": true
+    },
+    {
+      "test": "Mobile 390px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "test": "Mobile touch changes region draft without changing applied overlays",
+      "passed": true
+    },
+    {
+      "test": "Mobile touch Apply loads the selected source region and resets pagination",
+      "passed": true
+    },
+    {
+      "test": "Mobile touch opens source detail with original provenance",
+      "passed": true
+    },
+    {
+      "test": "Mobile touch closes detail and retains selected source results",
+      "passed": true
+    },
+    {
+      "test": "No JavaScript exceptions",
+      "passed": true
+    }
+  ],
+  "previousVerification": {
+    "checkedAt": "2026-10-26T03:50:50.908Z",
+    "assertionCount": 56,
+    "passed": true,
+    "note": "Baseline before stale-boundary, counts allowlist and keyboard pagination review fixes; not additive unique cases."
+  },
+  "verifiedCodeHashes": {
+    "tools/dev_server.py": "199163faf479da628c7c5f5146cf688ce97a4a936ebe66d0140b4953e9655fde",
+    "prototype/app.js": "18552568ba5fde6cf9d24abaa8584eb4a1de7fc0411b6e7d555bbbc09860a01e",
+    "prototype/province-data.js": "44416717b5d3b70cc4df71d63ec83e3007d814a6499c47573af49d1eaeabde9c",
+    "prototype/zone-data.js": "5250eaaab57eac5dbf2b6a8ff84819eea4e3cfa5e901f62a0d1f5d60914b5da8",
+    "tests/province-browser.mjs": "83ed1467fbf715250d189371132fdf4ba21fafdfb11d97b27805913d5ae5737f"
+  }
+}

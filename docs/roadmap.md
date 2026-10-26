@@ -13,8 +13,9 @@
 | Inventaris sumber agronomi/jalan dan uji akses | Selesai terbatas; analisis cakupan penuh belum | [Matriks sumber](discovery/data-sources.md); sampel/akses parsial bukan kesesuaian bidang |
 | Rubrik dan kontrak keluaran | Draf tersedia, belum disepakati | [Rubrik usulan](design/scoring-rubric.md); format SHP ZIP + KML sudah dipilih, skema/ambang/toleransi masih terbuka |
 | Prototipe eksplorasi | Dibuat dan diuji; review pengguna belum | [Alur dan uji](design/mockup.md); hanya KBLI/wilayah, tanpa kandidat atau ekspor GIS |
-| Sorotan geometri pilot | Terintegrasi dan teruji pada satu RDTR Tirawuta | [20 polygon sumber dan 18 pemeriksaan browser](design/zone-overlay.md); relevan untuk ditelaah, bukan izin/exact-KBLI terverifikasi |
+| Sorotan geometri pilot historis | Terintegrasi dan teruji pada satu RDTR Tirawuta pada 25 Oktober 2026 | [20 polygon sumber dan 18 pemeriksaan browser](design/zone-overlay.md); relevan untuk ditelaah, bukan izin/exact-KBLI terverifikasi |
 | Filter seluruh kabupaten/kota | 17 pilihan tersedia; 32 pemeriksaan browser lulus | [Kontrak filter](design/region-filter.md); sumber ID GISTARU baru 11, enam kunci internal eksplisit; bukan perluasan geometri |
+| Eksplorasi lintas-rencana | 5.994 polygon dari 16 rencana; 98 pemeriksaan browser setelah perbaikan review lulus | [Kontrak API/klien](design/province-api.md), [bukti browser](design/province-verification.json), [review kode](design/province-review.json); 2 relasi unknown/6 wilayah tidak tercantum, bukan izin |
 | Desain teknis/backlog/estimasi | Belum difinalisasi | Stack di PRD masih usulan |
 | Mesin produksi/integrasi OSS | Belum dimulai | Prototipe eksplorasi bukan persetujuan seluruh cakupan atau tindakan OSS |
 
@@ -60,7 +61,7 @@ Alur produk yang dituju tetap peta/filter → kriteria → perbandingan kandidat
 - [x] Hubungkan API terbatas Tirawuta ke sorotan biru, legenda dan detail polygon sumber; 20 fitur nyata teruji.
 - [x] Uji perubahan filter, respons rusak/terlambat, cache, keyboard/seluler dan unduhan JSON; 18 pemeriksaan browser lulus.
 - [ ] Review relasi exact-KBLI serta ketentuan Tirawuta sebelum menerbitkan status kesesuaian terverifikasi.
-- [ ] Perluas cakupan geometri bertahap dengan validasi/batas bukti yang sama; tujuh rencana belum diaktifkan.
+- [x] Perluas kontrak API/klien ke seluruh 18 rencana pada snapshot, 16 calon kegiatan dengan 6 gap wilayah/2 unknown; validasi dan batas bukti dipertahankan. Uji sumber nyata lulus 98 pemeriksaan; [review independen ulang](design/province-review.json) lulus tanpa temuan pemblokir.
 - [ ] Tinjau alur bersama pemilik kebutuhan.
 
 **Gerbang:** alur disetujui tanpa menyamakan mockup dengan bukti kelayakan lokasi.

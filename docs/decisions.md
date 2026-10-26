@@ -18,6 +18,7 @@
 | DEC-10 | Keluaran SHP dalam ZIP dan KML | Dikonfirmasi melalui formulir; kontrak atribut/unggah masih perlu diuji |
 | DEC-11 | Hapus textfield luas pada eksplorasi; tujuan modul ini hanya melihat zona sesuai KBLI pilihan | Ditegaskan pengguna. Eksplorasi hanya KBLI/wilayah; luas dan preferensi kandidat untuk modul pencarian/pembuatan polygon terpisah |
 | DEC-12 | Buat filter seluruh kabupaten/kota Sulawesi Tenggara | Diminta pengguna. Seluruh 17 pilihan tersedia; geometri tidak otomatis menjadi seluruh provinsi dan pilot kandidat empat kabupaten tetap terpisah |
+| DEC-13 | Lanjutkan eksplorasi KBLI 01273 terhadap seluruh sumber Sulawesi Tenggara yang tersedia | Diminta pengguna. Inventaris 18 rencana/17 wilayah; 6 wilayah tidak tercantum dan 2 rencana tanpa calon relasi. Bukan cakupan fisik seluruh provinsi atau verifikasi izin |
 
 ## Usulan yang belum otomatis disetujui
 

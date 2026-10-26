@@ -1,6 +1,6 @@
 # Mockup interaktif — eksplorasi lokasi Siap Izin
 
-**Status terbaru:** prototipe eksplorasi zona, mengikuti PRD v0.9 dan arahan Anton. Filter mencakup seluruh 17 kabupaten/kota dengan kontrol massal dan 32 pemeriksaan browser lulus; [kontrak/sumber filter](region-filter.md). Kriteria tetap hanya KBLI/wilayah; luas, preferensi jalan dan pencarian/pembuatan polygon berada pada modul terpisah. Sorotan geometri tetap **20 polygon sumber Tirawuta**, relevan untuk ditelaah, bukan kesesuaian exact-KBLI terverifikasi. [Kontrak sorotan dan hasil versi sebelumnya](zone-overlay.md).
+**Status berjalan:** prototipe eksplorasi lintas-rencana, PRD v0.10. Filter 17 wilayah dan snapshot 18 rencana; pengujian sumber nyata memuat 5.994 polygon dari 16 rencana; 98 pemeriksaan browser setelah perbaikan lulus. Dua relasi kegiatan dan enam wilayah tetap unknown/tidak tercantum. [Kontrak dan bukti berjalan](province-api.md), [rekaman browser](province-verification.json). Kriteria hanya KBLI/wilayah, sorotan relevansi bukan kesesuaian exact-KBLI terverifikasi. Catatan 20 polygon/32 pemeriksaan di bagian historis tetap bukti checkpoint sebelumnya.
 
 ## Menjalankan
 
@@ -13,20 +13,20 @@ python -m pip install -r requirements-prototype.txt
 python tools/dev_server.py --port 8765
 ```
 
-Buka `http://127.0.0.1:8765/prototype/`. Python 3.11+ dan dependency geometri diperlukan. Hentikan dengan Ctrl+C. Backend lokal hanya bind loopback, tanpa login/kredensial atau AI. Server statis dan `file://` tidak menyediakan API geometri; [rincian API](zone-api.md).
+Buka `http://127.0.0.1:8765/prototype/`. Python 3.11+ dan dependency geometri diperlukan. Hentikan dengan Ctrl+C. Backend lokal hanya bind loopback, tanpa login/kredensial atau AI. Server statis dan `file://` tidak menyediakan API geometri; [rincian API](province-api.md).
 
 ## Komposisi dan alur
 
 Permukaan utama **Explore**: kriteria di kiri, peta dan tab hasil di tengah, batas penilaian di kanan. Warna hijau hutan digunakan untuk tindakan, bukan status kesesuaian bidang. Tipografi Avenir Next/Avenir/Segoe UI memakai font sistem, tanpa layanan font eksternal. Pada layar kecil, kolom ditumpuk.
 
 1. Pilih KBLI `01273` dan satu atau beberapa dari 17 kabupaten/kota. Pilih semua/Kosongkan mengubah draf; awal/reset memilih seluruh wilayah. Tidak ada input luas/preferensi jalan.
-2. Tekan **Terapkan kriteria**. Draf tidak otomatis menjadi konfigurasi ekspor. Setelah peta diaktifkan, kriteria memuat ulang irisan sumber pilot; bukan penilaian izin/seluruh bidang.
-3. Filter wilayah membatasi inventaris metadata dan menentukan apakah pilot Tirawuta aktif. Sorotan hanya tersedia jika Kolaka Timur dipilih; tidak membuat batas administratif atau menafsirkan wilayah tanpa data sebagai dilarang.
+2. Tekan **Terapkan kriteria**. Draf tidak otomatis menjadi konfigurasi ekspor. Setelah peta diaktifkan, kriteria memuat ulang semua rencana sumber terpilih; bukan penilaian izin/seluruh bidang.
+3. Filter wilayah membatasi inventaris dan seluruh permintaan geometri per rencana. Status parsial/error/unavailable ditampilkan, tanpa batas administratif rekaan atau penafsiran wilayah tanpa data sebagai dilarang.
 4. **Muat peta publik** meminta dependensi/tile eksternal dan memicu API lokal untuk sumber geometri resmi. Peta melakukan fit-bounds ke polygon sumber yang valid, bukan batas kabupaten rekaan. API gagal tidak diganti overlay contoh.
-5. Tab **Zona** memuat daftar polygon relevan untuk ditelaah; klik peta/daftar membuka ID, dasar filter, atribut peraturan, provenance dan ketidakpastian. Biru putus-putus bukan izin. Tab **Bukti RDTR** tetap memuat delapan nama rencana aktual dari discovery; tujuh rencana lain masih metadata saja.
+5. Tab **Zona** memuat daftar polygon relevan untuk ditelaah; klik peta/daftar membuka ID, dasar filter, atribut peraturan, provenance dan ketidakpastian. Biru putus-putus bukan izin. Tab **Bukti RDTR** memuat semua rencana snapshot pada wilayah terapan, dengan identitas aktivitas dan status pemuatan terpisah.
 6. Bukti tiap rencana menampilkan identitas sumber, calon relasi kegiatan lokal yang **belum direview**, unknown, tautan katalog dan daftar kegiatan. Wolo memiliki peringatan eksplisit bahwa kemunculan katalog bukan bukti integrasi/siap pengajuan.
 7. Panel hanya membahas **kegiatan/zona** dan bukti. Agronomi serta preferensi jalan tidak menjadi kriteria eksplorasi; kebutuhan tersebut tetap berada pada modul kandidat yang terpisah.
-8. Ekspor hanya **JSON konfigurasi eksplorasi**, `schemaVersion: 2`, `artifactType: zone-exploration-configuration`, `module: zone-exploration`, `containsGeometry: false`. Tidak memuat `targetAreaM2`, `areaTolerance`, `road` atau jumlah kandidat. Kontrol ekspor GIS tidak ditampilkan dalam eksplorasi.
+8. Ekspor hanya **JSON konfigurasi eksplorasi**, `schemaVersion: 3`, `artifactType: zone-exploration-configuration`, `module: zone-exploration`, `containsGeometry: false`. Tidak memuat `targetAreaM2`, `areaTolerance`, `road` atau jumlah kandidat. Kontrol ekspor GIS tidak ditampilkan dalam eksplorasi.
 
 Tidak ada pencocokan izin berdasarkan kesamaan istilah atau nama zona. Ada polygon **sumber RDTR untuk tampilan**, tetapi tidak ada koordinat kandidat/bidang proyek, skor kecocokan, kelas agronomi S1/S2/S3 atau probabilitas izin. Kelompok kegiatan lokal `041` belum merupakan relasi exact-KBLI yang ditinjau. Geometri tampilan tidak menjadi berkas rencana atau bukti hak.
 

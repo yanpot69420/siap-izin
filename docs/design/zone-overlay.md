@@ -2,7 +2,11 @@
 
 **Status integrasi — 25 Oktober 2026:** API dan frontend terhubung; **20 polygon sumber nyata** tampil dan dapat diklik. **18 pemeriksaan browser lulus**, disertai 11 test backend offline dan 1 test kontrak frontend. Ini pembuktian eksplorasi satu rencana, bukan penerimaan pengguna atau persetujuan seluruh cakupan produksi. [Rekaman browser portabel](zone-overlay-verification.json).
 
-## Cakupan yang sedang dibuktikan
+## Versi berjalan
+
+Perluasan lintas-rencana menggantikan pembatasan satu Tirawuta pada checkpoint di bawah. Lihat [kontrak provinsi](province-api.md); angka pengujian lama tetap bukti historis, bukan cakupan versi berjalan.
+
+## Cakupan checkpoint historis
 
 - Tetap satu modul eksplorasi dengan kriteria KBLI/wilayah; tidak ada input luas, jalan, kandidat bidang atau ekspor GIS.
 - Pilot geometri dibatasi **RDTR Kawasan Perkotaan Tirawuta**, ID `7411000000:001`, Kolaka Timur. Tujuh rencana lain tetap inventaris metadata.

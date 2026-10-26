@@ -1,0 +1,89 @@
+{
+  "checkedAt": "2026-10-26T04:32:55.536348+00:00",
+  "passed": true,
+  "reviewedCodeFileCount": 13,
+  "reviewedCodeFiles": [
+    {
+      "file": "prototype/app.js",
+      "sha256": "18552568ba5fde6cf9d24abaa8584eb4a1de7fc0411b6e7d555bbbc09860a01e"
+    },
+    {
+      "file": "prototype/index.html",
+      "sha256": "68bab3708dea8defd1dc5d5c6be83d7e412229f274daf6a3a2e07544c206420b"
+    },
+    {
+      "file": "prototype/province-data.js",
+      "sha256": "44416717b5d3b70cc4df71d63ec83e3007d814a6499c47573af49d1eaeabde9c"
+    },
+    {
+      "file": "prototype/zone-data.js",
+      "sha256": "5250eaaab57eac5dbf2b6a8ff84819eea4e3cfa5e901f62a0d1f5d60914b5da8"
+    },
+    {
+      "file": "prototype/zones.css",
+      "sha256": "f1540e83c5c698815ddcc12d33a0809a982e31b43cbddb819991e127ca062514"
+    },
+    {
+      "file": "tests/province-browser.mjs",
+      "sha256": "83ed1467fbf715250d189371132fdf4ba21fafdfb11d97b27805913d5ae5737f"
+    },
+    {
+      "file": "tests/province-data.test.cjs",
+      "sha256": "178e4376f40d0dfbeeed07b38330144f9805c2210e7edd8ae18bc572d3af69a2"
+    },
+    {
+      "file": "tests/zone-data.test.cjs",
+      "sha256": "cd15fa237f15eef4b379eed77992c7a3beaed36a46aedb89d565c2360c596490"
+    },
+    {
+      "file": "tools/dev_server.py",
+      "sha256": "199163faf479da628c7c5f5146cf688ce97a4a936ebe66d0140b4953e9655fde"
+    },
+    {
+      "file": "tests/test_zone_server.py",
+      "sha256": "af1e1828c1e0e9d902b219405b1c93c4471abc8582761a92063a355601050c39"
+    },
+    {
+      "file": "tests/test_province_server.py",
+      "sha256": "73c0b75566b4730dc42fdeb18cd75251a214a8a2765c10173fa058bf186e8267"
+    },
+    {
+      "file": "tests/test_province_registry.py",
+      "sha256": "566d67989409bef32f04ece4c742d7f29e3421d1633381d785b9ba6f2c0fed08"
+    },
+    {
+      "file": "tools/rdtr-plans.json",
+      "sha256": "8a170fcb8c63c9d43d4f1f211bf0ecb7496f5b06e2b2b0a78a468c4337a60f4d"
+    }
+  ],
+  "frontend": {
+    "passed": true,
+    "security_concerns": [],
+    "logic_errors": [],
+    "tests": {
+      "node": 15,
+      "browser": 98
+    },
+    "summary": "Full designated frontend diffs independently reviewed; counts allowlist, all-feature keyboard pagination, immutable applied export, descriptor validation and revision guards verified.",
+    "nonBlockingFollowUp": "Add native-browser coverage for restoring dialog focus when another plan arrives while the dialog is open; existing rendering/focus unit probes and normal native close checks passed."
+  },
+  "backend": {
+    "passed": true,
+    "security_concerns": [],
+    "logic_errors": [],
+    "tests": {
+      "python": 27
+    },
+    "summary": "Five designated full backend/registry diffs independently reviewed; hashes matched. Independent clock probes confirm refresh-delay and geometry-validation-delay expiry at TTL/stale boundaries. Fixed source contexts/TLS/allowlists/cache integrity/original timestamps preserved."
+  },
+  "resolvedFindings": [
+    "Snapshot age recomputed after expensive validation and after failed refresh; exact stale cutoff rejected.",
+    "Nested exported counts use explicit three-counter allowlist; arbitrary geometry/candidate extras cannot leak.",
+    "All loaded source features accessible through native keyboard pagination; full map geometry preserved."
+  ],
+  "postReviewNormalization": "Removed one trailing blank line from tests/province-data.test.cjs after staged whitespace check; byte equality to reviewed content except final blank line verified, Node tests rerun.",
+  "limits": [
+    "Technical code review only, not legal exact-KBLI mapping approval or production UAT.",
+    "Historical 56-check browser baseline is not additive to 98-check final suite."
+  ]
+}

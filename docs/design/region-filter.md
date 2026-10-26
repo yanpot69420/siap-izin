@@ -9,8 +9,8 @@ Permintaan Anton memperluas **filter eksplorasi** ke seluruh Sulawesi Tenggara: 
 - Setidaknya satu wilayah wajib dipilih. Pilihan kosong ditolak tanpa merusak hasil terapan sebelumnya.
 - Daftar dapat digulir dan digunakan dengan keyboard; jumlah pilihan ditampilkan.
 - Judul/ringkasan menyebut kabupaten/kota, bukan menganggap kota sebagai kabupaten atau selalu melabeli wilayah sebagai Tirawuta.
-- Inventaris delapan RDTR masih berasal dari empat kabupaten awal. Pilihan tanpa inventaris menampilkan ketidaktersediaan bukti, **bukan** kesimpulan tidak ada RDTR atau kegiatan dilarang.
-- Sorotan geometri tetap hanya Tirawuta. Jika Kolaka Timur tidak dipilih, lapisan dibersihkan dan peta kembali ke viewport regional, tanpa menggambar batas atau zona rekaan.
+- Inventaris berjalan memakai snapshot 18 rencana; [kontrak lintas-rencana](province-api.md). Pilihan tanpa inventaris menampilkan ketidaktersediaan bukti, **bukan** kesimpulan tidak ada RDTR atau kegiatan dilarang.
+- Sorotan dimuat untuk seluruh rencana terpilih yang memiliki calon relasi kegiatan dan berhasil dibaca. Perubahan kriteria membersihkan konteks lama; wilayah tanpa sumber tidak diisi batas atau zona rekaan.
 - Ekspor memuat wilayah yang sudah diterapkan, bukan draf. Tetap tanpa luas, preferensi jalan atau geometri.
 
 ## Identitas wilayah dan sumber

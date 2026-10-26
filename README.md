@@ -1,47 +1,33 @@
 # Siap Izin
 
-Aplikasi Induk Asisten Izin Berusaha — **tahap prototipe eksplorasi zona**.
+Aplikasi induk pendamping perizinan berusaha — **prototipe eksplorasi zona lintas-RDTR Sulawesi Tenggara**.
 
-Repositori berisi PRD, audit sumber dan prototipe lokal. Sorotan geometri nyata sudah diuji untuk **satu RDTR Tirawuta**, bukan seluruh wilayah pilot. Belum ada mesin rekomendasi produksi, kandidat lokasi terverifikasi, generator polygon rencana atau integrasi OSS yang telah diuji.
+## Status yang sudah dibuktikan
 
-## Visi
+Pada pengujian 26 Oktober 2026, aplikasi memuat **5.994 polygon sumber dari 16 rencana**, dari 6.009 fitur cocok filter; **15 geometri invalid dikarantina** tanpa perbaikan. Seluruh fitur sah digambar dan tetap berstatus **unreviewed_mapping / permission: unknown**. Bukan jumlah lokasi sesuai atau izin yang diterima.
 
-Satu aplikasi induk untuk alur:
-
-**Dokumen perusahaan → identifikasi KBLI → pemeriksaan/rekomendasi lokasi → polygon rencana → persiapan dan penginputan OSS → tindak lanjut perizinan.**
-
-AI membantu membaca dan menjelaskan; aturan terverifikasi dan GIS mendukung pemeriksaan; pengguna menyetujui keputusan penting. Kesesuaian zona, indikasi kesesuaian tumbuh tanaman dan penerimaan resmi diperlakukan terpisah.
-
-## Pilot yang dipilih
-
-| Parameter | Pilihan |
+| Cakupan | Status |
 |---|---|
-| KBLI input | `01273` |
-| Kegiatan yang diuji | Kakao; budidaya merupakan asumsi ruang lingkup yang perlu dikonfirmasi |
-| Wilayah pilot kandidat | Kolaka Timur, Kolaka, Konawe, Konawe Selatan — Sulawesi Tenggara |
-| Cakupan filter eksplorasi | Seluruh 15 kabupaten dan 2 kota Sulawesi Tenggara; bukan klaim cakupan geometri seluruh wilayah |
-| Luas target | `5000m2` untuk modul polygon rencana; bukan input modul eksplorasi |
-| Tujuan | Kesesuaian kegiatan/zona dan indikasi lahan cocok untuk kakao |
-| Jalan | Preferensi pemeringkatan saja, bukan syarat gugur atau batas jarak maksimum |
-| Keluaran yang dituju | Kandidat pada peta dan polygon rencana dalam SHP ZIP + KML |
+| Filter administratif | 17 wilayah: 15 kabupaten dan 2 kota |
+| Registry sumber | 18 rencana di 11 wilayah; snapshot kurasi, bukan katalog live |
+| Geometri | 16 rencana memiliki calon relasi kegiatan dan berhasil dimuat pada sesi uji |
+| Rencana tanpa relasi yang dapat dipertanggungjawabkan | Wanggudu dan CBD Teluk Kendari; unknown, tidak meminjam kegiatan rencana lain |
+| Wilayah tidak tercantum pada snapshot publik | Buton Selatan, Buton Utara, Kolaka Utara, Muna, Muna Barat, Kota Baubau; source ID null, bukan bukti tidak ada RDTR |
+| Pemetaan exact-KBLI / ITBX seluruh bidang | Belum diverifikasi; filter kegiatan bukan izin |
 
-Format SHP ZIP dan KML telah dikonfirmasi. Toleransi luas, bentuk/jumlah kandidat, rubrik agronomi dan kebijakan bukti belum lengkap tetap terbuka. Nilai pilot tidak menjadi aturan universal seluruh kegiatan.
+[Bukti browser portabel](docs/design/province-verification.json) menyimpan hitungan, hasil pemeriksaan, status live/cache dan timestamp asli per rencana. Katalog 11 wilayah/18 rencana dibandingkan kembali dengan sumber pada 26 Oktober 2026. Data di luar polygon/rencana yang dimuat tetap belum dievaluasi.
 
-## Dokumen
+## Visi produk
 
-- [PRD v0.9](docs/PRD.md) — kebutuhan, batas produk dan kriteria penerimaan; bukan persetujuan rilis produksi.
-- [Filter seluruh kabupaten/kota](docs/design/region-filter.md) dan [32 pemeriksaan browser](docs/design/region-filter-verification.json) — 17 pilihan, kontrol massal, cakupan data dan namespace ID.
-- [Discovery pilot kakao](docs/discovery/pilot-kakao.md) — pembacaan awal katalog dan kegiatan.
-- [Audit geometri dan sampel ITBX](docs/discovery/rdtr-geometry-audit.md) — delapan layer; batas audit sumber versus penilaian bidang.
-- [Inventaris sumber data](docs/discovery/data-sources.md) — agronomi, medan, tutupan dan jalan; uji akses serta keterbatasan resolusi.
-- [Rubrik indikatif untuk review](docs/design/scoring-rubric.md) — usulan nonaktif sampai disetujui.
-- [Antarmuka dan riwayat uji](docs/design/mockup.md).
-- [Kontrak sorotan dan bukti integrasi](docs/design/zone-overlay.md), [hasil 18 pemeriksaan browser](docs/design/zone-overlay-verification.json) dan [API lokal](docs/design/zone-api.md).
-- [Daftar keputusan](docs/decisions.md) dan [roadmap](docs/roadmap.md).
+**Dokumen perusahaan → identifikasi KBLI → pemeriksaan/rekomendasi lokasi → polygon rencana → persiapan/penginputan OSS → tindak lanjut perizinan.**
 
-## Menjalankan prototipe lokal
+Satu aplikasi modular. AI membantu membaca/menjelaskan, aturan terverifikasi dan GIS memvalidasi, manusia menyetujui keputusan penting. Kesesuaian zona, agronomi dan penerimaan resmi tetap terpisah.
 
-Python **3.11+**, internet dan dependency geometri diperlukan. Dari root repositori:
+Eksplorasi sekarang hanya **KBLI 01273 versi 2025 dan wilayah**, tanpa luas/jalan/kandidat. Asumsi budidaya kakao belum dikonfirmasi. Pilot kandidat 5.000 m² di Kolaka Timur/Kolaka/Konawe/Konawe Selatan, jalan sebagai preferensi, dan keluaran SHP ZIP + KML tetap modul terpisah yang belum dibangun. Toleransi/bentuk polygon dan rubrik agronomi masih terbuka.
+
+## Menjalankan lokal
+
+Python 3.11+, internet dan dependensi geometri diperlukan:
 
 ```sh
 python3 -m venv .venv
@@ -50,41 +36,44 @@ python -m pip install -r requirements-prototype.txt
 python tools/dev_server.py --port 8765
 ```
 
-Buka `http://127.0.0.1:8765/prototype/`, lalu pilih **Muat peta publik**. Hentikan server dengan Ctrl+C. Server hanya bind ke loopback; bukan deployment produksi. **Server statis `python -m http.server` tidak menyediakan API geometri.** Tidak memerlukan login atau kredensial.
+Buka `http://127.0.0.1:8765/prototype/`, pilih **Muat peta publik**. Server statis `python -m http.server` tidak menyediakan API. Server hanya bind loopback dan bukan deployment produksi. Tidak memerlukan login atau kredensial.
 
-Modul eksplorasi hanya memakai **KBLI dan wilayah**, tanpa luas atau preferensi jalan. Filter menyediakan seluruh **17 kabupaten/kota**, dengan **Pilih semua**, **Kosongkan**, daftar bergulir dan jumlah pilihan. Awal/reset memilih semua; kontrol massal hanya mengubah draf hingga **Terapkan kriteria**. Jika Kolaka Timur dipilih, prototipe memuat polygon filter kegiatan sumber untuk Tirawuta. Pada pengujian 25 Oktober 2026, **20 polygon P-3** tampil dan dapat diklik untuk melihat ID, dasar sorotan, atribut peraturan, waktu sumber dan batas bukti.
+Pilih semua/Kosongkan mengubah draf; **Terapkan kriteria** memperbarui overlay dan ekspor. Semua rencana dengan calon kegiatan pada wilayah terapan dimuat bertahap, maksimal 3 serentak. Klik polygon/daftar menunjukkan rencana asal, ID kegiatan, field filter, sumber/timestamp dan batas bukti. ID yang sama lintas-rencana tidak saling menimpa.
 
-**Biru putus-putus berarti relevan untuk ditelaah, bukan diizinkan.** Relasi exact-KBLI belum direview, ruang lingkup budidaya belum dikonfirmasi dan ITBX seluruh bidang belum diperiksa. Tujuh rencana lainnya masih inventaris metadata, bukan sorotan zona terverifikasi. Wilayah di luar cakupan tidak dinyatakan dilarang.
+**Biru putus-putus berarti relevan untuk ditelaah, bukan diizinkan.** Hasil parsial/error/unknown ditampilkan, bukan diisi geometri contoh. Cache privat per rencana berada di `private/rdtr-cache/`; label `cached_snapshot` mempertahankan waktu sumber. Fallback dibatasi satu jam dan hanya untuk kegagalan jaringan. Payload rusak/perubahan konteks tidak dilonggarkan agar tampil.
 
-API memakai sumber publik yang dibatasi, rekonsiliasi ID dan validasi topologi. Cache berada di `private/rdtr-cache/`, tidak disajikan atau diterbitkan. Cache selalu dilabeli snapshot dengan waktu sumber asli. Sumber rusak/tidak lengkap tidak diganti data contoh.
+Ekspor JSON **skema 3** adalah snapshot konfigurasi/provenance, **tanpa geometri/luas/jalan/kandidat**. Pratinjau dan unduhan identik; bukan GeoJSON atau berkas siap unggah OSS.
 
-Ekspor konfigurasi berupa JSON skema v2, **tanpa geometri atau parameter kandidat**. Pencarian, pembentukan dan ekspor polygon SHP ZIP/KML tetap modul terpisah yang belum dibangun.
+**Catatan DNS lingkungan uji:** resolver sistem sempat gagal menemukan domain proxy. Pengguna mengizinkan Google Public DNS hanya pada proses server/uji; TLS tetap diverifikasi dan DNS sistem/hosts tidak diubah. Launcher sementara tidak dipublikasikan. Server default tetap membutuhkan DNS jaringan yang berfungsi; keberhasilan sesi tersebut tidak menjamin ketersediaan sumber terus-menerus.
 
-## Verifikasi
-
-Dengan venv aktif:
+## Verifikasi yang dapat diulang
 
 ```sh
-python -B -m unittest discover -s tests -p test_zone_server.py -v
-node --test tests/zone-data.test.cjs
+python -B -m unittest discover -s tests -p 'test_*.py' -v
+node --test tests/*.test.cjs
 node --check prototype/app.js
+# Backend aktif dan Chromium tersedia; memakai sumber nyata:
+node tests/province-browser.mjs
 ```
 
-Hasil aktual: **11 test backend offline** dan **1 test kontrak frontend** lulus. Integrasi pada Chromium terisolasi lulus **18 pemeriksaan browser**, termasuk polygon nyata, klik pada interior polygon, keyboard, perubahan filter, respons rusak/terlambat, unduhan JSON yang dibaca ulang, seluler dan pemulihan CDN. Ini bukan UAT seluruh produk, pengujian lintas browser atau penerimaan OSS.
+Verifikasi setelah perbaikan review: **27 tes backend offline, 15 tes Node dan 98 pemeriksaan browser** lulus. Termasuk umur fallback yang dihitung ulang setelah refresh gagal, allowlist atribut ekspor, penelusuran seluruh 5.994 fitur lewat 30 halaman dengan keyboard, serta pemilihan wilayah/penerapan/detail/penutupan melalui sentuhan seluler. Sesi final setelah koreksi umur cache memakai 1 sumber live dan 15 cached_snapshot yang sah; waktu sumber asli dan alasan cache dipertahankan per rencana. [Review independen API dan frontend](docs/design/province-review.json) lulus tanpa temuan pemblokir.
 
-Probe sumber tanpa fallback dapat dijalankan terpisah dengan `python -B tools/dev_server.py --probe-live`; memerlukan internet dan melakukan permintaan baru ke sumber resmi. Rincian batas/provenance ada pada dokumentasi API.
+Browser memeriksa 17 wilayah individual, 16 koleksi nyata, rekonsiliasi 5.994 path SVG, detail tiap rencana, pointer/keyboard, respons rusak/terlambat, unduhan yang dibaca ulang dan viewport 1512×1100/390×844. Fixture sintetis hanya untuk tes, tidak menjadi dataset/fallback aplikasi. Kegagalan sumber/jaringan tidak boleh diganti dengan data rekaan.
 
-## Status dan gerbang berikutnya
+Variabel uji: `CHROME_BIN`, `SIAP_IZIN_URL`, `SIAP_IZIN_TEST_OUTPUT`. Profil browser terisolasi; browser pengguna tidak ditutup/diubah. Batas 2 juta verteks per koleksi menerima data Routa sebanyak 1.877.978 verteks tanpa menghilangkan pembatasan ukuran. Pengukuran performa produksi/lintas-browser tetap terbuka.
 
-**Tersedia:** PRD v0.9, filter seluruh kabupaten/kota dengan 32 pemeriksaan browser lulus, audit RDTR terbatas, inventaris sumber, rancangan rubrik, prototipe eksplorasi dan sorotan nyata satu rencana. Review pengguna belum dianggap selesai hanya karena tes teknis lulus. Pilihan tanpa inventaris tidak dianggap tanpa RDTR atau dilarang; ID GISTARU yang belum ditemukan tetap null dengan kunci internal eksplisit pada ekspor.
+## Dokumen
 
-**Berikutnya:** telaah relasi exact-KBLI dan ketentuan Tirawuta sebelum menerbitkan indikasi kesesuaian terverifikasi; perluas rencana secara bertahap dengan validasi yang sama. Pembacaan aturan lengkap, analisis agronomi, persetujuan parameter/rubrik, kandidat, generator GIS, desain produksi dan otomasi OSS belum selesai.
+- [PRD v0.10](docs/PRD.md), [keputusan](docs/decisions.md), [roadmap](docs/roadmap.md).
+- [Kontrak API/klien lintas-rencana](docs/design/province-api.md), [registry](tools/rdtr-plans.json), [bukti browser](docs/design/province-verification.json).
+- [Audit sumber historis terkoreksi](docs/discovery/sultra-01273-source-audit.json): 32 sampel titik bukan izin seluruh polygon. Lasalimu 014 dikoreksi dari 015; predicate geometri sama dan respons titik asli dibaca ulang.
+- [Filter 17 wilayah](docs/design/region-filter.md), [riwayat pilot 20 polygon Tirawuta](docs/design/zone-overlay.md), [riwayat antarmuka](docs/design/mockup.md).
+- [Discovery kandidat kakao](docs/discovery/pilot-kakao.md), [audit delapan layer awal](docs/discovery/rdtr-geometry-audit.md), [sumber agronomi/jalan](docs/discovery/data-sources.md), [rubrik usulan nonaktif](docs/design/scoring-rubric.md).
 
-## Batas hasil dan publikasi
+## Yang belum selesai dan batas publikasi
 
-- Geometri sumber untuk tampilan bukan batas kepemilikan, bidang proyek, bukti tanah tersedia, hasil survei atau jaminan izin.
-- Ketersediaan/hak tanah dan realisasi bukan prasyarat rekomendasi rencana; kesiapan pengajuan resmi ditinjau terpisah.
-- Jangan mengunggah dokumen klien, identitas sensitif, rahasia, OTP, token, cookie, sesi OSS atau ekspor proyek ke repo publik.
-- Snapshot mentah, cache, PDF sumber, screenshot dan arsip kerja tetap di luar publikasi. Bukti lama di `prototype/test-output/` juga diabaikan Git; ringkasan portabel tersedia pada dokumentasi.
-- Akses publik bukan izin publikasi ulang data atau integrasi produksi. `.gitignore` bukan pengganti pemeriksaan sebelum commit.
-- Leaflet serta backend lokal ini merupakan pembuktian implementasi kecil, bukan penetapan seluruh stack produksi. Mandat kelanjutan bukan izin pengajuan OSS, penggunaan data klien atau layanan berbayar.
+- Menutup 6 celah wilayah/2 relasi unknown, crosswalk exact-KBLI, matriks aturan penuh/blok, review pengguna dan izin penggunaan/redistribusi produksi.
+- Agronomi bidang, kandidat/generator polygon, ekspor SHP/KML dan penerimaan OSS belum diuji. Tidak ada login atau pengajuan OSS.
+- Geometri tampilan bukan batas hak, bukti tanah tersedia, hasil survei atau jaminan izin. Ketersediaan tanah/realisasi bukan prasyarat rekomendasi rencana; kesiapan pengajuan ditinjau terpisah.
+- Jangan unggah dokumen klien, identitas sensitif, rahasia, OTP/token/cookie/sesi OSS atau ekspor proyek ke repo publik. Raw geodata, cache, PDF, screenshot dan launcher lingkungan tetap di luar publikasi.
+- Akses publik bukan izin otomasi/redistribusi produksi. `.gitignore` bukan pengganti pemeriksaan sebelum push. Keberhasilan teknis bukan UAT produksi atau persetujuan kegiatan.
