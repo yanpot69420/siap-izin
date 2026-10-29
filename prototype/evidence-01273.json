@@ -1,0 +1,823 @@
+{
+  "schemaId": "siap-izin.public-evidence-01273.v1",
+  "reviewDate": "2026-10-29",
+  "scope": {
+    "kbli": "01273",
+    "kbliVersion": "2025",
+    "name": "Pertanian Kakao",
+    "businessScopeSelection": "unconfirmed",
+    "allowedPurpose": "evidence_review_only",
+    "additionalKbliAllowed": false
+  },
+  "claimStatus": {
+    "classification": "verified_classification",
+    "localMapping": "unreviewed_mapping",
+    "fullRules": "unavailable_full_rules",
+    "wholeParcelPermission": "unknown_permission",
+    "ossProjectAcceptance": "unknown_permission",
+    "amendmentApplicability": "verified_01273_entry_in_amended_annex"
+  },
+  "classification": {
+    "sourceIds": [
+      "BPS_PUBLICATION",
+      "BPS_PDF",
+      "PERBAN_6_2026_PDF",
+      "OSS_CATALOG"
+    ],
+    "printedPage": 244,
+    "pdfPageOneBased": 260,
+    "paraphrase": "Pertanian kakao meliputi penyiapan lahan hingga panen dan pascapanen dalam rangkaian pertanian; penanaman untuk benih berupa biji juga dicakup. Pemilihan scope proyek belum dikonfirmasi."
+  },
+  "amendment": {
+    "sourceId": "PERBAN_6_2026_PDF",
+    "number": "6",
+    "year": "2026",
+    "amends": "7/2025",
+    "metadataPromulgationDate": "2026-09-10",
+    "abstractAffectedCodes": [
+      "27201",
+      "27203",
+      "68122"
+    ],
+    "fullTextRetrieved": true,
+    "effectOn01273": "verified_01273_entry_in_amended_annex",
+    "latestStatus": "latest_identified_not_exhaustively_certified",
+    "limitation": "PDF lengkap dari peraturan.go.id dan JDIH BPK diperoleh dengan SHA-256 identik. Pasal I mengganti lampiran; entri 01273 pada halaman lampiran tercetak 11 tetap Pertanian Kakao dan mencakup rangkaian pertanian serta benih berupa biji. Ini verifikasi entri 01273, bukan perbandingan seluruh kode atau approval pemetaan RDTR/OSS."
+  },
+  "sources": [
+    {
+      "id": "PERBAN_6_2026_PDF",
+      "url": "https://peraturan.go.id/files/peraturan-bps-no-6-tahun-2026.pdf",
+      "retrievedDate": "2026-10-29",
+      "locator": "Pasal I-II; lampiran halaman tercetak 11, entri 01273",
+      "sha256": "94732a0cd46a416f27a888e355d78cf96fae586359d3ddac37b121de8a513b28"
+    },
+    {
+      "id": "PERBAN_6_2026_BPK",
+      "url": "https://peraturan.bpk.go.id/Download/422292/no-6-tahun-2026.pdf",
+      "retrievedDate": "2026-10-29",
+      "locator": "Salinan PDF byte-identik dengan peraturan.go.id",
+      "sha256": "94732a0cd46a416f27a888e355d78cf96fae586359d3ddac37b121de8a513b28"
+    },
+    {
+      "id": "BPS_PUBLICATION",
+      "url": "https://www.bps.go.id/id/publication/2025/12/24/a9b2f130776c7bea36008556/klasifikasi-baku-lapangan-usaha-indonesia-kbli-2025-.html",
+      "retrievedDate": "2026-10-29",
+      "releaseDate": "2025-12-24",
+      "revisionDate": "2026-01-13",
+      "locator": "Metadata publikasi",
+      "sha256": null
+    },
+    {
+      "id": "BPS_PDF",
+      "url": "https://webapi.bps.go.id/download.php?f=AQADHlCUdNTI7wAmmQlt97gYFIXV7StXwdE25cHDjYOOX7CD4aKTrijXXyN2cIDNlnFE8c-_8tSVqngp-qzG-jNLFvwzHg5Hgxfe0EocAoUELzSwWvyc0nO2omHV7nKKddse25PuXTWRKLvz0G3f5kJhqr-GLrNlME5SPVNtK__zeqU_UcsY3QNg7aBozkCtGv2BRa48QcQJT4LouC7Pb57sHMXoZX-FFrxZrwvIsB6pGgxsoj9ekrxAUr2Snw88W0MHw1fJxYBWIpKPhiWyuJ9z51hywMrkQE8t5gmTefiQ",
+      "retrievedDate": "2026-10-29",
+      "locator": "Halaman tercetak 244; halaman PDF 260/1040",
+      "sha256": "169ec324af12c3e535d081dbe3789e019f9131ab81460357c2453fd0651a56b3"
+    },
+    {
+      "id": "OSS_CATALOG",
+      "url": "https://oss.go.id/id/kbli/detail/9f8bd843-df47-5b3d-8794-66a7d1be75b3",
+      "retrievedDate": "2026-10-29",
+      "locator": "Uraian; ruang lingkup; dampak konversi",
+      "sha256": "746e7429ff48c8b4d7a2183d1349b30b21da6c55808142ea724edaeab44cf7ef"
+    },
+    {
+      "id": "BPS_JDIH",
+      "url": "https://jdih.bps.go.id/public/dokumen-hukum/eyJpdiI6InQrQTk2ZnJHTkxwMkhuSUcvTlVRWEE9PSIsInZhbHVlIjoidy9LWm1wb2pBRzkvK25MT3lpQlBFUT09IiwibWFjIjoiOTllNWZkYTU3NDE2NzY0ZTU5Y2MwMjJkMmI1OWFkMjBjMzcwNWYwYWUzMTRhNDlhNTk3ZDFiYTBmZDdmZDAwZSIsInRhZyI6IiJ9",
+      "retrievedDate": "2026-10-29",
+      "locator": "Metadata peraturan; abstrak HTML, bukan PDF peraturan",
+      "sha256": null
+    }
+  ],
+  "localProvenance": [
+    {
+      "path": "docs/discovery/sultra-01273-source-audit.json",
+      "sha256": "d20d98d94a177adf51a79a6bf9330466673c61fbe9a1bd8e399ec58e14167478"
+    },
+    {
+      "path": "tools/rdtr-plans.json",
+      "sha256": "8a170fcb8c63c9d43d4f1f211bf0ecb7496f5b06e2b2b0a78a468c4337a60f4d"
+    }
+  ],
+  "historicalSummary": {
+    "planCount": 18,
+    "plansWithCandidateMapping": 16,
+    "plansWithoutMapping": 2,
+    "filterCounts": {
+      "matched": 6009,
+      "returned": 5994,
+      "excludedInvalid": 15
+    },
+    "pointSampleCount": 32,
+    "isLiveRevalidation": false
+  },
+  "plans": [
+    {
+      "planId": "7401000000:001",
+      "name": "RDTR Kawasan Perkotaan Kolaka",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7401000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7401000000&id_rtr=001",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "025",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "PS",
+        "RTH-8",
+        "EM",
+        "P-3",
+        "R-4",
+        "R-5"
+      ],
+      "historicalFilterCounts": {
+        "matched": 1054,
+        "returned": 1054,
+        "excludedInvalid": 0
+      },
+      "historicalPointObjectIds": [
+        4717,
+        4718
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7401000000:002",
+      "name": "RDTR Kawasan Perkotaan Wolo",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7401000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7401000000&id_rtr=002",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "034",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "R-3",
+        "R-4",
+        "K-3",
+        "P-1",
+        "P-2",
+        "P-3",
+        "W"
+      ],
+      "historicalFilterCounts": {
+        "matched": 254,
+        "returned": 253,
+        "excludedInvalid": 1
+      },
+      "historicalPointObjectIds": [
+        182,
+        183
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7402000000:003",
+      "name": "RDTR Wilayah Perencanaan Routa",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7402000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7402000000&id_rtr=003",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "043",
+        "name": "Perkebunan Tanaman Aromatik/Penyegaran",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "P-1",
+        "P-2",
+        "P-3"
+      ],
+      "historicalFilterCounts": {
+        "matched": 1688,
+        "returned": 1688,
+        "excludedInvalid": 0
+      },
+      "historicalPointObjectIds": [
+        1,
+        3
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7402000000:002",
+      "name": "RDTR Pondidaha",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7402000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7402000000&id_rtr=002",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "016",
+        "name": "PERKEBUNAN TANAMAN AROMATIK/PENYEGAR",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "P-2",
+        "P-3"
+      ],
+      "historicalFilterCounts": {
+        "matched": 197,
+        "returned": 196,
+        "excludedInvalid": 1
+      },
+      "historicalPointObjectIds": [
+        3,
+        4
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7404000000:001",
+      "name": "RDTR Kec.Lasalimu",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7404000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7404000000&id_rtr=001",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "014",
+        "name": "Pertanian Tanaman Untuk Bahan Minuman",
+        "mappingReviewed": false,
+        "basis": "candidate_beverage_crop_group_kbli0127_not_exact_crosswalk"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "P-2",
+        "P-3",
+        "R-5"
+      ],
+      "historicalFilterCounts": {
+        "matched": 182,
+        "returned": 178,
+        "excludedInvalid": 4
+      },
+      "historicalPointObjectIds": [
+        9,
+        10
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7405000000:002",
+      "name": "RDTR Wilayah Perencanaan Laonti",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7405000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7405000000&id_rtr=002",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "044",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "RTH-1",
+        "P-2",
+        "P-3",
+        "R-3",
+        "R-4"
+      ],
+      "historicalFilterCounts": {
+        "matched": 322,
+        "returned": 321,
+        "excludedInvalid": 1
+      },
+      "historicalPointObjectIds": [
+        3,
+        4
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7405000000:001",
+      "name": "RDTR Wilayah Perencanaan Angata",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7405000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7405000000&id_rtr=001",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "044",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "RTH-2",
+        "P-1",
+        "P-2",
+        "P-3",
+        "R-3",
+        "R-4",
+        "R-5"
+      ],
+      "historicalFilterCounts": {
+        "matched": 381,
+        "returned": 380,
+        "excludedInvalid": 1
+      },
+      "historicalPointObjectIds": [
+        25,
+        26
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7406000000:001",
+      "name": "RDTR Kawasan Perkotaan Rumbia",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7406000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7406000000&id_rtr=001",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "043",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "P-3"
+      ],
+      "historicalFilterCounts": {
+        "matched": 51,
+        "returned": 51,
+        "excludedInvalid": 0
+      },
+      "historicalPointObjectIds": [
+        208,
+        209
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7407000000:002",
+      "name": "RDTR Matahora Sekitar Kawasan Pariwisata",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7407000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7407000000&id_rtr=002",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "060",
+        "name": "Pertanian Tanaman untuk Bahan Minimum",
+        "mappingReviewed": false,
+        "basis": "candidate_beverage_crop_group_source_typo"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "P-3"
+      ],
+      "historicalFilterCounts": {
+        "matched": 58,
+        "returned": 57,
+        "excludedInvalid": 1
+      },
+      "historicalPointObjectIds": [
+        14,
+        15
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7407000000:001",
+      "name": "RDTR Perkotaan Wangi-Wangi",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7407000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7407000000&id_rtr=001",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "060",
+        "name": "Pertanian Tanaman untuk Bahan Minimum",
+        "mappingReviewed": false,
+        "basis": "candidate_beverage_crop_group_source_typo"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "KR",
+        "P-1",
+        "P-3",
+        "KPI"
+      ],
+      "historicalFilterCounts": {
+        "matched": 72,
+        "returned": 72,
+        "excludedInvalid": 0
+      },
+      "historicalPointObjectIds": [
+        144,
+        145
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7407000000:003",
+      "name": "RDTR Kawasan Perktoaan Usuku dan Sekitarnya",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7407000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7407000000&id_rtr=003",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "039",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "HL",
+        "P-3",
+        "R-4"
+      ],
+      "historicalFilterCounts": {
+        "matched": 389,
+        "returned": 383,
+        "excludedInvalid": 6
+      },
+      "historicalPointObjectIds": [
+        11,
+        12
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7409000000:001",
+      "name": "RDTR Kawasan Perkotaan Wanggudu",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7409000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7409000000&id_rtr=001",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": null,
+      "filterField": "KODSZN",
+      "filterZoneCodes": [],
+      "historicalFilterCounts": null,
+      "historicalPointObjectIds": [],
+      "mappingStatus": "unavailable_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7411000000:001",
+      "name": "RDTR Kawasan Perkotaan Tirawuta",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7411000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7411000000&id_rtr=001",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "041",
+        "name": "Perkebunan tanaman aromatik/penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "P-3"
+      ],
+      "historicalFilterCounts": {
+        "matched": 20,
+        "returned": 20,
+        "excludedInvalid": 0
+      },
+      "historicalPointObjectIds": [
+        82,
+        383
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7411000000:002",
+      "name": "RDTR Kawasan Agropolitan Mowewe, Lalolae, Tinondo",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7411000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7411000000&id_rtr=002",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "041",
+        "name": "Perkebunan tanaman aromatik/penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "P-2",
+        "P-3",
+        "R-4",
+        "R-5"
+      ],
+      "historicalFilterCounts": {
+        "matched": 373,
+        "returned": 373,
+        "excludedInvalid": 0
+      },
+      "historicalPointObjectIds": [
+        62,
+        63
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7412000000:001",
+      "name": "RDTR Kawasan Perkotaan Langara",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7412000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7412000000&id_rtr=001",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "320",
+        "name": "Perkebunan Tanaman Aromatik/Penyegar",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODUNK",
+      "filterZoneCodes": [
+        "HPK.00",
+        "HPK.01",
+        "HPK.02",
+        "P-2.00",
+        "P-2.01",
+        "P-2.02",
+        "P-2.03",
+        "P-2.04",
+        "P-3.00",
+        "P-3.01",
+        "P-3.02",
+        "P-3.03",
+        "P-3.04",
+        "P-3.05",
+        "P-3.06",
+        "P-3.07",
+        "P-3.08",
+        "P-3.09",
+        "P-4.01",
+        "P-4.02"
+      ],
+      "historicalFilterCounts": {
+        "matched": 502,
+        "returned": 502,
+        "excludedInvalid": 0
+      },
+      "historicalPointObjectIds": [
+        3,
+        114
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7414000000:001",
+      "name": "RDTR Kawasan Perkotaan Labungkari",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7414000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7414000000&id_rtr=001",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "002",
+        "name": "Pertanian Tanaman Tahunan",
+        "mappingReviewed": false,
+        "basis": "candidate_perennial_crop_group"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "PS",
+        "P-3",
+        "KPI",
+        "W",
+        "R-4",
+        "R-5",
+        "SPU-1",
+        "SPU-2",
+        "SPU-3",
+        "PL-6"
+      ],
+      "historicalFilterCounts": {
+        "matched": 346,
+        "returned": 346,
+        "excludedInvalid": 0
+      },
+      "historicalPointObjectIds": [
+        2,
+        6
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7414000000:002",
+      "name": "RDTR Kawasan Perkotaan Mawasangka",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7414000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7414000000&id_rtr=002",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": {
+        "id": "043",
+        "name": "Perkebunan Tanaman Aromatik/Penyegaran",
+        "mappingReviewed": false,
+        "basis": "candidate_aromatic_crop_group"
+      },
+      "filterField": "KODSZN",
+      "filterZoneCodes": [
+        "RTH-1",
+        "RTH-2",
+        "RTH-3",
+        "RTH-4",
+        "RTH-5",
+        "P-3",
+        "R-3",
+        "R-4"
+      ],
+      "historicalFilterCounts": {
+        "matched": 120,
+        "returned": 120,
+        "excludedInvalid": 0
+      },
+      "historicalPointObjectIds": [
+        14,
+        38
+      ],
+      "mappingStatus": "unreviewed_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    },
+    {
+      "planId": "7471000000:001",
+      "name": "RDTR WP I Central Business Districk (CBD) Teluk Kendari",
+      "catalogUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/rdtr/7471000000",
+      "activitiesUrl": "https://gistaru.atrbpn.go.id/rdtrinteraktif/api/interactive/activities?id_wilayah=7471000000&id_rtr=001",
+      "sourceSnapshotDate": "2026-10-25T15:44:36.522584+00:00",
+      "localSourceActivity": null,
+      "filterField": "KODSZN",
+      "filterZoneCodes": [],
+      "historicalFilterCounts": null,
+      "historicalPointObjectIds": [],
+      "mappingStatus": "unavailable_mapping",
+      "fullRulesStatus": "unavailable_full_rules",
+      "wholeParcelPermission": "unknown_permission",
+      "checklist": {
+        "snapshotIdentityAndFilterCompared": true,
+        "exactKbliAuthorityCrosswalkReviewed": false,
+        "operativePlanAndFullItbxReviewed": false,
+        "wholeParcelOverlayReviewed": false,
+        "targetOssAcceptanceVerified": false
+      }
+    }
+  ],
+  "acceptanceBoundary": {
+    "completed": [
+      "primary_classification_catalog_and_pdf_retrieved",
+      "operative_01273_entry_in_2026_amended_annex_verified",
+      "historical_per_plan_identity_filter_review",
+      "public_evidence_pack_validation"
+    ],
+    "notCompleted": [
+
+      "authority_exact_kbli_crosswalk",
+      "operative_full_itbx_and_condition_meanings",
+      "whole_parcel_permission",
+      "oss_target_flow_acceptance",
+      "redistribution_rights"
+    ],
+    "forbiddenInference": "filter membership or point samples => exact-KBLI or whole-parcel approval"
+  }
+}

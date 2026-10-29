@@ -30,6 +30,16 @@ Routes:
 
 Semua unit SQL hanya siap_izin_test, guard sebelumDDL, DROP schema hanya dalam transaksi rollback. A/B suites SERIALIZE fixture lifetime memakai session advisory lock `0x5244545254455354` sebelumDDL; tahan sampai koneksi ditutup. Migrasi tetap memakai lock sendiri. Parent tidak menjalankan SQL tests serentak. HTTP tests boleh injeksi factory/adapter yang tetap membaca SQL fixture nyata; jangan commit/drop database test untuk membagi fixture antarproses. Semua fixtures sintetis diberi label; data nyata hanya parent pada dev setelah gate.
 
-## Gerbang berikut
+## Tambahan satu-KBLI — kandidat 16 rencana, 29 Oktober 2026
+
+- Katalog dapat membawa `plan.localStorage:{state:'stored'|'not_stored'}`. Ini observasi keberadaan versi/mapping 01273/2025 saat katalog dibaca, bukan keanggotaan rilis atau waktu pengamatan sumber. Field opsional; tanpa field berarti unknown. Metadata ini tidak disalin sebagai provenance immutable ke ekspor.
+- `get_catalog_for_release(conn, release_hash)` memproyeksikan pin literal yang sudah divalidasi tanpa membaca/mengganti pointer. Dipakai preview operator terisolasi; bukan fallback dari hash yang gagal.
+- Kapabilitas perangkat lunak opsional `localCapabilities:{displayBatchOverview:true}` divalidasi ketat dan tidak menjadi provenance dataset. Tanpa kapabilitas, klien tetap memakai endpoint per rencana.
+- GET `/api/display-batch?kbli=01273&level=overview&release=<64hex>&plans=<literal_id_1>,<literal_id_2>` menerima 1–16 ID unik, tanpa bbox/level lain/parameter tambahan/URL decoding. Semua harus anggota rilis. Batas body 32 MiB, gagal eksplisit tanpa pemotongan fitur.
+- Respons batch tepat `{schemaVersion:1,releaseHash,results:[{planId,data:<collection>}|{planId,error:{code,status}}]}` dalam urutan permintaan. Setiap collection identik dengan endpoint individual. Kegagalan proof rilis menolak seluruh request; kegagalan proyeksi atribut per rencana tetap dibedakan. Klien menolak hasil hilang/duplikat/asing, pin salah atau schema extra, dan tidak fallback ke rilis/endpoint lain bila batch yang diumumkan gagal.
+- Proof SQL seluruh anggota tetap segar pada setiap request: dua agregat inventory/LOD berkelompok berdasarkan versi dan model hash. Tidak memakai cache kepercayaan lintas-request atau hanya memeriksa rencana yang diminta. Batch mengamortisasi proof itu sekali per request, bukan melemahkannya. Timeout statement tetap tiga detik.
+- Pada overview lokal saja, jika bbox viewport sepenuhnya mencakup **bounds sumber asli** yang valid, klien dapat memakai kembali inventaris terpin yang sudah dimuat. Collection tidak diubah; `meta.display.bbox` tetap null dan record diberi `origin:'inventory_contained'`. Ini bukan respons HTTP baru atau klaim interseksi dari geometri ringan. Partial overlap, level lebih dekat, legacy/live, metadata/pin yang salah dan sumber tidak diketahui tidak memakai jalan pintas tersebut.
+
+## Riwayat gerbang awal
 
 135Python/56Node dan review3 menutup fondasi, bukan fitur baru ini. Persiapan/rilis/API harus mempunyai RED→GREEN, tes identity/release pointer/rollback/readonly/no-upstream, lalu impor/prepare dua sumber nyata, browser dan review sendiri sebelum perluasan. Akun aplikasi terpisah serta aktivasi lokal bukan publikasi internet. Uraian katalog KBLI yang belum diimpor tidak boleh berubah menjadi label resmi karena release disegel; pengayaan katalog kelak perlu versi/provenance terpisah.

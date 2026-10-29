@@ -1,0 +1,30 @@
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const root=path.join(__dirname,'..');
+const pack=JSON.parse(fs.readFileSync(path.join(root,'prototype/evidence-01273.json'),'utf8'));
+const keys=(value,allowed)=>assert.deepEqual(Object.keys(value).sort(),allowed.split(' ').sort());
+test('01273 public evidence stays single-code, source-bound and unknown for mapping/permission',()=>{
+ keys(pack,'schemaId reviewDate scope claimStatus classification amendment sources localProvenance historicalSummary plans acceptanceBoundary');
+ keys(pack.scope,'kbli kbliVersion name businessScopeSelection allowedPurpose additionalKbliAllowed');
+ assert.equal(pack.scope.kbli,'01273');assert.equal(pack.scope.kbliVersion,'2025');assert.equal(pack.scope.additionalKbliAllowed,false);assert.equal(pack.scope.businessScopeSelection,'unconfirmed');assert.equal(pack.scope.allowedPurpose,'evidence_review_only');
+ assert.deepEqual(pack.claimStatus,{classification:'verified_classification',localMapping:'unreviewed_mapping',fullRules:'unavailable_full_rules',wholeParcelPermission:'unknown_permission',ossProjectAcceptance:'unknown_permission',amendmentApplicability:'verified_01273_entry_in_amended_annex'});
+ const allowedIds=new Set(['PERBAN_6_2026_PDF','PERBAN_6_2026_BPK','BPS_PUBLICATION','BPS_PDF','OSS_CATALOG','BPS_JDIH']),ids=new Set();
+ const hosts=new Set(['peraturan.go.id','peraturan.bpk.go.id','www.bps.go.id','webapi.bps.go.id','oss.go.id','jdih.bps.go.id','gistaru.atrbpn.go.id']);
+ for(const source of pack.sources){assert.ok(Object.keys(source).every(key=>['id','url','retrievedDate','releaseDate','revisionDate','locator','sha256'].includes(key)));for(const key of ['id','url','retrievedDate','locator','sha256'])assert.ok(Object.hasOwn(source,key));assert.ok(allowedIds.has(source.id));assert.ok(!ids.has(source.id));ids.add(source.id);assert.ok(source.sha256===null||/^[a-f0-9]{64}$/.test(source.sha256));}
+ assert.equal(ids.size,allowedIds.size);for(const id of [...pack.classification.sourceIds,pack.amendment.sourceId])assert.ok(ids.has(id));
+ assert.equal(pack.amendment.fullTextRetrieved,true);assert.equal(pack.amendment.effectOn01273,'verified_01273_entry_in_amended_annex');
+ keys(pack.classification,'sourceIds printedPage pdfPageOneBased paraphrase');keys(pack.amendment,'sourceId number year amends metadataPromulgationDate abstractAffectedCodes fullTextRetrieved effectOn01273 latestStatus limitation');keys(pack.historicalSummary,'planCount plansWithCandidateMapping plansWithoutMapping filterCounts pointSampleCount isLiveRevalidation');keys(pack.historicalSummary.filterCounts,'matched returned excludedInvalid');keys(pack.acceptanceBoundary,'completed notCompleted forbiddenInference');
+ const plans=new Set();for(const plan of pack.plans){keys(plan,'planId name catalogUrl activitiesUrl sourceSnapshotDate localSourceActivity filterField filterZoneCodes historicalFilterCounts historicalPointObjectIds mappingStatus fullRulesStatus wholeParcelPermission checklist');assert.match(plan.planId,/^74\d{8}:\d{3}$/);assert.ok(!plans.has(plan.planId));plans.add(plan.planId);assert.ok(['unreviewed_mapping','unavailable_mapping'].includes(plan.mappingStatus));assert.equal(plan.fullRulesStatus,'unavailable_full_rules');assert.equal(plan.wholeParcelPermission,'unknown_permission');if(plan.localSourceActivity){keys(plan.localSourceActivity,'id name mappingReviewed basis');assert.equal(plan.localSourceActivity.mappingReviewed,false);}if(plan.historicalFilterCounts)keys(plan.historicalFilterCounts,'matched returned excludedInvalid');keys(plan.checklist,'snapshotIdentityAndFilterCompared exactKbliAuthorityCrosswalkReviewed operativePlanAndFullItbxReviewed wholeParcelOverlayReviewed targetOssAcceptanceVerified');for(const [key,value]of Object.entries(plan.checklist))assert.equal(value,key==='snapshotIdentityAndFilterCompared');}
+ assert.equal(plans.size,pack.historicalSummary.planCount);
+ function walk(value){if(Array.isArray(value))return value.forEach(walk);if(!value||typeof value!=='object')return;for(const [key,item]of Object.entries(value)){assert.doesNotMatch(key,/^(?:geometry|coordinates|features|token|password|secret|credentials|authorization|cookie|apiKey)$/i);if(key==='url'||key.endsWith('Url')){const u=new URL(item);assert.equal(u.protocol,'https:');assert.ok(hosts.has(u.hostname),u.hostname);assert.equal(u.username,'');assert.equal(u.password,'');for(const parameter of u.searchParams.keys())assert.doesNotMatch(parameter,/token|password|secret|authorization|api.?key/i);}walk(item);}}walk(pack);
+ for(const source of pack.localProvenance){keys(source,'path sha256');assert.ok(['docs/discovery/sultra-01273-source-audit.json','tools/rdtr-plans.json'].includes(source.path));assert.match(source.sha256,/^[a-f0-9]{64}$/);assert.equal(require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(root,source.path))).digest('hex'),source.sha256);}
+});
+test('01273 classification basis is static, official and distinct from unresolved RDTR/OSS',()=>{
+ const html=fs.readFileSync(path.join(root,'prototype/index.html'),'utf8'),app=fs.readFileSync(path.join(root,'prototype/app.js'),'utf8');
+ const panel=html.match(/<details\b[^>]*id="kbliEvidence"[^>]*>([\s\S]*?)<\/details>/);assert.ok(panel,'visible static classification basis near KBLI selector');
+ assert.match(panel[1],/01273\/2025/);assert.match(panel[1],/klasifikasi terverifikasi/i);assert.match(panel[1],/budidaya.*benih.*belum dikonfirmasi/i);assert.match(panel[1],/pemetaan RDTR belum direview/i);assert.match(panel[1],/izin.*unknown.*penerimaan OSS.*belum diverifikasi/i);
+ const links=[...panel[1].matchAll(/href="([^"]+)"/g)].map(m=>m[1]);assert.deepEqual(links,[pack.sources.find(s=>s.id==='BPS_PUBLICATION').url,pack.sources.find(s=>s.id==='PERBAN_6_2026_PDF').url]);
+ assert.doesNotMatch(app,/fetch\([^\n]*(?:evidence-01273|\.pdf)/);assert.doesNotMatch(panel[1],/<script|<iframe|<object|<embed/i);
+});

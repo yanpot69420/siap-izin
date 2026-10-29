@@ -1,6 +1,6 @@
 # PRD — Aplikasi Induk Asisten Perizinan Berusaha
 
-**Versi:** 0.14 — database 16 versi, peta lokal dua rencana aktif dan navigasi sorotan langsung teruji; publikasi kode diizinkan, panel admin/sinkronisasi dan deployment produksi tetap ditunda
+**Versi:** 0.15 — peta lokal 16 rencana aktif untuk 01273/2025, batch/viewport dan operasi backup/restore teruji; validasi domain exact-KBLI/ITBX belum selesai, panel admin/sinkronisasi dan produksi tetap ditunda. Publikasi checkpoint hanya kode, tes dan dokumentasi, bukan dataset.
 
 **Pemilik kebutuhan:** Anton
 
@@ -59,6 +59,8 @@ Belum tersedia baseline waktu kerja, frekuensi kesalahan, volume berkas, dan bia
 | D-16 | Lanjutkan fondasi DB lokal, impor bertahap dan perbaikan review sebelum jalur baca lokal/integrasi peta | Anton memberi instruksi lanjut, mengonfirmasi migrasi dev dan menyetujui urutan perbaikan → uji/review → LOD/API → peta → perluasan. Tidak mengizinkan panel admin/scheduler, deployment berbayar, publikasi internet atau pengajuan OSS. [Checkpoint](design/rdtr-db-foundation.md), DEC-17 |
 | D-17 | Terapkan kriteria langsung memperlihatkan sorotan; lingkaran navigasi wilayah dapat diklik/disentuh untuk memperbesar, tetap ringan | Diminta Anton. Implementasi dan uji terbatas pada rilis lokal dua rencana; penanda bukan batas kabupaten atau keputusan izin. [Kontrak navigasi](design/map-region-navigation.md) |
 | D-18 | Publikasi kode, commit dan push setelah verifikasi | Anton meminta “publikasi commit push” pada 29 Oktober 2026. Hanya kode/skema/tes dan dokumentasi publik; bukan publikasi database, geometri, arsip, kredensial, deployment produksi atau aktivasi dataset tambahan. [Checkpoint](design/local-release-checkpoint.md) |
+| D-19 | Kerjakan tahap 1–5 penyempurnaan tetapi jangan perluas KBLI | Instruksi Anton 29 Oktober 2026. Hanya 01273/2025; persiapan → kandidat → review/uji/rollback → aktivasi lokal. Telaah bukti tidak mengesahkan pemetaan exact-KBLI/ITBX. [Checkpoint](design/exploration-01273-checkpoint.md), DEC-20 |
+| D-20 | Commit dan push checkpoint satu-KBLI setelah laporan hasil teknis | Anton menyatakan “anda boleh melakukan commit dan push” pada 29 Oktober 2026. Izin khusus kode/tes/dokumentasi yang telah diverifikasi; tidak mencakup data privat, deployment produksi atau keputusan izin. DEC-21 |
 | A-01 | Penggunaan awal untuk Anton dan tim internal, bukan SaaS publik | Asumsi |
 | A-02 | Ada pemeriksaan manusia sebelum data final dan pengajuan | Usulan pengamanan |
 | A-03 | MVP berakhir pada paket siap input dan pencatatan hasil input manual | Usulan batas MVP |
@@ -218,13 +220,13 @@ Sistem mempertahankan hasil lama sebagai riwayat dan menandai hasil turunannya `
 | F-42 | P0 optimasi diminta | Geometri tampilan bertingkat | Sumber asli tidak berubah. Turunan terikat snapshot/ID/versi algoritma, validitas/count diperiksa; coverage tidak valid tidak disederhanakan diam-diam. Detail atribut diminta terpisah dan terikat snapshot |
 | F-43 | P0 optimasi diminta | Pemuatan viewport dan hitungan jujur | Katalog/tersedia/dimuat/ditampilkan dipisahkan. Request area/zoom dibatasi dan respons lama diabaikan; daftar sumber tetap dapat ditelusuri seluruhnya melalui keyboard |
 | F-44 | P0 rancangan D-15 | Jalur baca database RDTR mandiri | Saat kelak diimplementasi, membuka peta/filter/detail membaca rilis lokal tanpa request ATR/BPN; gangguan sumber tidak memicu pengambilan live terselubung |
-| F-45 | P0 target D-15/D-16 | Impor awal dan kelengkapan sumber | Arsip verbatim, rekonsiliasi ID/count, CRS, karantina dan resume; subset kegiatan tidak disebut seluruh layer. Fondasi sudah mengimpor dua arsip tervalidasi terkait 01273; bukan pengambilan seluruh layer atau matriks aturan lengkap |
+| F-45 | P0 target D-15/D-16 | Impor awal dan kelengkapan sumber | Arsip verbatim, rekonsiliasi ID/count, CRS, karantina dan resume; subset kegiatan tidak disebut seluruh layer. Kini 16 versi/5.994 fitur valid dan 15 karantina sudah direkonsiliasi; bukan pengambilan seluruh layer atau matriks aturan lengkap |
 | F-46 | P0 rancangan D-15 | Rilis immutable dan aktivasi atomik | Rilis mengunci versi rencana dan revisi mapping untuk seluruh request sesi; gagal impor tidak merusak rilis aktif, rollback tercatat dan versi lama tidak dicampur |
 | F-47 | P0 rancangan D-15 | Relasi lokal berversi dan kekuatan bukti | ID kegiatan/OID/kode zona dibatasi rencana/versi; filter KODUNK/KODSZN, kategori/syarat dan sumber asli dipertahankan. Keanggotaan filter/sampel titik tidak menjadi izin seluruh polygon |
 | F-48 | P0 rancangan D-15 | Indeks spasial dan turunan siap baca | LOD/indeks selesai sebelum aktivasi; bootstrap tidak memuat seluruh geometri, viewport memakai polygon asli untuk seleksi dan daftar sumber dipaginasi tanpa kehilangan akses keyboard |
 | F-49 | P0 rancangan D-15 | Dataset lokal bertanggal tanpa sinkronisasi otomatis | Waktu sumber/pemeriksaan/tanggal berlaku dipisah; label bukan live/terbaru. Panel admin, scheduler dan kebijakan umur baru belum dibuat/diaktifkan hanya karena desain tersedia |
 
-F-44 sampai F-49 adalah persyaratan target database. Fondasi SQL, validator dan impor staging sudah berjalan sebagian; API/peta dari rilis lokal belum diaktifkan. Kelulusan SQL/unit bukan kelulusan seluruh fitur/UAT. Model dan gerbang di [rancangan database](design/rdtr-database.md); implementasi serta blocker di [checkpoint](design/rdtr-db-foundation.md).
+F-44 sampai F-49 mempunyai implementasi lokal: 16 rencana aktif, 17.982 LOD, reader-only API dan pin rilis teruji; 203 Python/111 Node/38 pemeriksaan native lulus setelah aktivasi. Backup/restore dan rollback terisolasi diuji. Kelulusan ini bukan UAT produksi, review exact-KBLI/ITBX atau penerimaan OSS. Model di [rancangan database](design/rdtr-database.md); keadaan dan batas terkini di [checkpoint satu KBLI](design/exploration-01273-checkpoint.md), dengan [riwayat fondasi](design/rdtr-db-foundation.md) dipertahankan.
 
 ### 8.1 Ketentuan dokumen dan AI
 

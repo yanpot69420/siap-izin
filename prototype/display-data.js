@@ -79,7 +79,7 @@
   });}
   return {json};
  }
- function createLoader({fetchImpl,transport,onUpdate=()=>{},timeoutMs=120000}={}){
+ function createLoader({fetchImpl,transport,onUpdate=()=>{},timeoutMs=120000,batchOverview=false,reuseContainedOverview=false}={}){
   // A caller-supplied transport lets viewport and detail share the same ceiling.
   transport=transport||createTransport({fetchImpl,timeoutMs});
   let revision=0;const controllers=new Set();
@@ -87,7 +87,37 @@
   async function start(plans,kbli,{level='overview',bbox=null,inventories=null}={}){
    cancel();if(!LocalDataset&&plans.some(p=>p.localDataset!==undefined))throw new Error('Helper dataset lokal tidak tersedia.');
    plans=LocalDataset?LocalDataset.capturePlans(plans,kbli):plans;const current=revision,queue=plans.filter(p=>LocalDataset?LocalDataset.canRequest(p):p.activity),records=new Map(plans.map(p=>[p.id,LocalDataset?LocalDataset.initialRecord(p):{status:p.activity?'loading':'unavailable'}]));let next=0;
-   const publish=()=>{if(current===revision)onUpdate(records);};publish();
+   // Only a wholly contained ORIGINAL source envelope proves that every source
+   // polygon is in this viewport. Reuse the actual pinned collection unchanged;
+   // never synthesize a response or change its null overview query bbox.
+   if((typeof reuseContainedOverview==='function'?reuseContainedOverview():reuseContainedOverview)===true&&level==='overview'&&bbox!==null){
+    for(let i=queue.length-1;i>=0;i--){const p=queue[i],entry=inventories?.get(p.id);
+     if(!p.localDataset?.available||entry?.status!=='ready'||!contains(bbox,entry.data?.meta?.sourceBounds))continue;
+     try{validateCollection(entry.data,p,kbli,{level:'overview'});records.set(p.id,{status:'ready',data:entry.data,origin:'inventory_contained'});}
+     catch{records.set(p.id,{status:'error',error:'inventory_invalid'});}
+     queue.splice(i,1);
+    }
+   }
+   const publish=()=>{if(current===revision)onUpdate(records);};
+   if((typeof batchOverview==='function'?batchOverview():batchOverview)===true&&level==='overview'&&bbox===null){
+    if(!LocalDataset||queue.length>16||new Set(plans.map(p=>p.id)).size!==plans.length||queue.some(p=>!p.localDataset?.available))fail();
+    if(!queue.length){publish();return records;}
+    const releaseHash=queue[0].localDataset.releaseHash,controller=new AbortController();controllers.add(controller);
+    try{
+     const value=await transport.json(`/api/display-batch?kbli=${kbli}&level=overview&release=${releaseHash}&plans=${queue.map(p=>p.id).join(',')}`,{signal:controller.signal});
+     if(current!==revision)return records;
+     if(!record(value)||Object.keys(value).sort().join(',')!=='releaseHash,results,schemaVersion'||value.schemaVersion!==1||value.releaseHash!==releaseHash||!Array.isArray(value.results)||value.results.length!==queue.length)fail();
+     const validated=value.results.map((item,i)=>{
+      if(!record(item)||item.planId!==queue[i].id)fail();
+      if(Object.hasOwn(item,'error')){const e=item.error;if(Object.keys(item).sort().join(',')!=='error,planId'||!record(e)||Object.keys(e).sort().join(',')!=='code,status'||typeof e.code!=='string'||!/^[a-z][a-z0-9_]{0,63}$/.test(e.code)||!Number.isInteger(e.status)||e.status<400||e.status>599)fail();return {status:e.status===422?'unavailable':'error',error:e.code};}
+      if(Object.keys(item).sort().join(',')!=='data,planId')fail();
+      return {status:'ready',data:validateCollection(item.data,queue[i],kbli,{level:'overview'})};
+     });
+     if(current===revision)validated.forEach((entry,i)=>records.set(queue[i].id,entry));
+    }catch(e){if(current===revision)queue.forEach(p=>records.set(p.id,{status:'error',error:e.message}));}
+    finally{controllers.delete(controller);}publish();return records;
+   }
+   publish();
    async function worker(){while(current===revision&&next<queue.length){const p=queue[next++],controller=new AbortController();controllers.add(controller);
     try{const value=await transport.json(`/api/display?plan=${p.id}&kbli=${kbli}&level=${level}${bbox?'&bbox='+bbox.join(','):''}${LocalDataset?LocalDataset.releaseQuery(p):''}`,{signal:controller.signal});
      const inventory=inventories?.get(p.id)?.data||null;

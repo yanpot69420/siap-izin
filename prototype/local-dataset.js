@@ -23,7 +23,13 @@
  }
  function expectedSnapshot(p){return sha256(JSON.stringify({algorithmVersion:'coverage-lod-v1',mappingId:p.mappingId,planVersionId:p.planVersionId,releaseHash:p.releaseHash}));}
  const datasetKeys=['sourceKind','releaseId','releaseHash','planVersionId','mappingId','geometryScope','rulesScope'];
+ function storageState(plan){
+  const s=plan?.localStorage;if(s===undefined)return 'unknown';
+  keys(s,['state']);if(!['stored','not_stored'].includes(s.state)||s.state==='not_stored'&&plan.localDataset?.available===true||plan.localDataset===undefined)fail();
+  return s.state==='stored'?(plan.localDataset.available?'active':'stored_not_active'):'not_stored';
+ }
  function validatePlan(plan,release){
+  storageState(plan);
   const p=plan?.localDataset;if(p===undefined){if(release)fail();return null;}
   if(!record(p)||typeof p.available!=='boolean'||!hex(p.releaseHash))fail();
   if(release&&p.releaseHash!==release.releaseHash)fail();
@@ -34,7 +40,8 @@
  }
  function validateCatalog(catalog){
   const r=catalog.localDataset;
-  if(r===undefined){if(catalog.plans.some(p=>p.localDataset!==undefined))fail();return null;}
+  if(catalog.localCapabilities!==undefined){keys(catalog.localCapabilities,['displayBatchOverview']);if(typeof catalog.localCapabilities.displayBatchOverview!=='boolean'||r===undefined)fail();}
+  if(r===undefined){if(catalog.plans.some(p=>p.localDataset!==undefined||p.localStorage!==undefined))fail();return null;}
   keys(r,['sourceKind','releaseId','releaseHash','partial']);if(r.sourceKind!=='local_dataset'||!uuid(r.releaseId)||!hex(r.releaseHash)||r.partial!==true)fail();
   catalog.plans.forEach(p=>validatePlan(p,r));return r;
  }
@@ -62,7 +69,7 @@
  function capturePlans(plans,kbli){
   if(kbli!=='01273'||!Array.isArray(plans)||plans.some(p=>!/^74\d{8}:\d{3}$/.test(p?.id)))fail();
   const local=plans.some(p=>p.localDataset!==undefined),first=plans.find(p=>p.localDataset?.available)?.localDataset,releaseHash=plans[0]?.localDataset?.releaseHash;
-  return plans.map(p=>{const pin=validatePlan(p);if(local&&(!pin||pin.releaseHash!==releaseHash||first&&pin.available&&pin.releaseId!==first.releaseId))fail();return {...p,activity:p.activity?{...p.activity}:null,...(pin?{localDataset:{...pin}}:{})};});
+  return plans.map(p=>{const pin=validatePlan(p);if(local&&(!pin||pin.releaseHash!==releaseHash||first&&pin.available&&pin.releaseId!==first.releaseId))fail();return {...p,activity:p.activity?{...p.activity}:null,...(p.localStorage?{localStorage:{...p.localStorage}}:{}),...(pin?{localDataset:{...pin}}:{})};});
  }
  function canRequest(p){return !!p.activity&&p.localDataset?.available!==false;}
  function initialRecord(p){return canRequest(p)?{status:'loading'}:{status:'unavailable',...(p.localDataset?.available===false?{reason:'not_in_release'}:{})};}
@@ -73,5 +80,5 @@
   return {dataset,snapshotId:p.snapshotId};
  }
  function catalogProvenance(catalog){const r=validateCatalog(catalog);return r?{sourceKind:r.sourceKind,releaseId:r.releaseId,releaseHash:r.releaseHash,partial:true}:null;}
- return {validateCatalog,validatePlan,validateMetadata,validateFeatures,capturePlans,canRequest,initialRecord,releaseQuery,provenance,catalogProvenance};
+ return {storageState,validateCatalog,validatePlan,validateMetadata,validateFeatures,capturePlans,canRequest,initialRecord,releaseQuery,provenance,catalogProvenance};
 });

@@ -2,6 +2,8 @@
 
 **Tanggal:** 29 Oktober 2026. **Lingkup publikasi:** kode aplikasi, skema/migrasi, tes dan dokumentasi. Bukan publikasi dataset atau deployment produksi.
 
+> Catatan historis checkpoint publikasi `2c523e7`: angka dua rencana di bawah tidak ditulis ulang. Keadaan lokal setelah tahap satu-KBLI berikutnya adalah 16 rencana aktif; lihat [checkpoint terkini](exploration-01273-checkpoint.md). Publikasi checkpoint berikutnya memerlukan persetujuan terpisah, bukan izin redistribusi dataset.
+
 ## Implementasi yang tersedia
 
 - Penyimpanan PostgreSQL/PostGIS terpisah untuk sumber asli, provenance, versi, karantina, LOD dan rilis terpin. Empat migrasi additive yang sudah diterapkan tidak ditulis ulang.

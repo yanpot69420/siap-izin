@@ -71,7 +71,7 @@ function displayCollection(p,id=17){
 }
 test('App renders every loaded plan as its own display overview and fetches snapshot-bound attributes on demand',async()=>{
  const h=appHarness(async url=>{const p=registry.plans.find(p=>url.includes('plan='+p.id+'&'));return {ok:true,json:async()=>displayCollection(p)};});await h.settle();
- const layers=[];h.context.window.testMap={removeLayer:()=>{},fitBounds:()=>{},setView:()=>{}};
+ const layers=[];h.context.window.testMap={removeLayer:()=>{},fitBounds:()=>{},setView:()=>{},getSize:()=>({x:900,y:600})};
  h.context.window.L={featureGroup:()=>({addTo(){return this;},addLayer(l){if(l.data)layers.push(l);},getBounds:()=>({isValid:()=>true}),clearLayers:()=>{layers.length=0;}}),geoJSON:(data,options)=>{
   const children=data.features.map(feature=>{const layer={feature,handlers:{},on(type,cb){this.handlers[type]=cb;},setStyle:()=>{},getBounds:()=>({isValid:()=>true})};options.onEachFeature(feature,layer);return layer;});
   return {data,getLayers:()=>children,getBounds:()=>({isValid:()=>true}),resetStyle:()=>{}};
@@ -94,7 +94,7 @@ test('Paginated source list reaches features beyond 200 with provenance, stable 
   if(p===first){d.features=Array.from({length:201},(_,i)=>displayCollection(p,i+1).features[0]);d.meta.counts={matched:201,returned:201,excludedInvalid:0};d.meta.sourceCounts={...d.meta.counts};Object.assign(d.meta.display,{sourceFeatureCount:201,returnedFeatureCount:201,originalVertices:804,returnedVertices:804});}
   return {ok:true,json:async()=>d};
  });await h.settle();
- const layers=[];h.context.window.testMap={removeLayer:()=>{},fitBounds:()=>{},setView:()=>{}};
+ const layers=[];h.context.window.testMap={removeLayer:()=>{},fitBounds:()=>{},setView:()=>{},getSize:()=>({x:900,y:600})};
  h.context.window.L={featureGroup:()=>({addTo(){return this;},addLayer(l){if(l.data)layers.push(l);},getBounds:()=>({isValid:()=>true})}),geoJSON:(data,options)=>{
   for(const f of data.features)options.onEachFeature(f,{feature:f,on:()=>{},setStyle:()=>{},getBounds:()=>({isValid:()=>true})});return {data};
  }};
@@ -140,16 +140,20 @@ test('App uses validated catalog for all plans, keeps audit historical and defau
  assert.match(h.el('catalogStatus').textContent,/curated_source_snapshot/);
  assert.match(h.el('catalogGaps').textContent,/6/);
 });
-function mapHarness(h,{movementOnFit=false}={}){
+function mapHarness(h,{movementOnFit=false,width=900}={}){
  const handlers={},fits=[],fitOptions=[];let bbox=[122,-4.2,122.2,-3.9],zoom=7;
  const map={removeLayer:()=>{},fitBounds:(b,options)=>{fits.push(b);fitOptions.push(options);if(movementOnFit){const move=()=>{map.fire('zoomstart');map.fire('movestart');map.fire('moveend');};if(options?.animate===false)move();else setImmediate(move);}},setView:()=>{},getZoom:()=>zoom,getBounds:()=>({getWest:()=>bbox[0],getSouth:()=>bbox[1],getEast:()=>bbox[2],getNorth:()=>bbox[3]}),on:(name,fn)=>{(handlers[name]??=[]).push(fn);},fire:name=>(handlers[name]||[]).forEach(fn=>fn())};
+ map.getSize=()=>({x:width,y:600});
  h.context.window.testMap=map;h.context.window.L={featureGroup:()=>({addTo(){return this;},addLayer(){},removeLayer(){}}),geoJSON:(data,options)=>{for(const f of data.features)options.onEachFeature(f,{feature:f,on(){},setStyle(){}});return {data};}};
- h.run('map=window.testMap;bindMapEvents()');return {fits,fitOptions,setView:(b,z)=>{bbox=b;zoom=z;},fire:map.fire};
+ h.run('map=window.testMap;bindMapEvents()');return {fits,fitOptions,setView:(b,z)=>{bbox=b;zoom=z;},resize:w=>{width=w;map.fire('resize');},fire:map.fire};
 }
 test('viewport refresh keeps full keyboard inventory, renders only source-intersecting plans, never refits and reports empty viewport',async()=>{
  const h=appHarness(async url=>{const q=new URL(url,'http://unit.test').searchParams,p=registry.plans.find(p=>p.id===q.get('plan')),d=displayCollection(p);if(q.has('bbox')){d.meta.display.bbox=q.get('bbox').split(',').map(Number);d.meta.display.level=q.get('level');d.meta.display.toleranceMeters={overview:100,regional:10,detail:1}[q.get('level')];}return {ok:true,json:async()=>d};});await h.settle();
  const m=mapHarness(h);await h.run('loadZones()');await h.settle();assert.equal(h.run('featureLayers.size'),16);assert.equal(m.fits.length,1);
+ const input=h.inputs[0],badge=h.el('regionOptions').children[0].children[2],badgeText=badge.textContent;input.checked=false;input.focus();
+ h.run('window.coverageCalls=0;window.originalCoverage=renderRegionCoverage;renderRegionCoverage=()=>{window.coverageCalls++;window.originalCoverage();}');
  m.setView([120,-6,121,-5],14);await h.run('requestViewport()');await h.settle();
+ assert.equal(h.run('window.coverageCalls'),0,'viewport never rerenders coverage');assert.equal(h.run('document.activeElement'),input);assert.equal(input.checked,false);assert.equal(h.el('regionOptions').children[0].children[2],badge);assert.equal(badge.textContent,badgeText);
  assert.equal(h.run('featureLayers.size'),0);assert.equal(h.run('layerMapper.size'),0);assert.equal(h.run('planRecords.size'),18);assert.equal(h.el('zoneList').children.length,16);assert.match(h.el('viewportStatus').textContent,/0.*viewport/i);assert.equal(m.fits.length,1);
  assert.match(h.el('zoneSummary').textContent,/18 rencana katalog.*16.*tersedia.*16.*overview dimuat.*0.*tergambar/);
  const config=h.run('configuration()');assert.equal(config.overlay.loadedFeatureCount,16);assert.equal(config.overlay.drawnFeatureCount,0);assert.equal(config.overlay.catalogPlanCount,18);assert.equal(config.overlay.availableFeatureCount,16);assert.equal(config.overlay.viewport.level,'detail');
@@ -308,6 +312,17 @@ test('NAV-02/03/04/07 beacons group ready source bounds, support pointer/keyboar
  assert.equal(h.circles.length,created);assert.deepEqual(h.metrics,{aggregate:0,zoneList:0,auditList:0});assert.equal(h.run('regionBeaconLayers.get('+JSON.stringify(region)+')'),beacon);
  m.setView([122,-4.2,122.2,-3.9],9);m.fire('zoomend');assert.equal(h.run('regionBeaconsVisible'),true);t.diagnostic(JSON.stringify({markers:expected,viewportBeaconRebuilds:h.circles.length-created,navigationFetches:0,viewportMutations:h.metrics}));h.run('clearZones()');assert.equal(h.run('regionBeaconLayers.size'),0);
 });
+test('NAV-mobile resize updates fixed pixel radii in place, without inventory, fetch or camera work',async t=>{
+ const h=appHarness(async url=>{const p=registry.plans.find(p=>url.includes('plan='+p.id+'&'));return {ok:true,json:async()=>displayCollection(p)};});await h.settle();const m=mapHarness(h,{width:390});await h.run('loadZones()');h.run('cancelViewport()');
+ const beacons=[...h.run('regionBeaconLayers.values()')],nodes=beacons.map(b=>b.getElement()),created=h.circles.length,requests=h.requests.length,fits=m.fits.length;
+ assert.ok(beacons.length>0);assert.ok(beacons.every(b=>b.options.radius===12),'mobile targets retain 24px diameter');
+ assert.ok(beacons.every(b=>b.options.pane==='markerPane'),'navigation stays above source polygons added by later viewport responses');
+ h.metrics.aggregate=0;h.metrics.zoneList=0;h.metrics.auditList=0;
+ h.run("for(const record of planRecords.values())if(record.data)record.data.features=new Proxy(record.data.features,{get(){throw Error('resize walked features');}})");
+ m.resize(500);assert.ok(beacons.every(b=>b.options.radius===16));m.resize(499);assert.ok(beacons.every(b=>b.options.radius===12));
+ assert.equal(h.circles.length,created);assert.ok(beacons.every((b,i)=>b.getElement()===nodes[i]));assert.equal(h.requests.length,requests);assert.equal(m.fits.length,fits);assert.deepEqual(h.metrics,{aggregate:0,zoneList:0,auditList:0});
+ m.fire('zoomend');assert.equal(h.run('regionBeaconsVisible'),true);t.diagnostic(JSON.stringify({mobileRadius:12,desktopRadius:16,breakpoint:500,resizeRebuilds:0,resizeFetches:0,resizeCamera:0,resizeMutations:h.metrics}));h.run('clearZones()');
+});
 test('NAV-02 regional bounds union reads inventory metadata without walking feature coordinates',async()=>{
  const h=appHarness();await h.settle();const m=mapHarness(h),same=registry.plans.filter(p=>p.activity&&p.regionId===registry.plans.find(p=>p.activity).regionId);assert.ok(same.length>1);
  h.context.window.navInventories=same.map((p,i)=>{const d=displayCollection(p);if(i)d.meta.sourceBounds=[123,-5,124,-3];d.features=new Proxy(d.features,{get(target,key){if(key!=='length')throw new Error('navigation walked features');return target.length;}});return [p.id,{status:'ready',data:d}];});
@@ -333,7 +348,23 @@ test('NAV-03 overview explains gold navigation circles separately from blue rele
 test('NAV-03 beacon keyboard focus has a visible nonanimated affordance',()=>{
  const css=fs.readFileSync(require('node:path').join(__dirname,'../prototype/zones.css'),'utf8');assert.match(css,/\.region-beacon:focus-visible/);assert.match(css,/\.region-beacon\{[^}]*cursor:pointer/);
 });
-function appHarness(fetchZones){
+test('regional coverage distinguishes storage, gaps and request overrides without replacing draft controls',async()=>{
+ const h=appHarness();await h.settle();const badges=h.el('regionOptions').children.map(row=>row.children[2]);
+ assert.equal(badges.length,17);assert.ok(badges.every(Boolean));assert.match(h.el('regionCoverageSummary').textContent,/6.*tidak tercantum/);
+ assert.match(h.el('regionCoverageSummary').textContent,/2.*relasi kegiatan/);
+ const input=h.inputs[0];input.checked=false;input.focus();h.run('renderAudit()');assert.equal(h.inputs[0],input);assert.equal(h.run('document.activeElement'),input);assert.equal(input.checked,false);
+ assert.equal(h.el('regionOptions').children[0].children[2],badges[0]);
+ const p=registry.plans[0],planBadge=badges[entries.findIndex(r=>r.id===p.regionId)];h.context.window.samplePlan=p;
+ assert.equal(h.run("coveragePlanState({...window.samplePlan,localDataset:{available:true},localStorage:{state:'stored'}})"),'active');
+ assert.equal(h.run("coveragePlanState({...window.samplePlan,localDataset:{available:false},localStorage:{state:'stored'}})"),'stored_not_active');
+ assert.equal(h.run("coveragePlanState({...window.samplePlan,localDataset:{available:false},localStorage:{state:'not_stored'}})"),'not_stored');
+ assert.equal(h.run('coveragePlanState(window.samplePlan)'),'unknown');
+ h.run("planRecords.set(window.samplePlan.id,{status:'loading'});renderAudit()");assert.match(planBadge.textContent,/memuat/);
+ h.run("planRecords.set(window.samplePlan.id,{status:'error'});renderAudit()");assert.match(planBadge.textContent,/gagal/);assert.match(h.el('regionCoverageSummary').textContent,/1.*gagal/);
+ const before=h.requests.length;h.run('renderRegionCoverage()');assert.equal(h.requests.length,before);assert.equal(h.run('document.activeElement'),input);
+ const gap=registry.regions.find(r=>!r.planIds.length);const badge=badges[entries.findIndex(r=>r.id===gap.id)];assert.match(badge.textContent,/tidak tercantum/);assert.doesNotMatch(badge.textContent,/tidak ada RDTR/);
+});
+function appHarness(fetchZones,catalogFixture=registry){
  const vm=require('node:vm');const elements=new Map(),inputs=[],tabs=[],requests=[],metrics={aggregate:0,zoneList:0,auditList:0};
  const mutation=el=>{for(const id of ['zoneList','auditList'])if(elements.get(id)===el)metrics[id]++;};
  class Element{
@@ -351,10 +382,10 @@ function appHarness(fetchZones){
  for(const [,id]of html.matchAll(/id="([^"]+)"/g))elements.set(id,new Element());
  for(const name of ['zones','audit','export']){const t=elements.get('tab-'+name);t.dataset.tab=name;tabs.push(t);}
  const document={querySelector:s=>elements.get(s.slice(1))||null,querySelectorAll:s=>s==='[role=tab]'?tabs:s==='[data-close]'?[]:s==='[name=region]:checked'?inputs.filter(i=>i.checked):s==='[name=region]'?inputs:[],createElement:tag=>new Element(tag),createTextNode:s=>({textContent:s}),head:new Element(),body:new Element()};
- const fetchImpl=async(url,options)=>{requests.push(url);if(url.startsWith('/api/catalog'))return {ok:true,json:async()=>structuredClone(registry)};if(url==='audit-summary.json')return {ok:true,json:async()=>({schemaVersion:1,plans:[]})};if(fetchZones){const response=await fetchZones(url,options);if(url.startsWith('/api/feature-detail')&&response.ok){const d=await response.json();if(d.schemaVersion===1)return {ok:true,json:async()=>d};const oid=Number(new URL(url,'http://unit.test').searchParams.get('objectId')),f=d.features.find(f=>f.id===oid);return {ok:true,json:async()=>({schemaVersion:1,planId:d.meta.plan.id,objectId:oid,snapshotId:d.meta.snapshotId,properties:{...f.properties,regulation:null},sourceBounds:f.properties.source_bounds,meta:d.meta})};}return response;}throw new Error('unexpected fetch '+url);};
+ const fetchImpl=async(url,options)=>{requests.push(url);if(url.startsWith('/api/catalog'))return {ok:true,json:async()=>structuredClone(catalogFixture)};if(url==='audit-summary.json')return {ok:true,json:async()=>({schemaVersion:1,plans:[]})};if(fetchZones){const response=await fetchZones(url,options);if(url.startsWith('/api/feature-detail')&&response.ok){const d=await response.json();if(d.schemaVersion===1)return {ok:true,json:async()=>d};const oid=Number(new URL(url,'http://unit.test').searchParams.get('objectId')),f=d.features.find(f=>f.id===oid);return {ok:true,json:async()=>({schemaVersion:1,planId:d.meta.plan.id,objectId:oid,snapshotId:d.meta.snapshotId,properties:{...f.properties,regulation:null},sourceBounds:f.properties.source_bounds,meta:d.meta})};}return response;}throw new Error('unexpected fetch '+url);};
  const context=vm.createContext({console,window:{DisplayData:require('../prototype/display-data.js'),MapStyle:require('../prototype/map-style.js'),RegionData:{entries},ProvinceData:{...api(),aggregate:(...args)=>{metrics.aggregate++;return api().aggregate(...args);}},ZoneData:require('../prototype/zone-data.js')},document,fetch:fetchImpl,AbortController,URL,Blob,Event,setTimeout,clearTimeout,FormData:class{constructor(){this.get=()=> '01273';this.getAll=()=>inputs.filter(i=>i.checked).map(i=>i.value);}}});
  const circles=[];let leaflet;
- Object.defineProperty(context.window,'L',{get:()=>leaflet,set:value=>{leaflet={...value,circleMarker:(center,options)=>{const node=new Element('path'),handlers={};const circle={center,options,on(type,fn){handlers[type]=fn;return this;},fire(type){handlers[type]?.();},bindTooltip(content){this.tooltip=content;return this;},getElement:()=>node};circles.push(circle);return circle;}};}});
+ Object.defineProperty(context.window,'L',{get:()=>leaflet,set:value=>{leaflet={...value,circleMarker:(center,options)=>{const node=new Element('path'),handlers={};const circle={center,options,setRadius(radius){this.options.radius=radius;return this;},on(type,fn){handlers[type]=fn;return this;},fire(type){handlers[type]?.();},bindTooltip(content){this.tooltip=content;return this;},getElement:()=>node};circles.push(circle);return circle;}};}});
  // Browser checkbox defaultChecked also sets checked before dirty selection.
  const create=document.createElement;document.createElement=tag=>{const e=create(tag);Object.defineProperty(e,'defaultChecked',{set(v){this.checked=v;}});return e;};
  vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'../prototype/app.js'),'utf8'),context);

@@ -4,7 +4,7 @@ Aplikasi induk pendamping perizinan berusaha — **prototipe eksplorasi zona lin
 
 ## Cakupan dan batas bukti
 
-**Checkpoint lokal 29 Oktober 2026:** database menyimpan 16 versi/5.994 fitur valid, tetapi **rilis peta aktif hanya Routa dan Tirawuta: 1.708 fitur**. Empat belas versi lainnya masih staging, belum memiliki LOD/rilis aktif. Kode dan skema dipublikasikan; database, arsip sumber, kredensial dan geometri tidak ikut didistribusikan. [Status verifikasi dan batas publikasi](docs/design/local-release-checkpoint.md).
+**Checkpoint lokal 29 Oktober 2026:** **16 rencana/5.994 fitur valid sudah aktif**, dengan 17.982 baris LOD tiga tingkat; rilis dua rencana sebelumnya tetap disimpan. Cakupan hanya KBLI **01273/2025**. Publikasi checkpoint ini hanya kode, tes dan dokumentasi; database, arsip sumber, kredensial dan geometri tidak ikut didistribusikan. [Status terkini dan batas verifikasi](docs/design/exploration-01273-checkpoint.md), [checkpoint publikasi sebelumnya](docs/design/local-release-checkpoint.md).
 
 Dataset pembanding 26 Oktober 2026 mencatat **5.994 fitur sumber valid dari 16 rencana**, dari 6.009 cocok filter; **15 geometri invalid dikarantina** tanpa repair. Inventaris sumber tetap lengkap, tetapi layer yang sedang tergambar mengikuti area dan zoom. Semuanya **unreviewed_mapping / permission: unknown**, bukan jumlah lokasi sesuai atau izin diterima.
 
@@ -28,6 +28,7 @@ Dataset pembanding 26 Oktober 2026 mencatat **5.994 fitur sumber valid dari 16 r
 - Sorotan biru mengikuti zoom; seleksi/hover lebih tegas tanpa garis internal putus-putus yang mendominasi overview. Biru tetap relevansi untuk ditelaah, **bukan diizinkan**.
 - Setelah peta disetujui, **Terapkan kriteria langsung memusatkan sorotan**, tanpa wajib memilih daftar RDTR. Lingkaran emas pada overview adalah navigasi per wilayah dengan sumber valid; klik/sentuh/Enter/Space memperbesar area sumber, bukan batas kabupaten penuh. Penanda memakai metadata inventaris, tanpa library/minimap baru, dan tidak dihitung sebagai fitur zona. [Kontrak navigasi](docs/design/map-region-navigation.md).
 - Setelah geser/zoom, permintaan dibatasi pada rencana yang berpotongan dengan area peta, dengan debounce/revision guard dan transport bersama maksimum 3 request. Respons area tidak melakukan fit-bounds ulang.
+- Overview lokal dapat memakai batch yang diumumkan server; setiap request tetap memeriksa seluruh anggota rilis secara segar. Inventaris terpin dapat digunakan ulang tanpa request area hanya ketika bounds sumber aslinya sepenuhnya tercakup viewport. Tidak ada perpanjangan TTL/fallback legacy atau perubahan metadata sumber.
 - Atribut detail diminta menurut pasangan plan/OID dan snapshot sumber. Perubahan snapshot meminta reload, bukan memasangkan gambar lama dengan atribut baru.
 - Katalog, sumber tersedia, overview dimuat, dan layer tergambar memiliki counter terpisah. Hasil nol pada viewport bukan bukti tidak ada RDTR atau kegiatan dilarang.
 
@@ -80,7 +81,7 @@ Ekspor JSON **skema3** adalah snapshot konfigurasi/provenance, **tanpa geometri/
 
 ## Verifikasi yang dapat diulang
 
-Suite Python penuh memerlukan konfigurasi privat development/test serta PostGIS yang sesuai; fixture SQL hanya boleh memakai database uji terisolasi, bukan database pengembangan. Bukti browser/oracle sumber tetap privat. Checkpoint terakhir: **177 Python, 96 Node, 28 pemeriksaan browser lokal lulus**, bukan sertifikasi produksi atau perluasan 16 rencana.
+Suite Python penuh memerlukan konfigurasi privat development/test serta PostGIS yang sesuai; fixture SQL hanya boleh memakai database uji terisolasi, bukan database pengembangan. Bukti browser/oracle sumber tetap privat. Checkpoint terakhir: **203 Python, 111 Node, 38 pemeriksaan browser lokal lulus**, memverifikasi 5.994 ID pada 16 rencana aktif; bukan sertifikasi produksi atau kesesuaian izin. Dua review independen lulus; backup/restore dan rollback terisolasi diuji nyata. [Hasil dan batas pengukuran](docs/design/exploration-01273-checkpoint.md), [operasi privat](docs/design/rdtr-operations.md).
 
 ```sh
 # Di virtualenv yang dependensinya telah dipasang:
@@ -112,7 +113,7 @@ Variabel tambahan: `CHROME_BIN`, `TMPDIR` untuk scratch, serta `SIAP_IZIN_MODE=l
 
 ## Dokumen
 
-- [PRD v0.14](docs/PRD.md), [keputusan](docs/decisions.md), [roadmap](docs/roadmap.md).
+- [PRD v0.15](docs/PRD.md), [keputusan](docs/decisions.md), [roadmap](docs/roadmap.md).
 - [API tampilan/detail](docs/design/map-display-api.md), [validasi geometri](docs/design/map-display-verification.json), [baseline](docs/design/map-performance-baseline.json).
 - [Kontrak sumber original](docs/design/province-api.md), [registry](tools/rdtr-plans.json), [review checkpoint sebelumnya](docs/design/province-review.json).
 - [Audit sumber historis terkoreksi](docs/discovery/sultra-01273-source-audit.json): sampel titik bukan izin seluruh polygon.

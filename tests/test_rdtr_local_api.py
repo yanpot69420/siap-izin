@@ -108,6 +108,33 @@ class SQLFixture(unittest.TestCase):
 
 
 class LocalAPITests(SQLFixture):
+    def test_catalog_storage_observation_is_separate_from_active_release(self):
+        first = seed(self.conn)
+        second = seed(self.conn, activate=False, fingerprint='b'*64)
+        result = self.api().get_catalog(self.conn)
+        plan = next(p for p in result['plans'] if p['id'] == PLAN)
+        self.assertEqual(plan['localStorage'], {'state':'stored'})
+        self.assertEqual(plan['localDataset']['planVersionId'], first['version'])
+        absent = next(p for p in result['plans'] if p['id'] != PLAN)
+        self.assertEqual(absent['localStorage'], {'state':'not_stored'})
+        states = self.api().get_storage_states(self.conn, [plan, absent])
+        self.assertEqual(states, {PLAN:'stored', absent['id']:'not_stored'})
+        wrong = dict(plan, regionId='7401000000')
+        self.assertEqual(self.api().get_storage_states(self.conn, [wrong]), {PLAN:'not_stored'})
+        self.assertNotIn('localStorage', json.dumps(self.api().get_display(self.conn, PLAN, 'overview', first['release_hash'])))
+
+    def test_candidate_catalog_uses_exact_release_without_active_fallback(self):
+        first = seed(self.conn)
+        second = seed(self.conn, activate=False, fingerprint='b'*64)
+        api = self.api()
+        candidate = api.get_catalog_for_release(self.conn, second['release_hash'])
+        self.assertEqual(candidate['localDataset']['releaseHash'], second['release_hash'])
+        self.assertEqual(api.get_catalog(self.conn)['localDataset']['releaseHash'], first['release_hash'])
+        self.conn.execute('DELETE FROM rdtr.active_release')
+        self.assertEqual(api.get_catalog_for_release(self.conn, second['release_hash']), candidate)
+        with self.assertRaises(legacy.APIError):
+            api.get_catalog_for_release(self.conn, 'f'*64)
+
     def test_catalog_complete_with_honest_availability(self):
         f = seed(self.conn)
         result = self.api().get_catalog(self.conn)

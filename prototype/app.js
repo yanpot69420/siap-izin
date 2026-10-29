@@ -53,12 +53,36 @@ function updateRegionSelectionCount(){
  const count=document.querySelectorAll('[name=region]:checked').length;
  $('#regionSelectionCount').textContent=`${count} dari ${regionEntries.length} kabupaten/kota dipilih`;
 }
+const regionCoverageBadges = new Map();
+const coverageLabels={active:'aktif dalam rilis',stored_not_active:'tersimpan · belum aktif',not_stored:'belum tersimpan',unknown:'penyimpanan belum diketahui',loading:'memuat',error:'gagal',unavailable:'tidak tersedia',not_listed:'tidak tercantum',unmapped:'relasi kegiatan belum tersedia'};
+function coveragePlanState(plan){
+ const request=planRecords.get(plan.id)?.status;
+ if(['loading','error'].includes(request))return request;
+ if(request==='unavailable'&&plan.localDataset?.available!==false)return 'unavailable';
+ if(!plan.localStorage)return 'unknown';
+ return plan.localStorage.state==='stored'?(plan.localDataset?.available?'active':'stored_not_active'):'not_stored';
+}
+function renderRegionCoverage(){
+ const totals={};
+ for(const region of regionEntries){
+  const badge=regionCoverageBadges.get(region.id);if(!badge)continue;
+  const r=catalog?.regions.find(r=>r.id===region.id),items=plans.filter(p=>p.regionId===region.id),counts={};
+  if(!catalog)counts[catalogState==='error'?'error':'loading']=1;
+  else if(r?.catalogStatus==='not_listed_in_public_catalog')counts.not_listed=1;
+  else for(const p of items){const state=coveragePlanState(p);counts[state]=(counts[state]||0)+1;if(!p.activity)counts.unmapped=(counts.unmapped||0)+1;}
+  for(const [key,n]of Object.entries(counts))totals[key]=(totals[key]||0)+n;
+  badge.textContent=Object.entries(counts).map(([key,n])=>`${n} ${coverageLabels[key]}`).join(' · ');
+  badge.setAttribute('aria-label',`${region.name}: ${badge.textContent}`);
+ }
+ $('#regionCoverageSummary').textContent=catalog?Object.entries(totals).map(([key,n])=>`${n} ${coverageLabels[key]}`).join('; ')+'. Seluruh 17 wilayah katalog; pilihan diterapkan terpisah. Katalog parsial, bukan bukti tidak ada RDTR. Penyimpanan adalah pengamatan saat ini, bukan kebaruan sumber atau kesiapan OSS.':'Cakupan '+(catalogState==='error'?'gagal dimuat; status belum diketahui.':'sedang dimuat; status belum diketahui.');
+}
 function renderRegionOptions(){
  const list=$('#regionOptions');list.replaceChildren();
  for(const region of regionEntries){
   const label=text('label','','check');const input=document.createElement('input');
   input.type='checkbox';input.name='region';input.value=region.id;input.defaultChecked=true;
-  label.append(input,document.createTextNode(region.name));list.append(label);
+  const badge=text('small','Status belum diketahui','region-coverage-badge');badge.dataset.regionCoverage=region.id;regionCoverageBadges.set(region.id,badge);
+  label.append(input,document.createTextNode(region.name),badge);list.append(label);
  }
  updateRegionSelectionCount();
 }
@@ -93,6 +117,7 @@ function planStatus(plan){
  return map&&catalog?(entry?.status==='loading'?'loading · sedang dimuat / antre':'idle · belum diminta'):'idle · menunggu aktivasi peta';
 }
 function renderAudit(){
+ renderRegionCoverage();
  const visible=plans.filter(p=>applied.regions.includes(p.regionId));
  $('#auditCount').textContent=catalog?String(visible.length):'—';
  $('#regionSummary').textContent=`KBLI ${applied.kbli} · ${applied.regions.length} kabupaten/kota diterapkan · ${catalog?visible.length+' rencana katalog':'katalog belum tersedia'}`;
@@ -183,6 +208,7 @@ function renderZoneDetail(feature,data){
  selectFeature(window.ProvinceData.featureKey(m.plan.id,p.object_id));
  $('#zoneDetailTitle').textContent=`${p.zone_name} · ${p.zone_code} · #${p.object_id}`;
  const body=$('#zoneDetailContent');body.replaceChildren();
+ body.append(fact('Batas bukti sorotan','Kecocokan nilai filter kegiatan lokal saja, bukan ITBX lengkap atau keputusan izin. Pemetaan KBLI 01273/2025 belum direview; status izin tetap unknown. Penyimpanan lokal tidak memperbarui tanggal pengamatan sumber.'));
  body.append(text('p','Relevan untuk ditelaah — bukan indikasi diizinkan atau hasil kesesuaian KBLI terverifikasi. Status izin: unknown.','detail-note'),fact('Rencana / identitas fitur',`${m.plan.name} · ${m.plan.id} / ${window.ProvinceData.featureKey(m.plan.id,p.object_id)}`),fact('Kabupaten/kota',regions[m.plan.regionId]),fact('KBLI dan asumsi ruang lingkup',`${m.kbli.code} · versi ${m.kbli.version} · ${m.kbli.scope}; ruang lingkup belum dikonfirmasi`),fact('Dasar sorotan',`ID kegiatan lokal ${m.activity.id} — ${m.activity.name}. Filter ${m.activity.filterField} = ${p.filter_value}; kode subzona asli KODSZN = ${p.zone_code}. Nilai filter terdapat pada daftar kegiatan sumber; bukan keputusan izin.`),fact('Status kegiatan/zona','unreviewed_mapping · unknown. Pemetaan KBLI belum direview; daftar filter dapat memuat kategori terbatas dan/atau bersyarat. ITBX sampel historis bukan evaluasi seluruh bidang.'),fact('Peraturan dari atribut sumber',p.regulation||'Belum tersedia; dokumen belum ditelaah lengkap.'),fact('Waktu dan metode pembacaan',sourceLabel(m.source)),fact('Cakupan / tujuan geometri',`${m.coverage} · ${m.geometryPurpose}. Hanya polygon hasil filter rencana ini; bukan seluruh kabupaten, bidang proyek atau batas hak.`),fact('Rekonsiliasi sumber',`${m.counts.matched} cocok filter · ${m.counts.returned} fitur sumber valid · ${m.counts.excludedInvalid} dikarantina. Bukan jumlah fitur pada viewport.`));
  const limits=text('ul','','zone-limits');for(const item of m.limitations)limits.append(text('li',item));body.append(limits);
  const links=text('div','','source-links');links.append(sourceLink('Kegiatan lokal resmi',m.source.activitiesUrl),sourceLink('Metadata layer resmi',m.source.metadataUrl),sourceLink('Query geometri sumber',m.source.geometryQueryUrl));body.append(links);showDialog('zoneDialog');
@@ -223,6 +249,11 @@ function clearRegionBeacons(){
  if(regionBeaconGroup&&map)map.removeLayer(regionBeaconGroup);
  regionBeaconGroup=null;regionBeaconLayers.clear();regionBeaconsVisible=false;regionBeaconSignature='';
 }
+function regionBeaconRadius(){return map.getSize().x<500?12:16;}
+function resizeRegionBeacons(){
+ const radius=regionBeaconRadius();
+ for(const circle of regionBeaconLayers.values())if(circle.options.radius!==radius)circle.setRadius(radius);
+}
 function updateRegionBeaconVisibility(){
  const visible=Boolean(regionBeaconGroup&&(map?.getZoom?.()??7)<=9);
  if(visible===regionBeaconsVisible)return;
@@ -242,7 +273,7 @@ function renderRegionBeacons(){
  regionBeaconGroup=window.L.featureGroup();
  for(const [id,b]of grouped){
   const label=`${regions[id]} — perbesar area sumber tersedia; indeks navigasi, bukan batas kabupaten/kota atau hasil izin.`;
-  const circle=window.L.circleMarker([(b[1]+b[3])/2,(b[0]+b[2])/2],{className:'region-beacon',radius:16,weight:2,color:'#285d83',fillColor:'#f1c76c',fillOpacity:.92,bubblingMouseEvents:false});
+  const circle=window.L.circleMarker([(b[1]+b[3])/2,(b[0]+b[2])/2],{className:'region-beacon',pane:'markerPane',radius:regionBeaconRadius(),weight:2,color:'#285d83',fillColor:'#f1c76c',fillOpacity:.92,bubblingMouseEvents:false});
   const navigate=()=>fitSourceBounds(b);
   const decorate=()=>{const node=circle.getElement();if(!node||node.dataset.region)return;node.dataset.region=id;node.setAttribute('role','button');node.setAttribute('tabindex','0');node.setAttribute('aria-label',label);node.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();navigate();}});};
   circle.bindTooltip(text('span',label));circle.on('click',navigate);circle.on('add',decorate);
@@ -269,6 +300,7 @@ function onMapMovementStart(){
  if(overviewReady){viewportPhase=snapshotReloadRequired?'reload-required':'loading';renderViewportState();}
 }
 function bindMapEvents(){
+ map.on('resize',resizeRegionBeacons);
  map.on('zoomend',()=>{refreshZoneStyles();updateRegionBeaconVisibility();});map.on('movestart',onMapMovementStart);map.on('zoomstart',onMapMovementStart);map.on('moveend',()=>{mapMoving=false;scheduleViewport();});
 }
 function renderViewportState(){
@@ -353,13 +385,13 @@ $('#zoneDialog').addEventListener('close',()=>{
  detailRevision++;detailLoader.cancel();detailState='idle';
  const row=Array.from($('#zoneList').children).find(e=>e.dataset.zoneId===selectedFeatureKey);if(row)row.focus();
 });
-const viewportLoader=window.DisplayData.createLoader({transport:displayTransport,onUpdate:records=>{
+const viewportLoader=window.DisplayData.createLoader({transport:displayTransport,reuseContainedOverview:()=>catalog?.localCapabilities?.displayBatchOverview===true,onUpdate:records=>{
  const unknown=plans.filter(p=>p.activity&&applied.regions.includes(p.regionId)&&planRecords.get(p.id)?.status!=='ready').map(p=>[p.id,planRecords.get(p.id)||{status:'loading'}]);
  viewportRecords=new Map([...unknown,...records]);
  for(const [id,entry]of records)if(entry.status==='ready'&&!layerMapper.has(id))drawPlan(entry.data);
  renderDrawingState();
 }});
-const zoneLoader=window.DisplayData.createLoader({transport:displayTransport,onUpdate:records=>{
+const zoneLoader=window.DisplayData.createLoader({transport:displayTransport,batchOverview:()=>catalog?.localCapabilities?.displayBatchOverview===true,onUpdate:records=>{
  planRecords=records;
  viewportRecords=new Map([...records].filter(([id])=>plans.find(p=>p.id===id)?.activity));viewportPhase='loading';
  for(const [id,entry]of records)if(entry.status==='ready'&&!layerMapper.has(id))drawPlan(entry.data);

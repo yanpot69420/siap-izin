@@ -39,6 +39,23 @@ def parse_query(query, *, detail=False):
     return result
 
 
+def parse_batch_query(query):
+    fields = {}
+    for pair in query.split('&'):
+        key, separator, value = pair.partition('=')
+        if not separator or key not in ('kbli','level','release','plans') or key in fields:
+            raise APIError('unsupported_query',400)
+        fields[key] = value
+    if (set(fields)!={'kbli','level','release','plans'} or fields['kbli']!='01273' or
+            fields['level']!='overview' or re.fullmatch(r'[0-9a-f]{64}',fields['release']) is None):
+        raise APIError('unsupported_query',400)
+    plans = fields['plans'].split(',')
+    if (not 1<=len(plans)<=16 or len(set(plans))!=len(plans) or
+            any(re.fullmatch(r'74\d{8}:\d{3}',p) is None or p not in api.PLANS for p in plans)):
+        raise APIError('unsupported_query',400)
+    return {'plans':plans,'level':'overview','release':fields['release']}
+
+
 class LocalHandler(BaseHTTPRequestHandler):
     server_version = 'LocalRDTR/1.0'
     sys_version = ''
@@ -117,6 +134,13 @@ class LocalHandler(BaseHTTPRequestHandler):
                     raise APIError('unsupported_query',400)
                 payload=self._sql(lambda conn:api.get_catalog(conn))
                 self.send_body(200,encoded(payload))
+            elif target.path=='/api/display-batch':
+                fields=parse_batch_query(target.query)
+                payload=self._sql(lambda conn:api.get_display_batch(conn,fields['plans'],fields['level'],fields['release']))
+                body=encoded(payload)
+                if len(body)>32*1024*1024:
+                    raise APIError('dataset_unavailable',503)
+                self.send_body(200,body)
             elif target.path in ('/api/display','/api/feature-detail'):
                 detail=target.path=='/api/feature-detail'
                 fields=parse_query(target.query,detail=detail)

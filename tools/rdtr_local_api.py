@@ -99,8 +99,9 @@ def _release(conn, release_hash):
         _require(type(row['model']) is dict and row['model'].get('schemaVersion')==1 and
                  row['model'].get('algorithmVersion')==ALGORITHM)
     release['members'] = {r['planId']: r for r in rows}
+    proofs = _prepared_rows(conn, rows)
     for row in rows:
-        _prepared(conn, row)
+        _prepared(conn, row, proofs[row['planVersionId']])
     return release
 
 
@@ -114,15 +115,40 @@ def _dataset(release, member=None):
     return result
 
 
+def get_storage_states(conn, plans):
+    """Current SQL existence only; not release membership or source freshness."""
+    result = {}
+    for plan in plans:
+        rows = _rows(conn, """SELECT EXISTS (
+            SELECT 1 FROM rdtr.rdtr_plan p
+            JOIN rdtr.geo_region g ON g.id=p.region_id
+            JOIN rdtr.plan_version v ON v.plan_id=p.id
+            JOIN rdtr.kbli_activity_mapping m ON m.plan_version_id=v.id
+            WHERE p.source_provider='gistaru' AND p.source_plan_id=%s
+              AND g.id_namespace='gistaru' AND g.source_region_id=%s
+              AND m.kbli_code='01273' AND m.kbli_version='2025'
+              AND m.scope_key='budidaya-kakao') AS stored""", (plan['id'], plan['regionId']))
+        result[plan['id']] = 'stored' if rows[0]['stored'] else 'not_stored'
+    return result
+
+
 def get_catalog(conn, channel='exploration'):
     _require(type(channel) is str and re.fullmatch(r'[a-z][a-z0-9_-]{0,63}', channel), 'unsupported_query', 400)
     rows = _rows(conn, """SELECT d.manifest_hash FROM rdtr.active_release a
         JOIN rdtr.dataset_release d ON d.id=a.release_id WHERE a.channel=%s""", (channel,))
     _require(len(rows)==1)
-    release = _release(conn, rows[0]['manifest_hash'])
+    return get_catalog_for_release(conn, rows[0]['manifest_hash'])
+
+
+def get_catalog_for_release(conn, release_hash):
+    """Project a validated literal release; never consult or change a pointer."""
+    release = _release(conn, release_hash)
     result = json.loads(CATALOG_BYTES)
     result['localDataset'] = _dataset(release)
+    result['localCapabilities'] = {'displayBatchOverview':True}
+    storage = get_storage_states(conn, result['plans'])
     for plan in result['plans']:
+        plan['localStorage'] = {'state': storage[plan['id']]}
         member = release['members'].get(plan['id'])
         local = {'available':False, 'releaseHash':release['manifest_hash']}
         if member:
@@ -132,7 +158,43 @@ def get_catalog(conn, channel='exploration'):
         plan['localDataset'] = local
     return result
 
-def _prepared(conn, member):
+def _prepared_rows(conn, members):
+    """Fresh, complete proofs for exactly these versions; never cached trust."""
+    ids = [m['planVersionId'] for m in members]
+    _require(len(ids) == len(set(ids)))
+    hashes = [_hash(m['model']) for m in members]
+    inventory = _rows(conn, """SELECT wanted.id::text AS version_id,
+        count(f.id) AS n, coalesce(sum(ST_NPoints(f.geom_original_4326)),0) AS vertices,
+        ST_XMin(ST_Extent(f.geom_original_4326)) AS w, ST_YMin(ST_Extent(f.geom_original_4326)) AS s,
+        ST_XMax(ST_Extent(f.geom_original_4326)) AS e, ST_YMax(ST_Extent(f.geom_original_4326)) AS n_bound,
+        count(f.id) FILTER (WHERE f.geometry_hash IS NULL OR f.source_object_id>9007199254740991) AS bad
+        FROM unnest(%s::uuid[]) AS wanted(id)
+        LEFT JOIN rdtr.zone_feature f ON f.plan_version_id=wanted.id GROUP BY wanted.id""", (ids,))
+    actual = _rows(conn, """SELECT d.plan_version_id::text AS version_id, d.level, count(*) AS n,
+        coalesce(sum(ST_NPoints(d.geom_display_4326)),0) AS vertices,
+        bool_and(d.source_geometry_hash=f.geometry_hash) AS hashes,
+        bool_and(d.qc_state=CASE WHEN d.method='coverage_simplify' THEN 'passed' ELSE 'fallback' END) AS qc,
+        bool_and(coalesce(d.qc_result->>'modelHash'=wanted.model_hash AND
+            d.qc_result->>'originalEWKBHash'=encode(sha256(ST_AsEWKB(f.geom_original_4326)),'hex') AND
+            d.qc_result->>'displayEWKBHash'=encode(sha256(ST_AsEWKB(d.geom_display_4326)),'hex'),false)) AS proof,
+        array_agg(DISTINCT d.method) AS methods,
+        array_agg(DISTINCT d.fallback_reason) AS reasons,
+        jsonb_agg(DISTINCT d.parameters) AS parameters,
+        jsonb_agg(DISTINCT jsonb_build_object('featureIdsPreserved',d.qc_result->'featureIdsPreserved',
+            'geometryValid',d.qc_result->'geometryValid','coverageValid',d.qc_result->'coverageValid')) AS validation
+        FROM unnest(%s::uuid[],%s::text[]) AS wanted(id,model_hash)
+        JOIN rdtr.zone_display d ON d.plan_version_id=wanted.id
+        JOIN rdtr.zone_feature f ON f.id=d.zone_feature_id AND f.plan_version_id=d.plan_version_id
+        WHERE d.algorithm_version=%s GROUP BY d.plan_version_id,d.level""", (ids,hashes,ALGORITHM))
+    _require(len(inventory)==len(ids) and {r['version_id'] for r in inventory}==set(ids) and
+             all(r['version_id'] in set(ids) for r in actual))
+    result = {r['version_id']:(r,[]) for r in inventory}
+    for row in actual:
+        result[row['version_id']][1].append(row)
+    return result
+
+
+def _prepared(conn, member, proof=None):
     """Fail closed if sealed read metadata no longer describes SQL inventory."""
     model, ctx = member['model'], PLANS[member['planId']]
     meta = model.get('meta')
@@ -167,31 +229,12 @@ def _prepared(conn, member):
         _require(observed.tzinfo is not None and observed==member['source_time'])
     except (KeyError, TypeError, ValueError, AttributeError):
         raise APIError('dataset_unavailable',503) from None
-    inventory = _rows(conn, """SELECT count(*) AS n, coalesce(sum(ST_NPoints(geom_original_4326)),0) AS vertices,
-        ST_XMin(ST_Extent(geom_original_4326)) AS w, ST_YMin(ST_Extent(geom_original_4326)) AS s,
-        ST_XMax(ST_Extent(geom_original_4326)) AS e, ST_YMax(ST_Extent(geom_original_4326)) AS n_bound,
-        count(*) FILTER (WHERE geometry_hash IS NULL OR source_object_id>9007199254740991) AS bad
-        FROM rdtr.zone_feature WHERE plan_version_id=%s""", (member['version_uuid'],))[0]
+    inventory, actual = proof if proof is not None else _prepared_rows(conn, [member])[member['planVersionId']]
     bounds = [inventory[k] for k in ('w','s','e','n_bound')] if inventory['n'] else None
     _require(inventory['n']==counts['returned'] and inventory['bad']==0 and
              inventory['vertices']<=2000000 and model.get('sourceBounds')==bounds)
     levels = model.get('levels')
     _require(type(levels) is dict and set(levels)==set(LEVELS))
-    actual = _rows(conn, """SELECT d.level, count(*) AS n,
-        coalesce(sum(ST_NPoints(d.geom_display_4326)),0) AS vertices,
-        bool_and(d.source_geometry_hash=f.geometry_hash) AS hashes,
-        bool_and(d.qc_state=CASE WHEN d.method='coverage_simplify' THEN 'passed' ELSE 'fallback' END) AS qc,
-        bool_and(coalesce(d.qc_result->>'modelHash'=%s AND
-            d.qc_result->>'originalEWKBHash'=encode(sha256(ST_AsEWKB(f.geom_original_4326)),'hex') AND
-            d.qc_result->>'displayEWKBHash'=encode(sha256(ST_AsEWKB(d.geom_display_4326)),'hex'),false)) AS proof,
-        array_agg(DISTINCT d.method) AS methods,
-        array_agg(DISTINCT d.fallback_reason) AS reasons,
-        jsonb_agg(DISTINCT d.parameters) AS parameters,
-        jsonb_agg(DISTINCT jsonb_build_object('featureIdsPreserved',d.qc_result->'featureIdsPreserved',
-            'geometryValid',d.qc_result->'geometryValid','coverageValid',d.qc_result->'coverageValid')) AS validation
-        FROM rdtr.zone_display d JOIN rdtr.zone_feature f
-            ON f.id=d.zone_feature_id AND f.plan_version_id=d.plan_version_id
-        WHERE d.plan_version_id=%s AND d.algorithm_version=%s GROUP BY d.level""", (_hash(model),member['version_uuid'],ALGORITHM))
     by_level = {r['level']:r for r in actual}
     _require(set(by_level)==({0,1,2} if counts['returned'] else set()))
     for name,(number,tolerance) in LEVELS.items():
@@ -282,6 +325,30 @@ def get_display(conn, plan_id, level, release_hash, bbox=None):
     _require(type(level) is str and level in LEVELS,'unsupported_query',400)
     bbox = _bbox(bbox)
     release,member = _member(conn,plan_id,release_hash)
+    return _display_projection(conn, release, member, level, bbox)
+
+
+def get_display_batch(conn, plan_ids, level, release_hash):
+    """One fresh full-release proof per call, never a cross-request trust cache."""
+    _require(type(level) is str and level=='overview', 'unsupported_query',400)
+    _require(type(plan_ids) in (list,tuple) and 1<=len(plan_ids)<=16 and
+             all(type(p) is str and p in PLANS for p in plan_ids) and
+             len(set(plan_ids))==len(plan_ids), 'unsupported_query',400)
+    release = _release(conn,release_hash)
+    _require(all(p in release['members'] for p in plan_ids), 'plan_not_in_release',422)
+    results = []
+    for plan_id in plan_ids:
+        try:
+            data = _display_projection(conn,release,release['members'][plan_id],'overview',None)
+            results.append({'planId':plan_id,'data':data})
+        except APIError as error:
+            results.append({'planId':plan_id,'error':{'code':error.code,'status':error.status}})
+    result = {'schemaVersion':1,'releaseHash':release_hash,'results':results}
+    _require(len(encoded(result))<=32*1024*1024)
+    return result
+
+
+def _display_projection(conn, release, member, level, bbox):
     sql = "SELECT f.source_object_id AS object_id," + _PROPERTY_SQL + " AS properties," + _BOUNDS_SQL + " AS bounds, ST_AsGeoJSON(d.geom_display_4326,17,0)::jsonb AS geometry FROM rdtr.zone_feature f JOIN rdtr.zone_display d ON d.zone_feature_id=f.id AND d.plan_version_id=f.plan_version_id WHERE f.plan_version_id=%s AND d.level=%s AND d.algorithm_version=%s"
     params = [member['version_uuid'],LEVELS[level][0],ALGORITHM]
     if bbox is not None:
