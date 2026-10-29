@@ -16,6 +16,11 @@
 | Sorotan geometri pilot historis | Terintegrasi dan teruji pada satu RDTR Tirawuta pada 25 Oktober 2026 | [20 polygon sumber dan 18 pemeriksaan browser](design/zone-overlay.md); relevan untuk ditelaah, bukan izin/exact-KBLI terverifikasi |
 | Filter seluruh kabupaten/kota | 17 pilihan tersedia; 32 pemeriksaan browser lulus | [Kontrak filter](design/region-filter.md); sumber ID GISTARU baru 11, enam kunci internal eksplisit; bukan perluasan geometri |
 | Eksplorasi lintas-rencana | 5.994 polygon dari 16 rencana; 98 pemeriksaan browser setelah perbaikan review lulus | [Kontrak API/klien](design/province-api.md), [bukti browser](design/province-verification.json), [review kode](design/province-review.json); 2 relasi unknown/6 wilayah tidak tercantum, bukan izin |
+| Baseline performa dan sorotan adaptif | Baseline SVG tiga run dan checkpoint styling diukur; 98 pemeriksaan browser styling lulus | [Angka baseline](design/map-performance-baseline.json). Replay privat diberi label; styling saja tetap mengirim 104.586.993 byte geometri per run, bukan perbaikan payload |
+| Geometri tampilan/detail/viewport | Uji terkendali selesai; pemuatan live masih perlu perbaikan | QA 27 Oktober: 55 Python, 56 Node, 139 pemeriksaan SVG dan 139 Canvas, 6 benchmark. SVG tetap default; bukti rinci privat. Keberhasilan snapshot tidak menutup masalah busy/pergantian snapshot pada jalur live; D-15 mengarahkan rancangan sumber lokal |
+| Database RDTR mandiri | Dua rencana aktif teruji; impor14arsip tambahan selesai, belum aktivasi | Migrasi001–004;database16versi/5.994fitur valid/15karantina dari6.009matched. Rilis aktif tetap2rencana/1.708fitur +5.124LOD;14staging belumLOD/rilis. Rekonsiliasi arsip/blob/SQL lulus. Review frontend/backend,173Python/68Node dan20pemeriksaan browser lulus pada rilis dua rencana. [Checkpoint](design/rdtr-db-foundation.md), [kontrak irisan baca](design/rdtr-local-read-contract.md). Server8769 lokal, bukan produksi; performa16rencana belum disahkan |
+| Navigasi sorotan langsung dan cleanup | Selesai untuk rilis lokal dua rencana | 177 Python/96 Node/28 pemeriksaan browser lulus; review independen penutup lulus. Apply langsung fokus, lingkaran emas klik/sentuh/keyboard; bukan aktivasi 14 staging atau perbaikan jalur live. [Checkpoint publikasi kode](design/local-release-checkpoint.md) |
+| Panel admin/sinkronisasi RDTR | Ditunda atas arahan Anton | Dibuat setelah jalur baca lokal stabil; tidak membangun scheduler/panel pada tahap rancangan sekarang |
 | Desain teknis/backlog/estimasi | Belum difinalisasi | Stack di PRD masih usulan |
 | Mesin produksi/integrasi OSS | Belum dimulai | Prototipe eksplorasi bukan persetujuan seluruh cakupan atau tindakan OSS |
 
@@ -64,9 +69,32 @@ Alur produk yang dituju tetap peta/filter → kriteria → perbandingan kandidat
 - [x] Perluas kontrak API/klien ke seluruh 18 rencana pada snapshot, 16 calon kegiatan dengan 6 gap wilayah/2 unknown; validasi dan batas bukti dipertahankan. Uji sumber nyata lulus 98 pemeriksaan; [review independen ulang](design/province-review.json) lulus tanpa temuan pemblokir.
 - [ ] Tinjau alur bersama pemilik kebutuhan.
 
+### Optimasi eksplorasi yang diminta
+
+- [x] Ukur baseline nyata sebelum mengubah produksi; tiga browser terisolasi pada dataset/viewport sama, byte HTTP bukan ukuran cache.
+- [x] Uji styling adaptif zoom/seleksi terhadap checkpoint sumber utuh: 16 unit dan 98 pemeriksaan browser lulus, termasuk seluruh daftar keyboard dan sentuhan seluler.
+- [x] Integrasikan level tampilan/detail terikat snapshot dan uji terkendali; sumber asli serta batas umur adapter live tetap dipertahankan.
+- [x] Bandingkan SVG/Canvas pada data/skema uji yang sama; SVG tetap default berdasarkan hasil yang tersedia.
+- [x] Jalankan uji area/zoom, revisi terlambat dan hitungan terpisah pada replay; masalah reload-required pada pengamatan live dicatat terpisah dan tidak dinyatakan selesai.
+- [x] Review independen kode dan susun laporan QA privat; tidak menyamakan hasil tersebut dengan kelulusan produksi/live.
+- [x] Izin publikasi kode/commit/push dikonfirmasi Anton pada 29 Oktober 2026 melalui D-18/DEC-19; hanya kode, skema, tes dan dokumentasi terverifikasi. Publikasi dataset/deployment produksi tetap terpisah. Vector tiles bukan migrasi otomatis.
+
 **Gerbang:** alur disetujui tanpa menyamakan mockup dengan bukti kelayakan lokasi.
 
 ## Tahap D — PRD siap bangun dan desain teknis
+
+### Irisan D-15/D-16 — rancangan, fondasi lokal, lalu jalur baca database
+
+- [x] Catat arah penyimpanan sendiri dan tunda panel admin/sinkronisasi.
+- [x] Susun model/ERD, identitas lokal, arsip sumber, karantina, impor awal, rilis dan kontrak API baca.
+- [x] Anton mengizinkan implementasi lokal dan impor awal bertahap setelah tahap desain; bukan izin deployment/redistribusi produksi.
+- [x] Buat skema/validator dan impor awal terukur: Tirawuta 20 dan Routa 1.688 fitur; subset `01273` tidak disebut full-layer.
+- [x] Tutup temuan review fondasi, jalankan regresi/review ulang dan migrasi002/003 tanpa mengubah histori atau mereset data. Ini bukan kelulusan kode API baru yang masih dibangun.
+- [ ] Tetapkan hak data, deployment/backup/retensi dan kebijakan umur untuk penggunaan produksi; belum ditetapkan hanya karena runtime lokal aktif.
+- [x] Uji jalur baca rilis lokal dua rencana, pin versi dan kegagalan/rollback; browser nyata serta lima endpoint HTTP telah diuji. Performa seluruh 16 rencana dan rollout berikutnya belum disahkan.
+- [ ] Rancang/bangun panel admin dan sinkronisasi pada fase berikutnya, bukan sebagai prasyarat desain sekarang.
+
+Model target berada di [rancangan database RDTR](design/rdtr-database.md), kontrak SQL di [kontrak skema](design/rdtr-db-schema-contract.md), dan bukti/batas implementasi di [checkpoint fondasi](design/rdtr-db-foundation.md). Empat migrasi, impor 16 versi dan rilis lokal dua rencana sudah diverifikasi; 14 versi lain masih staging. Adapter live/TTL tidak diganti atau dinyatakan selesai; perluasan LOD/rilis memerlukan gerbang berikutnya.
 
 - [ ] Putuskan cakupan rilis dan pengecualian sambil mempertahankan visi ujung ke ujung.
 - [ ] Tetapkan peran/akses, kebijakan data/AI/cloud, persetujuan dan pemulihan kegagalan.

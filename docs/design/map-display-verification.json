@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "scope": "backend_geometry_validation_not_browser_or_OSS_acceptance",
+  "date": "2026-10-26",
+  "sourceMode": "private_frozen_baseline_benchmark_replay_not_live",
+  "productionTTLRelaxed": false,
+  "source": {"plans": 16, "validFeatures": 5994, "excludedInvalid": 15, "vertices": 2527359, "originalHttpBodyBytes": 104586993},
+  "validation": {
+    "levelHttpResponses": 48,
+    "attributeDetailResponses": 16,
+    "externalSourceRequests": 0,
+    "sourceHashesAndMtimesUnchanged": true,
+    "sourcePayloadsUnchanged": true,
+    "allIdsCountsValidNonemptyPolygonsVerified": true,
+    "fallbackCoordinatesExact": true,
+    "derivedGeometryUsedForAnalysisOrExport": false,
+    "pythonTestsAtCheckpoint": 45
+  },
+  "levels": {
+    "overview": {"parameterMeters": 100, "responses": 16, "features": 5994, "vertices": 323589, "httpBodyBytes": 15946932, "coverageSimplifiedPlans": 11, "originalPreservedPlans": 5},
+    "regional": {"parameterMeters": 10, "responses": 16, "features": 5994, "vertices": 371639, "httpBodyBytes": 17872144, "coverageSimplifiedPlans": 11, "originalPreservedPlans": 5},
+    "detail": {"parameterMeters": 1, "responses": 16, "features": 5994, "vertices": 533090, "httpBodyBytes": 24346738, "coverageSimplifiedPlans": 11, "originalPreservedPlans": 5}
+  },
+  "overviewReduction": {"httpBodyPercent": 84.75, "verticesPercent": 87.2},
+  "limitations": [
+    "These are whole-plan geometry/HTTP checks against explicitly labelled original snapshots, not current live source reads.",
+    "Body bytes are actual uncompressed HTTP JSON response bodies; original cache-file bytes are a different metric.",
+    "Geometry reduction does not establish browser readiness, animation speed, source-network latency or a renderer winner.",
+    "Generalization parameters are not maximum deviation guarantees or survey accuracy. Boundaries remain display-only.",
+    "Five plans retain original coordinates because their coverage is unsafe to simplify. They are not counted as simplification successes.",
+    "Viewport subsets may contain fewer features; the full source inventory remains separate.",
+    "Unknown activity mappings, coverage gaps and official project acceptance remain unresolved. No licensing conclusion is derived.",
+    "Detailed measurements and source inputs remain private; no raw geodata is distributed in this artifact."
+  ]
+}

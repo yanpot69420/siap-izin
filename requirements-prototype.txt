@@ -1,2 +1,3 @@
-# Geometry validation only; HTTP, JSON, server and cache use Python stdlib.
+# Display-only coverage LOD + CRS transforms; HTTP/JSON/server/cache use stdlib.
 Shapely==2.2.0
+pyproj==3.8.0

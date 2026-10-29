@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "scope": "local_benchmark_replay_not_live_production_latency",
+  "checkpoint": "d72e21a",
+  "date": "2026-10-26",
+  "renderer": "svg",
+  "viewport": {"width": 1512, "height": 1100},
+  "source": {"planCount": 16, "validFeatures": 5994, "quarantinedInvalid": 15, "originalVertices": 2527359, "cacheFileBytes": 104667197},
+  "conditions": {
+    "isolatedChromePerRun": true,
+    "networkCacheDisabled": true,
+    "cpuOrNetworkThrottling": false,
+    "sourceReplay": "warm in-memory originals; original retrieval times; cached_snapshot/benchmark_replay banner",
+    "allPlansRetainedDuringFocalViews": true,
+    "rounding": "milliseconds rounded to 0.1; bytes exact"
+  },
+  "versions": {
+    "baseline": {
+      "httpBodyBytesEachRun": 104586993,
+      "runs": [
+        {"run": 1, "optInToReadyMs": 3892.7, "firstRequestToReadyMs": 3121.7, "jsHeapUsedBytes": 450139356, "longTaskCount": 2, "longTaskTotalMs": 589, "provinceRafP95Ms": 66.6},
+        {"run": 2, "optInToReadyMs": 3535.4, "firstRequestToReadyMs": 2757.9, "jsHeapUsedBytes": 451356124, "longTaskCount": 2, "longTaskTotalMs": 557, "provinceRafP95Ms": 66.6},
+        {"run": 3, "optInToReadyMs": 3433.4, "firstRequestToReadyMs": 3058.6, "jsHeapUsedBytes": 448499648, "longTaskCount": 2, "longTaskTotalMs": 593, "provinceRafP95Ms": 66.6}
+      ],
+      "medians": {"optInToReadyMs": 3535.4, "firstRequestToReadyMs": 3058.6, "jsHeapUsedBytes": 450139356, "longTaskTotalMs": 589, "provinceRafP95Ms": 66.6}
+    },
+    "style": {
+      "httpBodyBytesEachRun": 104586993,
+      "runs": [
+        {"run": 1, "optInToReadyMs": 3114.4, "firstRequestToReadyMs": 2773.7, "jsHeapUsedBytes": 441515988, "longTaskCount": 2, "longTaskTotalMs": 567, "provinceRafP95Ms": 66.6},
+        {"run": 2, "optInToReadyMs": 4435.9, "firstRequestToReadyMs": 2688.7, "jsHeapUsedBytes": 445463872, "longTaskCount": 2, "longTaskTotalMs": 543, "provinceRafP95Ms": 66.6},
+        {"run": 3, "optInToReadyMs": 3435, "firstRequestToReadyMs": 2776.8, "jsHeapUsedBytes": 442967828, "longTaskCount": 2, "longTaskTotalMs": 528, "provinceRafP95Ms": 66.7}
+      ],
+      "medians": {"optInToReadyMs": 3435, "firstRequestToReadyMs": 2773.7, "jsHeapUsedBytes": 442967828, "longTaskTotalMs": 543, "provinceRafP95Ms": 66.6}
+    }
+  },
+  "limitations": [
+    "HTTP body bytes are not cache-file sizes; no claim of production/source-network latency.",
+    "Response.json latency overlaps transfer, decoding and scheduling; not pure CPU parsing.",
+    "Synchronous layer construction is not complete paint/GPU time.",
+    "Ready means all source layers, final zoomAll and two RAF; basemap readiness recorded separately.",
+    "RAF measures main-thread scheduling, not GPU FPS. Heap is a snapshot without forced GC, not peak memory.",
+    "Styling did not reduce payload. Three local runs do not demonstrate a production speed-up.",
+    "Raw benchmark inputs, complete outputs and screenshots remain private."
+  ],
+  "styleBrowser": {"passed": true, "assertions": 98, "inventoryKeyboardReachable": 5994, "sourceMode": "explicit_benchmark_replay_not_live"}
+}

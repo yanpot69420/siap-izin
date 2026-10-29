@@ -1,5 +1,5 @@
 'use strict';
-(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.ProvinceData=api;})(globalThis,()=>{
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./local-dataset.js'));else root.ProvinceData=factory(root.LocalDataset);})(globalThis,LocalDataset=>{
  const record=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
  const short=x=>typeof x==='string'&&x.trim().length>0&&x.length<=4000;
  const timestamp=x=>typeof x==='string'&&/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?(?:Z|[+-]\d\d:\d\d)$/.test(x)&&Number.isFinite(Date.parse(x));
@@ -28,6 +28,7 @@
    for(const id of r.planIds)if(!plans.has(id)||plans.get(id).regionId!==r.id)fail();
    if([...plans.values()].filter(p=>p.regionId===r.id).length!==r.planIds.length)fail();
   }
+  if(LocalDataset)LocalDataset.validateCatalog(data);else if(data.localDataset!==undefined||data.plans.some(p=>p.localDataset!==undefined))fail();
   return data;
  }
  function featureKey(planId,objectId){return `${planId}:${objectId}`;}
@@ -36,12 +37,14 @@
   const regions=catalog.regions.filter(r=>regionIds.includes(r.id));
   const selected=catalog.plans.filter(p=>regionIds.includes(p.regionId));
   const plans=[],features=[],counts={matched:0,returned:0,excludedInvalid:0};
-  let requestedPlanCount=0,loadedPlanCount=0,failedPlanCount=0,unmappedPlanCount=0,pendingPlanCount=0;
+  let requestedPlanCount=0,loadedPlanCount=0,failedPlanCount=0,unmappedPlanCount=0,pendingPlanCount=0,notImportedPlanCount=0;
   for(const plan of selected){
-   const entry=plan.activity?(records.get(plan.id)||{status:active?'loading':'idle'}):{status:'unavailable'};
+   const notImported=plan.localDataset?.available===false;
+   const entry=notImported?{status:'unavailable',reason:'not_in_release'}:plan.activity?(records.get(plan.id)||{status:active?'loading':'idle'}):{status:'unavailable'};
+   if(notImported)notImportedPlanCount++;
    if(!['idle','loading','ready','partial','unavailable','error'].includes(entry.status))throw new Error('Status rencana tidak valid.');
    if(!plan.activity)unmappedPlanCount++;else requestedPlanCount++;
-   const item={planId:plan.id,status:entry.status,source:null};
+   const item={planId:plan.id,status:entry.status,source:null,...(notImported?{reason:'not_in_release'}:{})};
    if(entry.status==='ready'){
     const d=entry.data,m=d?.meta;
     if(!plan.activity||m?.plan?.id!==plan.id||m.plan.name!==plan.name||m.activity?.id!==plan.activity.id||m.activity.name!==plan.activity.name||!Array.isArray(d.features)||m.counts?.returned!==d.features.length)throw new Error('Hasil lintas rencana ditolak.');
@@ -51,8 +54,11 @@
      const value=m.counts[key];if(!Number.isSafeInteger(value)||value<0)throw new Error('Hitungan sumber tidak valid.');
      item.counts[key]=value;counts[key]+=value;
     }
+    if(plan.localDataset)Object.assign(item,LocalDataset.provenance(plan,m));
+    if(!['live','cached_snapshot','local_dataset'].includes(m.source?.status)||!timestamp(m.source.retrievedAt)||!plan.localDataset&&m.source.status==='local_dataset')throw new Error('Status sumber tidak valid.');
     loadedPlanCount++;item.source={status:m.source.status,retrievedAt:m.source.retrievedAt};
-   }else if(plan.activity&&['error','unavailable'].includes(entry.status))failedPlanCount++;
+   }else if(notImported){/* Known release gap: no request, count, or success inferred. */}
+   else if(plan.activity&&['error','unavailable'].includes(entry.status))failedPlanCount++;
    else if(plan.activity)pendingPlanCount++;
    plans.push(item);
   }
@@ -61,15 +67,17 @@
   if(active){
    if(!requestedPlanCount)state='unavailable';
    else if(pendingPlanCount)state=loadedPlanCount?'partial':'loading';
-   else if(!loadedPlanCount)state='error';
-   else state=(failedPlanCount||unmappedPlanCount||notListedRegionCount)?'partial':'ready';
+   else if(!loadedPlanCount)state=notImportedPlanCount?'unavailable':'error';
+   else state=(failedPlanCount||unmappedPlanCount||notListedRegionCount||notImportedPlanCount)?'partial':'ready';
   }
-  return {state,requestedPlanCount,loadedPlanCount,failedPlanCount,unmappedPlanCount,notListedRegionCount,pendingPlanCount,highlightedFeatureCount:features.length,mappingReviewed:false,plans,features,counts};
+  return {state,requestedPlanCount,loadedPlanCount,failedPlanCount,unmappedPlanCount,notListedRegionCount,notImportedPlanCount,pendingPlanCount,highlightedFeatureCount:features.length,mappingReviewed:false,plans,features,counts};
  }
  function configuration(catalog,entries,applied,records,active,catalogState='idle'){
+  if(applied.kbli!=='01273'||catalog&&(catalog.sourceStatus!=='curated_source_snapshot'||!timestamp(catalog.checkedAt)))throw new Error('Konfigurasi sumber tidak valid.');
   const summary=catalog?aggregate(catalog,applied.regions,records,active):null;
   const overlay=summary?Object.fromEntries(Object.entries(summary).filter(([key])=>!['features','counts','pendingPlanCount'].includes(key))):{state:catalogState,requestedPlanCount:null,loadedPlanCount:0,failedPlanCount:0,unmappedPlanCount:null,notListedRegionCount:null,highlightedFeatureCount:0,mappingReviewed:false,plans:[]};
   const result={schemaVersion:3,artifactType:'zone-exploration-configuration',module:'zone-exploration',status:'eksplorasi-pemetaan-belum-direview',containsGeometry:false,kbli:{code:applied.kbli,version:'2025',scope:'budidaya-kakao',scopeConfirmed:false,mappingReviewed:false},regions:applied.regions.map(id=>{const r=entries.find(e=>e.id===id);if(!r)throw new Error('Wilayah tidak valid.');return {id:r.id,name:r.name,idNamespace:r.idNamespace,gistaruId:r.gistaruId};}),catalog:catalog?{sourceStatus:catalog.sourceStatus,checkedAt:catalog.checkedAt}:null,assessments:{zoning:'belum-dinilai'},evaluatedZoneCount:0,overlay,limitations:['Konfigurasi saja, bukan GeoJSON atau hasil kesesuaian.','Sorotan relevansi kelompok kegiatan lokal; bukan izin atau penerimaan exact-KBLI pada OSS.','Cakupan hanya zona hasil filter dari rencana yang berhasil dimuat, bukan seluruh daratan Sulawesi Tenggara.','ITBX sampel historis bukan evaluasi seluruh bidang.']};
+  if(catalog?.localDataset)result.catalog.localDataset=LocalDataset.catalogProvenance(catalog);
   // Detach preview from mutable records and applied selection, including nested provenance/counts.
   return JSON.parse(JSON.stringify(result));
  }
@@ -78,7 +86,8 @@
   let revision=0;const controllers=new Set();
   function cancel(){revision++;for(const controller of controllers)controller.abort();controllers.clear();}
   async function start(plans,kbli){
-   cancel();const current=revision,queue=plans.filter(p=>p.activity),records=new Map(plans.map(p=>[p.id,{status:p.activity?'loading':'unavailable'}]));let next=0;
+   cancel();if(!LocalDataset&&plans.some(p=>p.localDataset!==undefined))throw new Error('Helper dataset lokal tidak tersedia.');
+   plans=LocalDataset?LocalDataset.capturePlans(plans,kbli):plans;const current=revision,queue=plans.filter(p=>LocalDataset?LocalDataset.canRequest(p):p.activity),records=new Map(plans.map(p=>[p.id,LocalDataset?LocalDataset.initialRecord(p):{status:p.activity?'loading':'unavailable'}]));let next=0;
    const publish=()=>{if(current===revision)onUpdate(records);};publish();
    async function worker(){
     while(current===revision&&next<queue.length){
@@ -90,7 +99,8 @@
      try{
       const work=(async()=>{
        // Literal allowlisted identifiers; do not URL-encode the colon (backend checks raw tokens).
-       const response=await fetchImpl(`/api/zones?plan=${plan.id}&kbli=${kbli}`,{signal:controller.signal,cache:'no-store'});
+       const url=plan.localDataset?`/api/display?plan=${plan.id}&kbli=${kbli}&level=overview${LocalDataset.releaseQuery(plan)}`:`/api/zones?plan=${plan.id}&kbli=${kbli}`;
+       const response=await fetchImpl(url,{signal:controller.signal,cache:'no-store'});
        if(!response.ok)throw new Error(response.status===422?'unavailable':`http_${response.status}`);
        return validateCollection(await response.json(),plan.id,kbli,plan);
       })();

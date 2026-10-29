@@ -19,6 +19,12 @@
 | DEC-11 | Hapus textfield luas pada eksplorasi; tujuan modul ini hanya melihat zona sesuai KBLI pilihan | Ditegaskan pengguna. Eksplorasi hanya KBLI/wilayah; luas dan preferensi kandidat untuk modul pencarian/pembuatan polygon terpisah |
 | DEC-12 | Buat filter seluruh kabupaten/kota Sulawesi Tenggara | Diminta pengguna. Seluruh 17 pilihan tersedia; geometri tidak otomatis menjadi seluruh provinsi dan pilot kandidat empat kabupaten tetap terpisah |
 | DEC-13 | Lanjutkan eksplorasi KBLI 01273 terhadap seluruh sumber Sulawesi Tenggara yang tersedia | Diminta pengguna. Inventaris 18 rencana/17 wilayah; 6 wilayah tidak tercantum dan 2 rencana tanpa calon relasi. Bukan cakupan fisik seluruh provinsi atau verifikasi izin |
+| DEC-14 | Kerjakan optimasi berurutan: baseline/sorotan, geometri tampilan/detail serta perbandingan SVG–Canvas, lalu pemuatan area/zoom | Disetujui Anton: “ya kerjakan sesuai urutan yang anda pilih”. Vector tiles hanya bila hasil ukur masih memerlukan; bukan izin mengganti geometri analisis atau mengklaim izin |
+| DEC-15 | Resolver publik hanya untuk proses server/uji, tanpa mengubah DNS sistem | Diizinkan khusus untuk gangguan DNS sumber pada lingkungan uji. TLS tetap diverifikasi; bukan perubahan DNS/hosts sistem atau kebijakan deployment produksi |
+| DEC-16 | Rancang database RDTR mandiri untuk menyimpan polygon/batas dan relasi kegiatan dari ATR/BPN; panel admin/sinkronisasi terbaru dibuat belakangan | Permintaan awal 27 Oktober 2026 adalah desain saja; tidak menjadi izin build dengan sendirinya. [Rancangan database](design/rdtr-database.md). Izin implementasi berikutnya dicatat terpisah pada DEC-17 |
+| DEC-17 | Lanjutkan implementasi database lokal, impor bertahap, perbaikan review, jalur baca lokal dan integrasi peta sesuai urutan yang dibahas | Anton memberi instruksi lanjut setelah rancangan, mengonfirmasi migrasi dev, lalu “ya kerjakan sesuai urutan anda”. Tahap awal menyimpan dua subset arsip nyata, bukan seluruh layer atau pengambilan massal baru. Review/perbaikan mendahului integrasi/aktivasi lokal. Tidak mengizinkan panel admin/scheduler, publikasi internet, layanan berbayar, data klien atau pengajuan OSS. Lihat [checkpoint](design/rdtr-db-foundation.md) |
+| DEC-18 | Terapkan langsung menampilkan sorotan dan gunakan lingkaran wilayah untuk navigasi yang ringan | Diminta Anton 29 Oktober 2026; klik/sentuh/keyboard memperbesar area sumber yang tersedia, bukan membuktikan batas wilayah/izin. Uji lokal dua rencana, tanpa aktivasi staging. [Kontrak](design/map-region-navigation.md) |
+| DEC-19 | Publikasi kode melalui commit dan push | Instruksi eksplisit Anton 29 Oktober 2026. Mencakup kode, skema, tes dan dokumentasi yang telah diperiksa; database, konfigurasi rahasia, arsip/geometri, bukti privat, deployment produksi dan pengajuan OSS tidak ikut diizinkan. Izin ini memperbarui batas publikasi kode pada DEC-17, bukan izin redistribusi dataset. [Checkpoint](design/local-release-checkpoint.md) |
 
 ## Usulan yang belum otomatis disetujui
 
@@ -27,7 +33,7 @@
 | PROP-01 | Aplikasi web induk modular | Finalisasi bentuk/ruang penggunaan dan scope rilis |
 | PROP-02 | Penggunaan awal internal | Pengguna, peran, volume dan akses |
 | PROP-03 | MVP paket siap input OSS, otomasi eksternal menyusul | Persetujuan batas MVP; jangan menghilangkan visi ujung ke ujung |
-| PROP-04 | Next.js, FastAPI, PostgreSQL/PostGIS, worker dan kandidat Playwright | Desain teknis setelah risiko data/integrasi diperiksa |
+| PROP-04 | Next.js, FastAPI, PostgreSQL/PostGIS, worker dan kandidat Playwright | PostgreSQL/PostGIS sudah dipakai untuk fondasi lokal DEC-17; tidak mengesahkan seluruh stack, deployment produksi atau panel sinkronisasi |
 | PROP-05 | Kontrak/skema ekspor SHP ZIP serta KML | Format sudah dikonfirmasi DEC-10; atribut, validasi dan kecocokan target belum final |
 | PROP-06 | Review manusia, bukti per temuan dan status unknown yang eksplisit | Alur dan kewenangan persetujuan perlu ditetapkan |
 
@@ -41,6 +47,7 @@
 - Pengguna, volume, kewenangan reviewer dan skenario pengurusan awal/perubahan.
 - Kebijakan data/cloud/AI, retensi, anggaran dan batas rilis.
 - Ketersediaan serta izin penggunaan sumber data dan kelayakan integrasi OSS.
+- Deployment/backup/retensi, kebijakan umur dataset lokal serta kewenangan aktivasi rilis DB RDTR; tidak meminta jadwal sinkronisasi sekarang karena panel tersebut ditunda.
 
 Pada formulir terakhir, pengguna melewati konfirmasi ruang lingkup budidaya, usulan polygon utuh/toleransi ±1m2, dan kebijakan menampilkan kandidat ketika agronomi belum lengkap. Ketiganya tetap terbuka; tidak ada persetujuan implisit dan tidak ditanyakan ulang dalam putaran yang sama. Pekerjaan audit sumber dan rancangan layar yang tidak bergantung pada jawabannya tetap dapat berjalan.
 

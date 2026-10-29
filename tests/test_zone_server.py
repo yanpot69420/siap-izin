@@ -1,10 +1,12 @@
 """Offline synthetic fixtures, never official/real RDTR evidence."""
 import importlib.util
 from pathlib import Path
+import sys
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULE = ROOT / 'tools' / 'dev_server.py'
+sys.path.insert(0, str(MODULE.parent))
 
 
 def load_server():
@@ -37,7 +39,7 @@ class QueryTests(unittest.TestCase):
 # All fixture coordinates and records below are invented for offline tests.
 import copy
 import json
-from urllib.parse import parse_qs
+
 
 
 def fixture_feature(oid):
@@ -259,7 +261,6 @@ class TransportTests(unittest.TestCase):
             transport(server.ACTIVITIES_URL)
 
 
-import os
 import tempfile
 
 

@@ -1,0 +1,3 @@
+# Additional database client; existing GIS pins remain unchanged.
+-r requirements-prototype.txt
+psycopg[binary]==3.3.6

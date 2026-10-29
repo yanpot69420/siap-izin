@@ -1,6 +1,6 @@
 # PRD — Aplikasi Induk Asisten Perizinan Berusaha
 
-**Versi:** 0.10 — eksplorasi lintas-rencana Sulawesi Tenggara; pemetaan exact-KBLI belum direview, cakupan mengikuti sumber yang benar-benar tersedia
+**Versi:** 0.14 — database 16 versi, peta lokal dua rencana aktif dan navigasi sorotan langsung teruji; publikasi kode diizinkan, panel admin/sinkronisasi dan deployment produksi tetap ditunda
 
 **Pemilik kebutuhan:** Anton
 
@@ -54,6 +54,11 @@ Belum tersedia baseline waktu kerja, frekuensi kesalahan, volume berkas, dan bia
 | D-11 | Modul eksplorasi hanya untuk melihat zona berdasarkan KBLI terpilih; input luas dihapus | Ditegaskan Anton; kriteria eksplorasi KBLI/wilayah, parameter kandidat berada pada modul terpisah |
 | D-12 | Filter eksplorasi mencakup seluruh kabupaten/kota Sulawesi Tenggara | Diminta Anton; 17 pilihan tersedia. Tidak dianggap mengaktifkan seluruh geometri atau mengubah pilot kandidat empat kabupaten |
 | D-13 | Lanjutkan eksplorasi 01273 ke semua sumber Sulawesi Tenggara yang tersedia | Diminta Anton. Registry 18 rencana/17 wilayah, 16 calon relasi dan 2 unknown; bukan jaminan seluruh daratan atau izin |
+| D-14 | Jalankan baseline/styling, geometri tampilan ringan/perbandingan renderer, lalu pemuatan area/zoom | Disetujui Anton. Vector tiles hanya jika pengukuran masih memerlukan; tidak mengganti geometri analisis atau menyimpulkan izin |
+| D-15 | Rancang database sendiri untuk menyimpan polygon/relasi RDTR dari ATR/BPN; panel admin untuk sinkronisasi terbaru dikerjakan belakangan | Permintaan awal adalah rancangan/model dan alur impor awal; bukan izin build dengan sendirinya. Instruksi implementasi sesudahnya dicatat pada D-16 |
+| D-16 | Lanjutkan fondasi DB lokal, impor bertahap dan perbaikan review sebelum jalur baca lokal/integrasi peta | Anton memberi instruksi lanjut, mengonfirmasi migrasi dev dan menyetujui urutan perbaikan → uji/review → LOD/API → peta → perluasan. Tidak mengizinkan panel admin/scheduler, deployment berbayar, publikasi internet atau pengajuan OSS. [Checkpoint](design/rdtr-db-foundation.md), DEC-17 |
+| D-17 | Terapkan kriteria langsung memperlihatkan sorotan; lingkaran navigasi wilayah dapat diklik/disentuh untuk memperbesar, tetap ringan | Diminta Anton. Implementasi dan uji terbatas pada rilis lokal dua rencana; penanda bukan batas kabupaten atau keputusan izin. [Kontrak navigasi](design/map-region-navigation.md) |
+| D-18 | Publikasi kode, commit dan push setelah verifikasi | Anton meminta “publikasi commit push” pada 29 Oktober 2026. Hanya kode/skema/tes dan dokumentasi publik; bukan publikasi database, geometri, arsip, kredensial, deployment produksi atau aktivasi dataset tambahan. [Checkpoint](design/local-release-checkpoint.md) |
 | A-01 | Penggunaan awal untuk Anton dan tim internal, bukan SaaS publik | Asumsi |
 | A-02 | Ada pemeriksaan manusia sebelum data final dan pengajuan | Usulan pengamanan |
 | A-03 | MVP berakhir pada paket siap input dan pencatatan hasil input manual | Usulan batas MVP |
@@ -194,7 +199,7 @@ Sistem mempertahankan hasil lama sebagai riwayat dan menandai hasil turunannya `
 | F-23 | P0 usulan | Cakupan dan mutu data | Bedakan belum tercakup, aturan belum tersedia, pemetaan belum terverifikasi, konflik dan data kedaluwarsa; tidak disatukan sebagai tidak sesuai |
 | F-24 | P0 usulan | Peta ke proyek dan ekspor rencana | Kandidat dapat dibentuk/diekspor tanpa bukti ketersediaan tanah; asal geometri dan label rencana wajib, pemeriksaan seluruh geometri dijalankan; pemakaian untuk pengajuan memiliki gerbang review terpisah |
 | F-25 | P1 usulan | Filter beberapa KBLI | Mode semua/salah satu eksplisit, hasil per KBLI tetap terlihat dan kondisi tidak dihilangkan oleh agregasi |
-| F-26 | P0 usulan | Publikasi dan pembaruan data peta | Dataset dan pemetaan diperiksa sebelum tayang; perubahan versi menandai kandidat/pemeriksaan terdampak untuk review tanpa menimpa bukti historis |
+| F-26 | P0 usulan | Aktivasi rilis data peta lokal | Dataset/pemetaan hasil impor awal diperiksa sebelum aktivasi lokal; perubahan versi tidak menimpa histori. Panel admin dan sinkronisasi berkala ditunda sesuai D-15; aktivasi lokal bukan izin publikasi internet |
 | F-27 | P0 usulan | Formulir kriteria rencana | Pada modul pencarian/pembuatan polygon terpisah, pengguna memasukkan KBLI, luas, toleransi dan kriteria tambahan; bukan formulir wajib eksplorasi zona |
 | F-28 | P0 usulan | Pembentukan polygon rencana | Geometri dibentuk pada koordinat nyata, valid dan memenuhi luas dalam toleransi yang disetujui; seluruh bidang diuji, bukan titik pusat; hasil ditandai rencana |
 | F-29 | P0 usulan | Beberapa kandidat dan alasan | Jumlah kandidat dipilih pada discovery; hasil dibandingkan per kriteria dan peringkat dapat dijelaskan, tanpa persentase peluang izin yang tidak diukur |
@@ -209,6 +214,17 @@ Sistem mempertahankan hasil lama sebagai riwayat dan menandai hasil turunannya `
 | F-38 | P0 eksplorasi diminta | Inventaris lintas-rencana dan celah wilayah | Snapshot katalog direkonsiliasi dengan 17 wilayah; timestamp/status snapshot eksplisit. Tidak tercantum atau aktivitas null tetap unknown, bukan dilarang |
 | F-39 | P0 eksplorasi diminta | Sorotan semua rencana terpilih | Maksimal 3 request serentak; filter/aktivitas/CRS/cache per rencana. Identitas pasangan planId/OID; status parsial, pending, gagal dan karantina terlihat tanpa menghilangkan hasil sah |
 | F-40 | P0 eksplorasi diminta | Ekspor lintas-rencana | Skema 3 berisi wilayah/namespace, snapshot katalog serta provenance/counts aktual per rencana. Pratinjau sama dengan unduhan; tanpa geometri/luas/jalan/kandidat atau keputusan OSS |
+| F-41 | P0 optimasi diminta | Benchmark dan sorotan adaptif | Ukur waktu/payload/memori sebelum/sesudah dengan kondisi sama; overview tidak dipenuhi garis tebal, seleksi/zoom menegaskan fitur tanpa warna izin |
+| F-42 | P0 optimasi diminta | Geometri tampilan bertingkat | Sumber asli tidak berubah. Turunan terikat snapshot/ID/versi algoritma, validitas/count diperiksa; coverage tidak valid tidak disederhanakan diam-diam. Detail atribut diminta terpisah dan terikat snapshot |
+| F-43 | P0 optimasi diminta | Pemuatan viewport dan hitungan jujur | Katalog/tersedia/dimuat/ditampilkan dipisahkan. Request area/zoom dibatasi dan respons lama diabaikan; daftar sumber tetap dapat ditelusuri seluruhnya melalui keyboard |
+| F-44 | P0 rancangan D-15 | Jalur baca database RDTR mandiri | Saat kelak diimplementasi, membuka peta/filter/detail membaca rilis lokal tanpa request ATR/BPN; gangguan sumber tidak memicu pengambilan live terselubung |
+| F-45 | P0 target D-15/D-16 | Impor awal dan kelengkapan sumber | Arsip verbatim, rekonsiliasi ID/count, CRS, karantina dan resume; subset kegiatan tidak disebut seluruh layer. Fondasi sudah mengimpor dua arsip tervalidasi terkait 01273; bukan pengambilan seluruh layer atau matriks aturan lengkap |
+| F-46 | P0 rancangan D-15 | Rilis immutable dan aktivasi atomik | Rilis mengunci versi rencana dan revisi mapping untuk seluruh request sesi; gagal impor tidak merusak rilis aktif, rollback tercatat dan versi lama tidak dicampur |
+| F-47 | P0 rancangan D-15 | Relasi lokal berversi dan kekuatan bukti | ID kegiatan/OID/kode zona dibatasi rencana/versi; filter KODUNK/KODSZN, kategori/syarat dan sumber asli dipertahankan. Keanggotaan filter/sampel titik tidak menjadi izin seluruh polygon |
+| F-48 | P0 rancangan D-15 | Indeks spasial dan turunan siap baca | LOD/indeks selesai sebelum aktivasi; bootstrap tidak memuat seluruh geometri, viewport memakai polygon asli untuk seleksi dan daftar sumber dipaginasi tanpa kehilangan akses keyboard |
+| F-49 | P0 rancangan D-15 | Dataset lokal bertanggal tanpa sinkronisasi otomatis | Waktu sumber/pemeriksaan/tanggal berlaku dipisah; label bukan live/terbaru. Panel admin, scheduler dan kebijakan umur baru belum dibuat/diaktifkan hanya karena desain tersedia |
+
+F-44 sampai F-49 adalah persyaratan target database. Fondasi SQL, validator dan impor staging sudah berjalan sebagian; API/peta dari rilis lokal belum diaktifkan. Kelulusan SQL/unit bukan kelulusan seluruh fitur/UAT. Model dan gerbang di [rancangan database](design/rdtr-database.md); implementasi serta blocker di [checkpoint](design/rdtr-db-foundation.md).
 
 ### 8.1 Ketentuan dokumen dan AI
 
@@ -310,7 +326,7 @@ Usulan rilis awal memakai satu KBLI agar hasil mudah diaudit. Jika multi-KBLI di
 - Discovery menginventarisasi geometri, ketentuan kegiatan, syarat dan sumber resmi yang tersedia untuk Sulawesi Tenggara; tidak mengarang jumlah atau daftar cakupannya.
 - Pisahkan peta dasar, batas administratif, geometri RDTR dan relasi kegiatan. Peta dasar atau RTRW tidak otomatis menggantikan ketentuan rinci RDTR yang belum tersedia.
 - Periksa ketentuan akses, penyimpanan, pengunduhan dan publikasi ulang sebelum memakai data. Jika tidak diizinkan/disediakan, revisi cakupan atau tampilkan rujukan pemeriksaan manual; jangan mengaku pencarian otomatis lengkap.
-- Data yang dipublikasikan memiliki versi, sumber, tanggal pemeriksaan dan status review. Ketika sumber sementara tidak tersedia, versi terakhir tidak disebut live; usulan kebijakan kedaluwarsa harus ditentukan bersama reviewer.
+- Data yang diaktifkan memiliki versi, sumber, tanggal pemeriksaan dan status review. D-15 menetapkan arah database sendiri dengan impor awal; panel admin/sinkronisasi ditunda. Rilis lokal terakhir tidak disebut live/terbaru ketika sumber tidak diperiksa; kebijakan umur untuk eksplorasi/pengajuan masih harus ditentukan. Desain ini belum mengubah TTL adapter live yang sedang berjalan.
 - Untuk respons filter, usulan arsitektur memakai indeks geometri dan relasi yang sudah ditinjau, bukan meminta AI menyimpulkan semua zona setiap kali diklik. Besaran kinerja tetap harus diukur pada data nyata.
 - Untuk tampilan provinsi, geometri boleh disederhanakan agar ringan; pemeriksaan bidang dan ekspor memakai geometri analisis yang tidak disederhanakan untuk tampilan.
 - Sistem boleh membentuk bagian polygon zona sebagai kandidat rencana sesuai luas dan kriteria, tetapi tidak mengklaimnya sebagai batas kepemilikan. Seluruh zona tidak otomatis menjadi proyek; pembentukan geometri memerlukan parameter yang jelas dan pemeriksaan seluruh hasil.
@@ -468,11 +484,27 @@ Hasil eksekusi terpisah: **11 test backend offline**, **1 test kontrak frontend*
 
 ### 8.12 Eksplorasi lintas-rencana — kontrak perluasan
 
+Bagian ini merekam kontrak live-prototipe sebelum migrasi database. Target jalur baca lokal mengikuti 8.14; selama migrasi belum diimplementasikan, API/cache live lama tetap berlaku dan tidak dinyatakan telah diganti.
+
 Registry versi 1 memuat 17 wilayah/18 rencana sebagai `curated_source_snapshot`, bukan katalog live. Enam wilayah tidak tercantum tetap selectable dengan namespace internal/source ID null. Dua rencana beraktivitas null tidak meminjam kegiatan rencana lain; celah bukan larangan.
 
 Setelah peta diaktifkan, semua rencana beraktivitas pada wilayah terapan diminta bertahap, maksimal 3 serentak/timeout 120 detik. Filter, ID kegiatan, sumber/CRS dan cache terikat rencana immutable; detail fitur terikat koleksi asal melalui `(planId,objectId)`. Status berhasil/pending/gagal/unknown terpisah. Penerapan filter membersihkan konteks lama dan mengabaikan respons terlambat.
 
 Lasalimu memakai calon 014 bahan minuman, bukan 015 rempah/aromatik. Langara memfilter KODUNK bertitik, kode subzona tetap KODSZN. Matahora memakai batch 5, semua query dibatasi 200 ID dan 1900 byte URL. Semua hasil unreviewed/unknown, bukan pemetaan exact-KBLI final. Konfigurasi skema 3 tanpa geometri atau parameter kandidat. [Kontrak API/klien](design/province-api.md), [registry](../tools/rdtr-plans.json), [audit historis terkoreksi](discovery/sultra-01273-source-audit.json).
+
+### 8.13 Optimasi peta yang disetujui
+
+Urutan pekerjaan mengikuti [rencana optimasi](design/map-performance-plan.md). Baseline dilakukan sebelum mengubah kode produksi. Perapian sorotan tetap mempertahankan status unreviewed/unknown. Geometri tampilan bertingkat bukan geometri analisis/ekspor. Kebutuhan vector tiles diputuskan dari benchmark sesudah tahap geometri/renderer/viewport, bukan dianggap wajib sejak awal.
+
+### 8.14 Database RDTR mandiri — rancangan yang diminta Anton
+
+Tujuan D-15 adalah memisahkan pemakaian peta dari pengambilan ATR/BPN. Operator kelak menjalankan impor awal ke staging, menyimpan arsip mentah, memeriksa ID/CRS/geometri/relasi dan menyiapkan turunan/indeks sebelum suatu rilis lokal diaktifkan. Pengguna membaca rilis yang sama untuk inventaris, viewport dan detail; perubahan waktu pengambilan saja tidak memaksa ID konten baru. Rilis mengunci juga revisi pemetaan KBLI, bukan hanya polygon.
+
+Penyimpanan geometri tidak mensyaratkan suatu rencana sudah mempunyai calon relasi `01273`; dua dimensi ketersediaan tersebut tetap terpisah. Dataset subset lama tidak menjadi seluruh layer, invalid tetap dikarantina, dan hak penggunaan/penyajian ulang sumber tetap perlu pemeriksaan. Rancangan tidak menghasilkan keputusan izin atau hasil OSS.
+
+PostgreSQL/PostGIS sudah dipakai pada fondasi pengembangan lokal yang disetujui D-16; ini bukan persetujuan deployment produksi. Panel admin untuk sinkronisasi terbaru, penjadwal, retry berkala dan notifikasi ditunda. Log/manifest impor awal disiapkan agar fase admin kelak dapat memakainya tanpa melewati validasi. Kebijakan dataset lokal dibuat eksplisit pada kontrak API versi baru; tidak merelaksasi TTL atau label provenance API live lama secara diam-diam.
+
+Lihat [model, ERD, API baca dan uji penerimaan](design/rdtr-database.md). D-16 mengizinkan fondasi pengembangan lokal: skema awal, uji SQL serta impor staging Tirawuta/Routa sudah dijalankan. Tahap aktif menutup temuan review sebelum migrasi perbaikan dan integrasi peta; belum ada rilis aktif atau bukti performa UI berbasis DB. Pengambilan massal baru dan panel admin belum dilaksanakan.
 
 ## 9. Pengalaman pengguna
 
@@ -578,11 +610,23 @@ Keberhasilan penerbitan izin tidak menjadi ukuran tunggal kualitas produk, karen
 | UAT-41 | Geometri filter kelompok kegiatan tampil, relasi exact-KBLI belum direview | Sorotan hanya relevan untuk ditelaah, tanpa warna/keputusan izin; fitur dan detail memuat ID, sumber, waktu, cakupan serta unknown. Tile peta dasar saja tidak dianggap kelulusan sorotan |
 | UAT-42 | Respons geometri rusak atau respons lama tiba setelah filter berubah | Lapisan lama dibersihkan; payload rusak tidak digambar dan respons konteks sebelumnya diabaikan. Cache sah berlabel snapshot dengan timestamp sumber asli; tidak ada polygon contoh sebagai fallback |
 | UAT-43 | Memilih kabupaten/kota mana pun di Sulawesi Tenggara | Seluruh 17 pilihan dapat diterapkan, dicampur dan diekspor; kontrol massal hanya mengubah draf, reset kembali 17 dan pilihan kosong ditolak. ID internal tidak disebut kode resmi; wilayah tanpa inventaris/sorotan tetap belum dievaluasi |
-| UAT-44 | Semua rencana terpilih, OID sama lintasrencana | Inventaris snapshot lengkap; detail/cache tidak tertukar. Semua geometri respons sah digambar, pembatasan daftar berpaginasi dapat dioperasikan dengan keyboard untuk seluruh fitur |
+| UAT-44 | Semua rencana terpilih, OID sama lintasrencana | Inventaris snapshot lengkap; detail/cache tidak tertukar. Semua geometri respons tampilan sah untuk viewport digambar; fitur sumber lain tetap tercatat/diakses lewat daftar berpaginasi. Jumlah tersedia tidak disamakan dengan jumlah yang sedang tampil |
 | UAT-45 | Sebagian sumber gagal, aktivitas null atau wilayah tidak tercantum | Hasil sah dipertahankan dengan status parsial/error/unavailable; tanpa geometri pengganti, keputusan izin atau ekstrapolasi titik |
 | UAT-46 | Ekspor saat request/draf berubah | Unduhan nyata identik dengan pratinjau skema 3, provenance/counts per rencana pada waktu snapshot; tanpa geometri/luas/jalan/kandidat |
+| UAT-47 | Membandingkan peta sebelum/sesudah optimasi | Ukuran HTTP, kompleksitas, waktu request/parse/render dan respons geser/zoom dicatat terpisah; replay jelas bukan live, tanpa angka percepatan rekaan |
+| UAT-48 | Menyederhanakan rencana dengan/tanpa coverage valid | ID/count/status bukti dipertahankan, output divalidasi. Rencana yang tidak aman memakai geometri asli berlabel, tanpa repair atau kehilangan fitur diam-diam |
+| UAT-49 | Zoom/pan/perubahan kriteria saat request berjalan | Level dan bbox cocok dengan hasil; revisi lama tidak mengganti tampilan baru, tidak ada fit-bounds loop, sumber di luar viewport tidak disebut tidak tersedia |
+| UAT-50 | Memilih fitur lewat map/keyboard/sentuhan sesudah optimasi | Detail cocok plan/OID/snapshot asli; snapshot berubah menghasilkan reload/konflik, bukan atribut dari geometri lain. Konfigurasi tetap tanpa geometri/parameter kandidat |
+| UAT-51 | Fase DB: domain ATR/BPN tidak tersedia setelah rilis lokal ada | Peta/filter/detail tetap membaca data lokal tanpa request ATR/BPN; peta dasar adalah dependensi terpisah |
+| UAT-52 | Fase DB: seed subset, ID hilang/duplikat atau geometri invalid | Scope subset/partial dan karantina jujur; tidak mengklaim full-layer atau mengisi geometri rekaan |
+| UAT-53 | Fase DB: rilis baru diaktifkan di antara inventaris, viewport dan detail | Sesi tetap terikat satu rilis/versi mapping; rilis ditarik meminta perpindahan eksplisit, tidak bercampur |
+| UAT-54 | Fase DB: OID/aktivitas sama lintasrencana atau bukti hanya filter/titik | Kunci/FK menjaga rencana/versi dan literal; tidak menyamakan ID kegiatan dengan KBLI atau bukti titik dengan izin seluruh zona |
+| UAT-55 | Fase DB: LOD belum siap, bbox overlap envelope, banyak halaman/cursor salah | Aktivasi ditahan atau fallback aman berlabel; seleksi polygon asli, pagination lengkap dan partial eksplisit; tanpa geometri penuh pada bootstrap |
+| UAT-56 | Fase DB: impor ulang sama konten, data lama dan admin sync belum dibuat | Observasi bertambah tanpa mengganti konten hanya karena waktu; label dataset lokal bertanggal, bukan live/terbaru atau sync palsu |
+| UAT-57 | Fase DB: impor/aktivasi terputus atau satu rencana gagal | Rilis lama utuh; rollback/resume dapat ditelusuri dan aktivasi parsial membutuhkan keputusan eksplisit |
+| UAT-58 | Fase DB: restore arsip tak lengkap atau role baca mencoba menulis | Ketidaklengkapan terdeteksi; backup DB/blob/rilis diuji bersama dan hak baca tidak dapat mengubah data |
 
-UAT-15 dan UAT-16 adalah gerbang fase otomasi, bukan syarat MVP tanpa integrasi. UAT-17 sampai UAT-20 dan UAT-22 sampai UAT-46 mencakup eksplorasi serta modul rekomendasi rencana yang terpisah; UAT-21 berlaku jika multi-KBLI masuk rilis. Uji teknis eksplorasi satu rencana tidak menyatakan seluruh UAT produk lulus; rincian korpus/label pembanding untuk rilis harus disepakati.
+UAT-15 dan UAT-16 adalah gerbang fase otomasi, bukan syarat MVP tanpa integrasi. UAT-17 sampai UAT-20 dan UAT-22 sampai UAT-50 mencakup eksplorasi serta modul rekomendasi rencana yang terpisah; UAT-21 berlaku jika multi-KBLI masuk rilis. UAT-51 sampai UAT-58 adalah target penerimaan fitur database. Tes SQL fondasi sudah dijalankan, tetapi tidak menggantikan UAT API/peta, rilis terikat versi atau performa aplikasi berbasis DB. Uji teknis eksplorasi tidak menyatakan seluruh UAT produk lulus; korpus/label pembanding rilis harus disepakati.
 
 ## 13. Cakupan rilis dan gerbang kelulusan
 
@@ -603,7 +647,7 @@ Keluaran:
 
 ### Fase 1 — MVP paket siap input
 
-Keluaran usulan: F-01 sampai F-16 serta F-20 sampai F-24 dan F-26 sampai F-40 dalam cakupan pilot, termasuk pembentukan kandidat polygon rencana. Kebutuhan ini dicatat sebagai cakupan yang diminta; prioritas dan besar rilis tetap perlu disepakati. Peta memiliki area tampilan Sulawesi Tenggara dengan cakupan dataset yang ditandai jujur; prioritas ini masih memerlukan persetujuan Anton. Pemeriksaan manual dapat melengkapi kasus tertentu, tetapi tidak boleh menggantikan dataset filter otomatis lalu mengklaim cakupannya lengkap. Penginputan OSS tetap dilakukan operator dan hasilnya dicatat.
+Keluaran usulan: F-01 sampai F-16 serta F-20 sampai F-24 dan F-26 sampai F-49 dalam cakupan pilot, termasuk pembentukan kandidat polygon rencana. F-44 sampai F-49 menambah target database sendiri; implementasi fondasi lokal sudah diizinkan D-16, bukan persetujuan build seluruh MVP. Prioritas dan besar rilis tetap perlu disepakati. Peta memiliki area tampilan Sulawesi Tenggara dengan cakupan dataset yang ditandai jujur. Pemeriksaan manual dapat melengkapi kasus tertentu, tetapi tidak boleh menggantikan dataset filter otomatis lalu mengklaim cakupannya lengkap. Penginputan OSS tetap dilakukan operator dan hasilnya dicatat.
 
 **Gerbang:** seluruh UAT P0 yang berlaku lulus pada data uji yang disepakati; hak akses, backup/pemulihan, ekspor dan audit teruji; temuan kritis terselesaikan.
 
@@ -620,6 +664,8 @@ Kandidat: cakupan RDTR/KBLI Sulawesi Tenggara yang lebih luas, provinsi lain, se
 Estimasi durasi dan biaya belum ditetapkan. Keduanya baru layak dihitung setelah Fase 0, bukan dengan menganggap semua dependensi telah tersedia.
 
 ## 14. Arah teknis — bukan keputusan produk yang sudah final
+
+**Arah penyimpanan RDTR D-15/D-16:** database sendiri dan impor awal sumber ATR/BPN, dengan target jalur baca rilis lokal; panel admin/sinkronisasi ditunda. PostgreSQL/PostGIS sudah dipasang untuk fondasi pengembangan lokal. Ini tidak mengonfirmasi deployment produksi atau seluruh stack di bawah. [Desain](design/rdtr-database.md) dan [checkpoint](design/rdtr-db-foundation.md) memisahkan target dari yang telah diuji.
 
 Usulan dari diskusi sebelumnya:
 
@@ -675,6 +721,9 @@ Penyedia AI/OCR, antrean tugas, pustaka ekspor, layanan hosting dan autentikasi 
 | Q-19 | Kriteria tambahan apa yang disetujui: bentuk, kemiringan, banjir, air dan batas pengecualian? | Anton + reviewer | Scope data dan bobot |
 | Q-20 | Kebijakan kandidat bersyarat/agronomi belum lengkap belum diputuskan; pertanyaan dilewati, bukan persetujuan menampilkan kandidat indikatif | Anton + reviewer | Status kecocokan dan batas penggunaan |
 | Q-21 | Konfirmasi budidaya atau produksi benih dilewati; budidaya tetap asumsi kerja. Rubrik/ambang serta reviewer agronomi belum final | Anton + reviewer agronomi | Model kecocokan dan batas klaim |
+| Q-22 | Di mana database/arsip RDTR akan ditempatkan, dan apa kebijakan backup/retensinya? | Anton + pelaksana teknis | Terbuka untuk implementasi; tidak menghambat desain logis |
+| Q-23 | Berapa batas umur dataset lokal untuk eksplorasi dan pemeriksaan/pengajuan resmi? | Anton + reviewer | Terpisah dari TTL adapter live; belum ditetapkan oleh D-15 |
+| Q-24 | Siapa berwenang mengaktifkan rilis impor awal dan apa bukti hak penyimpanan/penyajian ulang sumber? | Anton + penanggung jawab data | Aktivasi internal dan publikasi internet berbeda; panel sinkronisasi tetap ditunda |
 
 ## 17. Definition of Ready dan Definition of Done
 
@@ -685,6 +734,7 @@ Penyedia AI/OCR, antrean tugas, pustaka ekspor, layanan hosting dan autentikasi 
 - [ ] Contoh dokumen diizinkan dan label pembanding tersedia.
 - [ ] Kolom kritis, kontrak data dan kriteria penerimaan ditetapkan.
 - [ ] Akses sumber data serta fallback-nya diperiksa.
+- [ ] Untuk implementasi DB RDTR: model/rilis/impor awal diterima, hak data dan deployment diperiksa; perintah desain saja tidak dianggap izin migrasi/impor massal.
 - [ ] Cakupan data pilot Sulawesi Tenggara, sumber, legenda, metode pemetaan KBLI dan penanggung jawab review peta disetujui.
 - [ ] Kriteria rencana wajib/preferensi, target/toleransi luas, metode jarak jalan, definisi tutupan dan penanganan unknown disetujui.
 - [ ] Kebijakan data dan penggunaan AI/cloud disetujui.
@@ -701,6 +751,7 @@ Penyedia AI/OCR, antrean tugas, pustaka ekspor, layanan hosting dan autentikasi 
 - [ ] Operator dapat menyelesaikan alur pilot dengan pencatatan hasil eksternal.
 - [ ] Tidak ada temuan kritis keamanan atau integritas data yang belum ditangani.
 - [ ] Backup dan pemulihan diuji.
+- [ ] Jika fase DB masuk rilis: UAT-51 sampai UAT-58 dijalankan pada DB sebenarnya, termasuk pembacaan tanpa ATR/BPN dan konsistensi versi lintas-request; bukan hanya validasi dokumen.
 - [ ] Panduan kerja dan batas kemampuan tersedia.
 - [ ] Hasil pilot serta biaya aktual dibahas; penerimaan dicatat Anton.
 
@@ -716,6 +767,9 @@ Penyedia AI/OCR, antrean tugas, pustaka ekspor, layanan hosting dan autentikasi 
 - v0.8: merekam implementasi dan pembuktian 20 polygon sumber Tirawuta, API lokal/validator serta 18 pemeriksaan browser; menambahkan UAT-41/42. Seluruh sorotan masih unreviewed/unknown; exact-KBLI, agronomi, kandidat/generator dan OSS tidak dinyatakan selesai.
 - v0.9: menindaklanjuti permintaan filter seluruh kabupaten/kota: 17 pilihan, kontrol massal/draf/reset dan namespace ID eksplisit; D-12 serta UAT-43. Sebanyak 32 pemeriksaan browser lulus termasuk setiap wilayah; cakupan geometri, pilot kandidat dan ketidakpastian tidak diperluas secara semu.
 - v0.10: memperluas eksplorasi ke snapshot 18 rencana/17 wilayah, dengan 16 calon relasi kegiatan dan celah yang eksplisit; D-13, F-38 sampai F-40 serta UAT-44 sampai UAT-46. Identitas/cache/provenance per rencana, konfigurasi skema 3 dan akses keyboard seluruh fitur menjadi kontrak. Baseline 5.994 polygon bukan izin; seluruh produk dan penerimaan OSS tetap belum selesai.
+- v0.11: merekam persetujuan optimasi berurutan melalui D-14, F-41 sampai F-43 dan UAT-47 sampai UAT-50; memisahkan geometri sumber/tampilan dan katalog/tersedia/dimuat/ditampilkan. Hasil benchmark serta pemilihan renderer belum dinyatakan selesai hanya karena rencana tersedia.
+- v0.12: merekam D-15, F-44 sampai F-49 dan UAT-51 sampai UAT-58 untuk rancangan database RDTR mandiri, impor awal, rilis konsisten dan provenance. Panel admin/sinkronisasi ditunda. Tidak ada pemasangan DB, migrasi, impor massal, perubahan TTL live atau publikasi data pada tahap desain.
+- v0.13: mencatat izin implementasi D-16/DEC-17, fondasi lokal dan impor staging dua subset, serta gerbang hardening/review sebelum API/peta DB. Tidak menyamakan hasil SQL dengan UAT produk atau penerimaan OSS; publikasi dan sinkronisasi tetap ditunda.
 - Referensi resmi di bawah mendukung konteks tertentu saja, bukan pemeriksaan hukum menyeluruh atau verifikasi operasional OSS.
 - Sumber regulasi, katalog dan antarmuka perlu diperiksa ulang saat discovery dan sebelum produksi.
 - Langkah berikutnya: review mockup/parameter → validasi aturan/data lanjutan → finalisasi PRD serta desain teknis/backlog → persetujuan development mesin produksi. Tidak ada komitmen biaya atau waktu yang dianggap telah disetujui melalui draf ini.

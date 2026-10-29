@@ -522,6 +522,42 @@ def read_static(root, raw_path):
             os.close(fd)
 
 
+def parse_display_query(query, detail=False):
+    """Validate literal raw tokens; never URL-decode identifiers or bbox."""
+    fields = {}
+    required = {'plan', 'kbli', 'objectId', 'snapshot'} if detail else {'plan', 'kbli', 'level'}
+    allowed = required if detail else required | {'bbox'}
+    for pair in query.split('&'):
+        key, separator, value = pair.partition('=')
+        if not separator or key not in allowed or key in fields or not value:
+            raise APIError('unsupported_query', 400)
+        fields[key] = value
+    if not required <= fields.keys() or fields['kbli'] != KBLI or fields['plan'] not in PLANS:
+        raise APIError('unsupported_query', 400)
+    if detail:
+        if (not re.fullmatch(r'(?:0|[1-9][0-9]{0,15})', fields['objectId']) or
+                int(fields['objectId']) > 9007199254740991 or
+                not re.fullmatch(r'[0-9a-f]{64}', fields['snapshot'])):
+            raise APIError('unsupported_query', 400)
+        fields['objectId'] = int(fields['objectId'])
+    else:
+        if fields['level'] not in ('overview', 'regional', 'detail'):
+            raise APIError('unsupported_query', 400)
+        bbox = None
+        if 'bbox' in fields:
+            numbers = fields['bbox'].split(',')
+            if len(numbers) != 4 or any(len(n) > 24 or not re.fullmatch(r'-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?', n)
+                                        for n in numbers):
+                raise APIError('unsupported_query', 400)
+            bbox = list(map(float, numbers))
+            west, south, east, north = bbox
+            if not (all(math.isfinite(n) for n in bbox) and -180 <= west < east <= 180
+                    and -90 <= south < north <= 90):
+                raise APIError('unsupported_query', 400)
+        fields['bbox'] = bbox
+    return fields
+
+
 class ZoneHandler(BaseHTTPRequestHandler):
     server_version = 'LocalPrototype/1.0'
     sys_version = ''
@@ -589,6 +625,23 @@ class ZoneHandler(BaseHTTPRequestHandler):
                     raise APIError('unsupported_query', 400)
                 payload = service.get_zones()
                 self.send_body(200, encoded(payload), 'application/geo+json; charset=utf-8')
+            elif target.path in ('/api/display', '/api/feature-detail'):
+                detail = target.path == '/api/feature-detail'
+                fields = parse_display_query(target.query, detail=detail)
+                plan_id = fields['plan']
+                if context_for(plan_id).activity_id is None:
+                    raise APIError('activity_mapping_unavailable', 422)
+                service = self.server.display_services.get(plan_id)
+                if service is None:
+                    raise APIError('unsupported_query', 400)
+                if detail:
+                    payload = service.get_feature_detail(fields['objectId'], fields['snapshot'])
+                else:
+                    payload = service.get_display(fields['level'], bbox=fields['bbox'])
+                body = encoded(payload)
+                service.validate_response_age(payload)
+                self.send_body(200, body, ('application/json' if detail else 'application/geo+json')
+                               + '; charset=utf-8')
             elif target.path == '/' and not target.query:
                 self.send_body(302, b'', extra={'Location': '/prototype/'})
             elif not target.query:
@@ -615,6 +668,10 @@ def make_server(port=8765, prototype_dir=None, service=None, services=None):
     server.daemon_threads = True
     server.prototype_dir = Path(prototype_dir) if prototype_dir else REPO_ROOT / 'prototype'
     server.zone_services = MappingProxyType(dict(services))
+    from display_geometry import DisplayService
+    server.display_services = MappingProxyType({key: DisplayService(item, error_type=APIError,
+                                               benchmark_replay=getattr(item, 'benchmark_replay', False) is True)
+                                               for key, item in services.items()})
     server.zone_service = server.zone_services.get(PLAN_ID)  # Legacy injected Tirawuta fixture API only.
     return server
 
